@@ -1,0 +1,25 @@
+.search {
+    width: 25%;
+    height: 40%;
+    margin: 40px;
+    border-style:solid;
+    float: left;
+    display:block;
+    text-align: center;
+    line-height: 180px; 
+}
+.btn-info,.btn-primary {
+    height:100px;
+    width: 145px;
+    margin:15px   
+}
+.btn-default {
+    margin:5px;
+    height:50px;
+    width:45%;
+}
+.glyphicon {
+    margin:20px;
+    top: 10px;
+}
+
