@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 let SearchesComponent = class SearchesComponent {
@@ -34,7 +33,8 @@ SearchesComponent = __decorate([
         templateUrl: 'searches.component.html',
         styleUrls: ['searches.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [typeof (_a = typeof router_1.Router !== "undefined" && router_1.Router) === "function" && _a || Object, typeof (_b = typeof router_1.ActivatedRoute !== "undefined" && router_1.ActivatedRoute) === "function" && _b || Object])
 ], SearchesComponent);
 exports.SearchesComponent = SearchesComponent;
+var _a, _b;
 //# sourceMappingURL=searches.component.js.map
