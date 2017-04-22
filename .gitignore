@@ -3,5 +3,5 @@
 AngularApp/typings/
 AngularApp/node_modules/
 .DS_Store
-/AngularApp/**.js
-/AngularApp/**.js.map
+/AngularApp/App/**.js
+/AngularApp/App/**.js.map

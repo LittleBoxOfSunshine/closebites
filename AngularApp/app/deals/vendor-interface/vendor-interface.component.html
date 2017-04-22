@@ -1,0 +1,88 @@
+<div class = "row">
+	<h1>CloseBites
+		<div style = "float:right">
+			<a routerLink = "/">
+			<button type="button" class="btn btn-danger">Log Out</button></a>
+		</div>
+	</h1>
+</div>
+<div class = "row">
+        <div class = "col-sm-2" style="text-align:center">
+            <span class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px"
+            data-toggle="modal" data-target="#myModal"></span>
+        </div>
+        <div class = "container-fluid" style = "margin-top:20px;margin-left:200px">
+            <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'month','btn-primary':mode != 'month'}"
+			type="button"
+			(click) = "updateMode('month')">Month</button>
+            <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'week','btn-primary':mode != 'week'}"
+			type="button"
+			(click) = "updateMode('week')">Week</button>
+            <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'day','btn-primary':mode != 'day'}"
+			type="button"
+			(click) = "updateMode('day')">Day</button>
+            <table *ngIf = "mode=='month'"class="table table-bordered" style="margin-top:20px">
+                <thead>
+                <tr>
+                    <th *ngFor = "let day of days">
+                        {{day}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let value of [1,2,3,4,5,6]">
+                        <td *ngFor = "let value of [1,2,3,4,5,6,7]"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div *ngIf = "mode=='week'" class="media">
+                <div *ngFor = "let day of days">
+                    <div class="media-left" style="border-style:ridge;height:68px;width:20%;max-width:20%;text-align:center">
+                        <h4>{{day}}</h4>
+                    </div>
+                    <div class="media-body" style="border-style:ridge;height:68px">
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf = "mode=='day'" class="media">
+                <div *ngFor = "let time of times">
+                    <div class="media-left" style="border-style:ridge;height:80px;width:20%;max-width:20%;text-align:center">
+                        <h4>{{time}}</h4>
+                    </div>
+                    <div class="media-body" style="border-style:ridge;height:80px">
+                    <hr><hr>  
+                    </div>
+                </div>
+            </div>
+        </div>        
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content" style="text-align:center">
+        <h1>Create Deal</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Deal Title">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" rows="5" id="description" placeholder="Deal Description"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="tags" name="tags" placeholder="Cuisine Tags">
+        </div>
+        <div class ="form-group">
+            <input type="text" class="form-control" id="dType" name="dType" placeholder="Deal Type">
+        </div>
+        <div class ="form-group">
+            <input type="text" class="form-control" id="dDay" name="dDay" placeholder="Deal Day">
+        </div>
+        <div class ="form-group">
+            <input type="text" class="form-control" id="dTime" name="dTime" placeholder="Deal Time">
+        </div>
+        <button type="button" class="btn btn-default" style="width:90%;background-color:black;color:white">Upload a photo</button>
+        <button type="button" class="btn btn-default" style="margin:20px">Submit</button>  
+      </div>
+      
+    </div>
+  </div>
