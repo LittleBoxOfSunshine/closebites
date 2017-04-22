@@ -1,0 +1,5 @@
+.idea/
+.vagrant/
+AngularApp/typings/
+AngularApp/node_modules/
+.DS_Store
