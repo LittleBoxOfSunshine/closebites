@@ -16,7 +16,7 @@ const sign_up_component_1 = require("./sign-up/sign-up.component");
 const searches_component_1 = require("./searches/searches.component");
 const vendor_interface_component_1 = require("./vendor-interface/vendor-interface.component");
 const login_component_1 = require("./login/login.component");
-const deal_repository_service_1 = require("./api/deal-repository.service");
+const deal_repository_service_1 = require("./api/deal/deal-repository.service");
 var routes = [
     {
         path: '',

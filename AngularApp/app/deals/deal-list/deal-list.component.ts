@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { DealRepository } from '../api/deal-repository.service';
-import { Deal } from '../api/deal';
+import { DealRepository } from '../api/deal/deal-repository.service';
+import { Deal } from '../api/deal/deal';
+import { UserRepository } from '../api/user/user-repository.service';
+import { User, Filter, FilterItem } from '../api/user/user';
 import { Router,ActivatedRoute } from '@angular/router';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 

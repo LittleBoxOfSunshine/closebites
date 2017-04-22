@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
-const deal_1 = require("../../deals/api/deal");
+const deal_1 = require("../../deals/api/deal/deal");
 let RatingComponent = class RatingComponent {
     constructor() {
     }

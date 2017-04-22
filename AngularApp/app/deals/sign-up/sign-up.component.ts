@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 
-import { DealRepository } from '../api/deal-repository.service';
-import { Deal } from '../api/deal';
+import { UserRepository } from '../api/user/user-repository.service';
+import { User } from '../api/user/user';
 
 @Component({
 	moduleId: module.id,

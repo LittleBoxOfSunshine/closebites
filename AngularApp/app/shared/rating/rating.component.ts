@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Deal } from '../../deals/api/deal';
+import { Deal } from '../../deals/api/deal/deal';
 
 
 @Component({

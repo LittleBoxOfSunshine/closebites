@@ -11,7 +11,8 @@ import { SearchesComponent } from './searches/searches.component';
 import { VendorInterfaceComponent } from './vendor-interface/vendor-interface.component';
 import { LoginComponent } from './login/login.component';
 
-import { DealRepository } from './api/deal-repository.service';
+import { DealRepository } from './api/deal/deal-repository.service';
+import { UserRepository } from './api/user/user-repository.service';
 
 
 var routes = [

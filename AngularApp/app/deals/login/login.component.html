@@ -7,13 +7,13 @@
 		<h1 style="text-align:center">Login</h1>
 		<form>
 				<div class="form-group">
-					<input type="text" class="form-control" id="email" name="email" placeholder="Email">
+					<input type="text" class="form-control" id="email" name="email" placeholder="Email" [(ngModel)]="email">
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" id="pwd" name="pwd" placeholder="Password">
+					<input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password" [(ngModel)]="password">
 				</div>
 		</form>
-		<button type="button" (click) = "go()" class="btn btn-primary btn-lg" 
+		<button type="button" (click) = "submit()" class="btn btn-primary btn-lg" 
 		style="text-align:center;margin:0px;width:100%">
 			Submit</button>		
 	</div>

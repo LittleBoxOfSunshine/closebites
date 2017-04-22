@@ -15,16 +15,10 @@ let LoginComponent = class LoginComponent {
     constructor(router, route) {
         this.router = router;
         this.route = route;
-        this.route.params.subscribe(params => {
-            this.mode = params['mode'];
-        });
     }
-    go() {
-        if (this.mode == 'vendor') {
-            this.router.navigate(['/vendor']);
-        }
-        else
-            this.router.navigate(['/user']);
+    submit() {
+        console.log("Email => " + this.email);
+        console.log("Password => " + this.password);
     }
 };
 LoginComponent = __decorate([
