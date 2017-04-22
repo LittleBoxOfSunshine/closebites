@@ -3,7 +3,7 @@
 		<div *ngIf = "!loggedIn" style = "float:right">
 			<a [routerLink] = "'/signup/' + 'home'">
 			<button type="button" class="btn btn-success">Sign Up</button></a>
-			<a routerLink = "/user">
+			<a routerLink = "/login">
 			<button type="button" class="btn btn-danger">Log In</button></a>
 		</div>
 		<div *ngIf = "loggedIn" style = "float:right">

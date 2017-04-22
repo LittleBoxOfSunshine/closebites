@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 let DealListComponent = class DealListComponent {
@@ -15,7 +16,7 @@ let DealListComponent = class DealListComponent {
         this.router = router;
         this.food = true;
         this.drink = false;
-        this.loggedIn = this.router.url == '/user' ? true : false;
+        this.loggedIn = this.router.url == '/user';
     }
     updateMode() {
         if (this.food) {
@@ -35,8 +36,7 @@ DealListComponent = __decorate([
         templateUrl: 'deal-list.component.html',
         styleUrls: ['deal-list.component.css']
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof router_1.Router !== "undefined" && router_1.Router) === "function" && _a || Object])
+    __metadata("design:paramtypes", [router_1.Router])
 ], DealListComponent);
 exports.DealListComponent = DealListComponent;
-var _a;
 //# sourceMappingURL=deal-list.component.js.map

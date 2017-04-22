@@ -23,8 +23,8 @@ export class SignUpComponent {
   }
 
   go (){
-    if (this.mode == 'business'){
-      this.router.navigate(['/business']);
+    if (this.mode == 'vendor'){
+      this.router.navigate(['/vendor']);
     } else 
       this.router.navigate(['/user']);
   }

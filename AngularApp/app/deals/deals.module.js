@@ -5,9 +5,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const platform_browser_1 = require("@angular/platform-browser");
 const router_1 = require("@angular/router");
@@ -16,7 +14,8 @@ const Shared = require("../shared/index");
 const deal_list_component_1 = require("./deal-list/deal-list.component");
 const sign_up_component_1 = require("./sign-up/sign-up.component");
 const searches_component_1 = require("./searches/searches.component");
-const business_interface_component_1 = require("./business-interface/business-interface.component");
+const vendor_interface_component_1 = require("./vendor-interface/vendor-interface.component");
+const login_component_1 = require("./login/login.component");
 const deal_repository_service_1 = require("./api/deal-repository.service");
 var routes = [
     {
@@ -28,8 +27,8 @@ var routes = [
         component: deal_list_component_1.DealListComponent
     },
     {
-        path: 'business',
-        component: business_interface_component_1.BusinessInterfaceComponent
+        path: 'vendor',
+        component: vendor_interface_component_1.VendorInterfaceComponent
     },
     {
         path: 'mysearches',
@@ -38,6 +37,10 @@ var routes = [
     {
         path: 'signup/:mode',
         component: sign_up_component_1.SignUpComponent
+    },
+    {
+        path: 'login',
+        component: login_component_1.LoginComponent
     }
 ];
 let DealsModule = class DealsModule {
@@ -51,7 +54,7 @@ DealsModule = __decorate([
             Shared.SharedModule
         ],
         declarations: [
-            deal_list_component_1.DealListComponent, sign_up_component_1.SignUpComponent, business_interface_component_1.BusinessInterfaceComponent, searches_component_1.SearchesComponent
+            deal_list_component_1.DealListComponent, sign_up_component_1.SignUpComponent, vendor_interface_component_1.VendorInterfaceComponent, searches_component_1.SearchesComponent, login_component_1.LoginComponent
         ],
         exports: [
             deal_list_component_1.DealListComponent
@@ -59,8 +62,7 @@ DealsModule = __decorate([
         providers: [
             deal_repository_service_1.DealRepository
         ]
-    }),
-    __metadata("design:paramtypes", [])
+    })
 ], DealsModule);
 exports.DealsModule = DealsModule;
 //# sourceMappingURL=deals.module.js.map

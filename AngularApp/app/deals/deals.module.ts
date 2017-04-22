@@ -8,7 +8,8 @@ import * as Shared from '../shared/index';
 import { DealListComponent } from './deal-list/deal-list.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SearchesComponent } from './searches/searches.component';
-import { BusinessInterfaceComponent } from './business-interface/business-interface.component';
+import { VendorInterfaceComponent } from './vendor-interface/vendor-interface.component';
+import { LoginComponent } from './login/login.component';
 
 import { DealRepository } from './api/deal-repository.service';
 
@@ -23,8 +24,8 @@ var routes = [
     component: DealListComponent
   },
   {
-    path: 'business',
-    component: BusinessInterfaceComponent
+    path: 'vendor',
+    component: VendorInterfaceComponent
   },
   {
     path:'mysearches',
@@ -33,6 +34,10 @@ var routes = [
   {
     path: 'signup/:mode',
     component: SignUpComponent
+  },
+  {
+    path:'login',
+    component: LoginComponent
   }
 ]
 
@@ -44,7 +49,7 @@ var routes = [
     Shared.SharedModule
   ],
   declarations: [
-    DealListComponent, SignUpComponent,BusinessInterfaceComponent,SearchesComponent
+    DealListComponent, SignUpComponent,VendorInterfaceComponent,SearchesComponent,LoginComponent
   ],
   exports: [
       DealListComponent

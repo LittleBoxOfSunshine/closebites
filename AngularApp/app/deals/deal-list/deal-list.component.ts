@@ -19,8 +19,7 @@ export class DealListComponent {
 	constructor(private router:Router){
 		this.food = true;
 		this.drink = false;
-		this.loggedIn = this.router.url == '/user' ? true : false;
-
+		this.loggedIn = this.router.url == '/user';
 	}
 
 	updateMode(){ // this mode refers to food or drink
