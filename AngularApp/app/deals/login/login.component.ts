@@ -15,14 +15,25 @@ import { User } from '../api/user/user';
 export class LoginComponent { 
   email: string;
   password: string;
+  error: boolean;
 
-  constructor(private router: Router, private route:ActivatedRoute){
- 
+  constructor(private router: Router, private route:ActivatedRoute, private userRepository : UserRepository){
+      this.error = false;
   }
 
-  submit (){
-      console.log("Email => " + this.email);
-      console.log("Password => " + this.password);
+  submit() {
+      // Allow promis callback to access this (parent scope)
+      var that = this;
+      // Make API call, provide "then" callback for when promise is satisfied
+      this.userRepository.login(this.email, this.password)
+          .then(function(valid) {
+              if(valid == 'consumer')
+                  that.router.navigateByUrl('user');
+              else if(valid == 'vendor')
+                  that.router.navigateByUrl('vendor');
+              else
+                  that.error = true;
+          });
   }
 
 }

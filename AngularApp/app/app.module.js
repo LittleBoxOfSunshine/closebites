@@ -6,9 +6,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mock_api_service_1 = require("./mock-api.service");
 const core_1 = require("@angular/core");
 const platform_browser_1 = require("@angular/platform-browser");
 const router_1 = require("@angular/router");
+const http_1 = require("@angular/http");
+const angular_in_memory_web_api_1 = require("angular-in-memory-web-api");
 const app_component_1 = require("./app.component");
 const deals_module_1 = require("./deals/deals.module");
 const Shared = require("./shared/index");
@@ -20,6 +23,8 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             deals_module_1.DealsModule,
             router_1.RouterModule,
+            http_1.HttpModule,
+            angular_in_memory_web_api_1.InMemoryWebApiModule.forRoot(mock_api_service_1.MockApiService),
             Shared.SharedModule
         ],
         declarations: [

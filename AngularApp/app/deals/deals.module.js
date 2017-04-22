@@ -10,6 +10,7 @@ const core_1 = require("@angular/core");
 const platform_browser_1 = require("@angular/platform-browser");
 const router_1 = require("@angular/router");
 const forms_1 = require("@angular/forms");
+const http_1 = require("@angular/http");
 const Shared = require("../shared/index");
 const deal_list_component_1 = require("./deal-list/deal-list.component");
 const sign_up_component_1 = require("./sign-up/sign-up.component");
@@ -17,6 +18,7 @@ const searches_component_1 = require("./searches/searches.component");
 const vendor_interface_component_1 = require("./vendor-interface/vendor-interface.component");
 const login_component_1 = require("./login/login.component");
 const deal_repository_service_1 = require("./api/deal/deal-repository.service");
+const user_repository_service_1 = require("./api/user/user-repository.service");
 var routes = [
     {
         path: '',
@@ -51,7 +53,8 @@ DealsModule = __decorate([
             platform_browser_1.BrowserModule,
             router_1.RouterModule.forRoot(routes),
             forms_1.FormsModule,
-            Shared.SharedModule
+            Shared.SharedModule,
+            http_1.HttpModule
         ],
         declarations: [
             deal_list_component_1.DealListComponent, sign_up_component_1.SignUpComponent, vendor_interface_component_1.VendorInterfaceComponent, searches_component_1.SearchesComponent, login_component_1.LoginComponent
@@ -60,7 +63,8 @@ DealsModule = __decorate([
             deal_list_component_1.DealListComponent
         ],
         providers: [
-            deal_repository_service_1.DealRepository
+            deal_repository_service_1.DealRepository,
+            user_repository_service_1.UserRepository
         ]
     })
 ], DealsModule);

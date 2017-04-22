@@ -15,7 +15,10 @@
 		</form>
 		<button type="button" (click) = "submit()" class="btn btn-primary btn-lg" 
 		style="text-align:center;margin:0px;width:100%">
-			Submit</button>		
+			Submit</button>
+		<div *ngIf = "error" id="error" class="alert alert-danger">
+			<strong>Error:</strong> Incorrect email and/or password
+		</div>
 	</div>
 </div>
 

@@ -58,7 +58,8 @@ var routes = [
       DealListComponent
   ],
   providers: [
-      DealRepository
+      DealRepository,
+      UserRepository
   ]
 })
 

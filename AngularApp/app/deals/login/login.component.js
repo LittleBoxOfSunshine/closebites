@@ -11,14 +11,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
+const user_repository_service_1 = require("../api/user/user-repository.service");
 let LoginComponent = class LoginComponent {
-    constructor(router, route) {
+    constructor(router, route, userRepository) {
         this.router = router;
         this.route = route;
+        this.userRepository = userRepository;
+        this.error = false;
     }
     submit() {
-        console.log("Email => " + this.email);
-        console.log("Password => " + this.password);
+        // Allow promis callback to access this (parent scope)
+        var that = this;
+        // Make API call, provide "then" callback for when promise is satisfied
+        this.userRepository.login(this.email, this.password)
+            .then(function (valid) {
+            if (valid == 'consumer')
+                that.router.navigateByUrl('user');
+            else if (valid == 'vendor')
+                that.router.navigateByUrl('vendor');
+            else
+                that.error = true;
+        });
     }
 };
 LoginComponent = __decorate([
@@ -28,7 +41,7 @@ LoginComponent = __decorate([
         templateUrl: 'login.component.html',
         styleUrls: ['login.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, user_repository_service_1.UserRepository])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map

@@ -10,45 +10,47 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
+const http_1 = require("@angular/http");
+const user_1 = require("./user");
+require("rxjs/add/operator/toPromise");
 let UserRepository = class UserRepository {
-    constructor() {
-        this._movies = [
-            { id: 1, title: 'Batman', year: 1988, imagePath: 'images/shining.jpg', rating: 0 },
-            { id: 2, title: 'Home Alone', year: 1990, imagePath: 'images/nemo.jpg', rating: 0 },
-            { id: 3, title: 'Titanic', year: 1996, imagePath: 'images/hungergames.jpg', rating: 0 }
-        ];
+    constructor(http) {
+        this.http = http;
+        this.user = new user_1.User;
+        let headers = new http_1.Headers();
+        headers.append('Content-Type', 'application/json');
+        this.options = new http_1.RequestOptions({ headers: headers });
     }
-    getIndex(id) {
-        for (var i = this._movies.length; i--;) {
-            var movie = this._movies[i];
-            if (movie.id == id)
-                return i;
-        }
-        return -1;
+    loadUser(jsonObj) {
+        this.user.name = jsonObj.name;
+        this.user.addr = jsonObj.address;
+        this.user.favorites = jsonObj.favorites;
+        this.user.filters = jsonObj.filters;
+        this.user.calendar = jsonObj.calendar;
+        this.user.accountType = jsonObj.accountType;
+        this.user.id = jsonObj.id;
+        return this.user.accountType;
     }
-    list() {
-        return this._movies;
-    }
-    get(id) {
-        var index = this.getIndex(id);
-        return this._movies[index];
-    }
-    add(movie) {
-        movie.id = this._movies.length + 1;
-        this._movies.push(movie);
-    }
-    update(movie) {
-        var index = this.getIndex(movie.id);
-        this._movies[index] = movie;
-    }
-    delete(id) {
-        var index = this.getIndex(id);
-        this._movies.splice(index, 1);
+    login(email, password) {
+        // let body = {"email": email, "password": password};
+        // this.http
+        // 	.post("User/login", JSON.stringify(body), this.options)
+        // 	.toPromise()
+        // 	.then(x => this.loadUser(x.json().data))
+        // 	.catch(x => false);
+        // Note, in production there is no "loginVendor"; sepearing just allows two different
+        // test cases to be derived from the mock API
+        return this.http
+            .get(email == 'vendor' ? "api/loginVendor" : 'api/login')
+            .toPromise()
+            .then(x => this.loadUser(x.json().data))
+            .catch(x => x.message);
+        //return this.user.accountType == undefined;
     }
 };
 UserRepository = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [http_1.Http])
 ], UserRepository);
 exports.UserRepository = UserRepository;
 //# sourceMappingURL=user-repository.service.js.map
