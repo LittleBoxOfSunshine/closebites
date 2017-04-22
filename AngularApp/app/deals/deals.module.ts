@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import * as Shared from '../shared/index';
 
@@ -46,7 +47,8 @@ var routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     FormsModule,
-    Shared.SharedModule
+    Shared.SharedModule,
+    HttpModule
   ],
   declarations: [
     DealListComponent, SignUpComponent,VendorInterfaceComponent,SearchesComponent,LoginComponent
