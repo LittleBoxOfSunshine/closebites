@@ -14,12 +14,6 @@ const deal_1 = require("../../deals/api/deal/deal");
 let RatingComponent = class RatingComponent {
     constructor() {
     }
-    //rating component will take input from movie-list-component and update the movie's rating
-    //reflected in both the stars and badge rating
-    updateRating(value) {
-        this.model = value;
-        this.movie.rating = this.model;
-    }
 };
 __decorate([
     core_1.Input(),

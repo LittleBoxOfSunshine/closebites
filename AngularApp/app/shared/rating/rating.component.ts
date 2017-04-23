@@ -20,11 +20,5 @@ export class RatingComponent {
     constructor() {
         
     }
-    //rating component will take input from movie-list-component and update the movie's rating
-    //reflected in both the stars and badge rating
-    updateRating(value: number){
-        this.model = value;
-        this.movie.rating = this.model;
-    }
     
 }

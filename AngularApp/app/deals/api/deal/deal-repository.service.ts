@@ -5,7 +5,7 @@ import { Deal } from './deal';
 @Injectable()
 export class DealRepository {
 
-	private _movies: Deal[];
+	/*private _movies: Deal[];
 
 	private getIndex(id : number){
 		for (var i = this._movies.length; i--;) {
@@ -45,5 +45,5 @@ export class DealRepository {
 	public delete(id : number) {
 		var index = this.getIndex(id);
 		this._movies.splice(index, 1);
-	}
+	}*/
 }

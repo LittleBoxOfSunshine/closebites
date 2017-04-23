@@ -5,7 +5,7 @@ function __export(m) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./deals.module"));
 __export(require("./deal-list/deal-list.component"));
-__export(require("./api/deal"));
-__export(require("./api/deal-repository.service"));
+__export(require("./api/deal/deal"));
+__export(require("./api/deal/deal-repository.service"));
 __export(require("./sign-up/sign-up.component"));
 //# sourceMappingURL=index.js.map

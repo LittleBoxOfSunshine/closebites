@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { PlatformLocation } from '@angular/common';
 
-import { DealRepository } from '../api/deal-repository.service';
+import { DealRepository } from '../api/deal/deal-repository.service';
 
 @Component({
   moduleId: module.id,
