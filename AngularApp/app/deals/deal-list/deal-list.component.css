@@ -27,4 +27,10 @@ a.hover:hover {
     margin:20px;
     top: 10px;
 }
+.glyphicon-heart {
+    opacity: 0.5;
+}
+.glyphicon-heart:hover {
+    opacity: 1;
+}
 

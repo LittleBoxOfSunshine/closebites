@@ -15,10 +15,9 @@ let SearchesComponent = class SearchesComponent {
     constructor(router, route) {
         this.router = router;
         this.route = route;
-        this.dealOrSearch = 'search';
     }
-    reset() {
-        this.dealOrSearch = 'search';
+    ngOnInit() {
+        this.dealOrSearch = this.router.url == '/mysearches' ? 'search' : 'deal';
     }
     updateMode(newMode) {
         this.foodOrDrink = newMode;

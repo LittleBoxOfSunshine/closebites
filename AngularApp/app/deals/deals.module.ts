@@ -40,6 +40,10 @@ var routes = [
   {
     path:'login',
     component: LoginComponent
+  },
+  {
+    path:'mydeals',
+    component:SearchesComponent
   }
 ]
 

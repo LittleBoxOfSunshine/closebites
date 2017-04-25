@@ -1,9 +1,13 @@
 <div class = "row">
 	<h1>CloseBites
 		<div style = "float:right">
-			<span class="glyphicon glyphicon-heart"></span>
-            <a routeLink = "/mysearches" (click)="reset()">
-			<span class="glyphicon glyphicon-floppy-disk"></span></a>
+            <a routerLink="/mydeals">
+			    <span class="glyphicon glyphicon-heart" title="View favorited deals"
+                style="color:red"></span>
+            </a>
+            <a routerLink = "/mysearches">
+			    <span class="glyphicon glyphicon-floppy-disk" title="View saved searches"></span>
+            </a>
 			<a routerLink = "/">
 			<button type="button" class="btn btn-danger">Log Out</button></a>
 		</div>
@@ -38,15 +42,15 @@
             </div>
             <div id = "deal">
                 <strong><p style = "text-align:center">Deal Type</p></strong>
-                <button class = "btn" [ngClass] = "{'btn-info':mode == 'food','btn-primary':mode != 'food'}"
+                <button class = "btn" [ngClass] = "{'btn-info':foodOrDrink == 'food','btn-primary':mode != 'food'}"
                 type="button"
                 (click) = "updateMode('food')">Food</button>
-                <button class = "btn" [ngClass] = "{'btn-info':mode=='drink','btn-primary':mode!='drink'}"
+                <button class = "btn" [ngClass] = "{'btn-info':foodOrDrink=='drink','btn-primary':mode!='drink'}"
                 type="button"
                 (click) = "updateMode('drink')">Drink</button>
             </div>
             <button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
-            class="btn btn-default" data-dismiss="modal" (click)= "updateBoxMode()">
+            class="btn btn-default" data-dismiss="modal">
                 Update</button>
             <button type="button" style ="background-color:white;color:black;height:50px;margin-top:15px"
             class="btn btn-default" data-dismiss="modal">

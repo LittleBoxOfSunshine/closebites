@@ -15,12 +15,10 @@ export class SearchesComponent {
     foodOrDrink:string;
     dealOrSearch:string;
 
-    constructor(private router: Router, private route:ActivatedRoute){
-        this.dealOrSearch = 'search';
-    }
+    constructor(private router: Router, private route:ActivatedRoute){}
 
-    reset(){
-        this.dealOrSearch = 'search';
+    ngOnInit(){
+        this.dealOrSearch = this.router.url=='/mysearches' ? 'search':'deal';
     }
 
     updateMode(newMode:string){

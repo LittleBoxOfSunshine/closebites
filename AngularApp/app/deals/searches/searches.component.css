@@ -11,7 +11,7 @@
 .btn-info,.btn-primary {
     height:100px;
     width: 145px;
-    margin:15px   
+    margin:15px;
 }
 .btn-default {
     margin:5px;
@@ -21,5 +21,15 @@
 .glyphicon {
     margin:20px;
     top: 10px;
+}
+.glyphicon-heart {
+    opacity: 0.5;
+    color:red;
+}
+.glyphicon-heart:hover {
+    opacity: 1;
+}
+a {
+    text-decoration:none;
 }
 
