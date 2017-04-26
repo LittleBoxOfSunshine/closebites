@@ -16,6 +16,7 @@ import { User, Date } from '../api/user/user';
 
 export class VendorInterfaceComponent { 
     mode:string;
+    dealMode:string;
     days:string[];
     times:string[];
 
@@ -27,6 +28,10 @@ export class VendorInterfaceComponent {
 
     updateMode(newMode:string){
         this.mode = newMode;
+    }
+
+    updateDealMode(newMode:string){
+        this.dealMode = newMode;
     }
 
 

@@ -58,7 +58,7 @@
 </div>
 
 <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width:400px">
     
       <div class="modal-content" style="text-align:center">
         <h1>Create Deal</h1>
@@ -71,15 +71,25 @@
         <div class="form-group">
             <input type="text" class="form-control" id="tags" name="tags" placeholder="Cuisine Tags">
         </div>
-        <div class ="form-group">
-            <input type="text" class="form-control" id="dType" name="dType" placeholder="Deal Type">
-        </div>
-        <div class ="form-group">
-            <input type="text" class="form-control" id="dDay" name="dDay" placeholder="Deal Day">
-        </div>
-        <div class ="form-group">
-            <input type="text" class="form-control" id="dTime" name="dTime" placeholder="Deal Time">
-        </div>
+        <p>Deal Type
+            <button [ngClass] = "{'btn-info':dealMode == 'food','btn-primary':dealMode != 'food'}"
+                (click)="updateDealMode('food')" type="button" class="btn btn-primary" 
+                style="width:30%;margin:10px">Food
+            </button>
+            <button [ngClass] = "{'btn-info':dealMode == 'drink','btn-primary':dealMode != 'drink'}"
+                (click)="updateDealMode('drink')" type="button" class="btn btn-primary" 
+                style="width:30%;margin:10px">Drink
+            </button>
+        </p>
+        
+        <form style="display:inline-block">
+            <select id="dDay" name="dDay">
+                <option value="" selected disabled>Deal Day</option>
+            </select>
+            <select id="dTime" name="dTime">
+                <option value="" selected disabled>Deal Time</option>
+            </select>
+        </form>
         <button type="button" class="btn btn-default" style="width:90%;background-color:black;color:white">Upload a photo</button>
         <button type="button" class="btn btn-default" style="margin:20px">Submit</button>  
       </div>

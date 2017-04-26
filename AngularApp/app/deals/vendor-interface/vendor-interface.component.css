@@ -2,7 +2,12 @@ td {
     height:75px;
     width:120px;
 }
-
+select {
+    height:40px;
+    margin:20px;
+    width:150px;
+    border-radius:3px;
+}
 hr {
     display: block;
     border-style: inset;
@@ -27,5 +32,4 @@ th {
 
 .btn-primary,.btn-info{
     width:150px;
-
 }

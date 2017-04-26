@@ -22,6 +22,9 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
     updateMode(newMode) {
         this.mode = newMode;
     }
+    updateDealMode(newMode) {
+        this.dealMode = newMode;
+    }
 };
 VendorInterfaceComponent = __decorate([
     core_1.Component({
