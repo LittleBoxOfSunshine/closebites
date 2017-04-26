@@ -18,7 +18,7 @@ export class MockApiService implements InMemoryDbService {
                 accountType: "consumer",
                 favorites: [0, 1],
                 filters: [
-                    ""
+                    "" 
                 ]
                 //error: "invalid username and/or password"
             },
