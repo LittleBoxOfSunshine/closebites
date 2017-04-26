@@ -6,6 +6,7 @@
 		</div>
 	</h1>
 </div>
+<!--contains calendar and plus glyphicon to add deal-->
 <div class = "row">
         <div class = "col-sm-2" style="text-align:center">
             <span class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px"
@@ -57,16 +58,17 @@
         </div>        
 </div>
 
+<!--modal to add deal-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" style="width:400px">
     
       <div class="modal-content" style="text-align:center">
         <h1>Create Deal</h1>
         <div class="form-group">
-            <input type="text" class="form-control" id="title" name="title" placeholder="Deal Title">
+            <input type="text" class="form-control" id="title" name="title" placeholder="Deal Title" [(ngModel)]="deal.name">
         </div>
         <div class="form-group">
-            <textarea class="form-control" rows="5" id="description" placeholder="Deal Description"></textarea>
+            <textarea class="form-control" rows="5" id="description" placeholder="Deal Description" [(ngModel)]="deal.description"></textarea>
         </div>
         <div class="form-group">
             <input type="text" class="form-control" id="tags" name="tags" placeholder="Cuisine Tags">
@@ -91,7 +93,7 @@
             </select>
         </form>
         <button type="button" class="btn btn-default" style="width:90%;background-color:black;color:white">Upload a photo</button>
-        <button type="button" class="btn btn-default" style="margin:20px">Submit</button>  
+        <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px" data-dismiss="modal">Submit</button>  
       </div>
       
     </div>

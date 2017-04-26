@@ -1,3 +1,4 @@
+<!--top row containing buttons and closebites logo-->
 <div class = "row">
 	<h1>CloseBites
 		<div *ngIf = "!loggedIn" style = "float:right">
@@ -6,7 +7,7 @@
 			<a routerLink = "/login">
 			<button type="button" class="btn btn-danger">Log In</button></a>
 		</div>
-		<div *ngIf = "loggedIn" style = "float:right">
+		<div *ngIf = "loggedIn" style="float:right">
 			<a routerLink="/mydeals" style="text-decoration:none">
 				<span class="glyphicon glyphicon-heart" title="View favorited deals" style="color:red"></span>
 			</a>
@@ -18,6 +19,7 @@
 		</div>
 	</h1>
 </div>
+<!--next row contains search fields to filter deals and the deals on the right-->
 <div class = "row">
 	<div class = "col-sm-4" style = "height:500px;border-style:ridge">
 		<div class="form-group">
@@ -44,13 +46,15 @@
 			<h4 *ngIf ="loggedIn" style="text-align:center" data-toggle="modal" data-target="#littleModal">Save Search</h4>
 		</a>
 	</div>
-	<div class = "col-sm-8" style = "height:500px">
-		<div *ngFor = "let value of [1,2,3,4]">
-			<div class = "deal">Deal</div>
+	<!--div containing the deals-->
+	<div class = "col-sm-8" style = "height:500px;overflow-y:scroll">
+		<div *ngFor = "let deal of deals">
+			<div class = "deal" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal">{{deal.name}}</div>
 		</div>
 	</div>
 </div>
 
+<!--Modal for saving searches-->
 <div class="modal fade" id="littleModal" role="dialog">
     <div class="modal-dialog">  
       <div class="modal-content" style="text-align:center">
@@ -64,6 +68,33 @@
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
 		</div> 
+      </div>  
+    </div>
+  </div>
+
+  <!--modal for when clicking on a deal-->
+  <div class="modal fade" id="dealModal" role="dialog">
+    <div class="modal-dialog">  
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">{{deal.name}}</h4>
+		</div>
+		<div class="modal-body">
+            <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
+                <h2 style="text-align:center">PICTURE</h2>
+            </div> 
+            <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
+                <p>{{deal.description}}
+                <span class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                </p>             
+            </div> 
+		</div>	
+        <div class="modal-footer" style="text-align:left">
+            <p>Deal Location: <i>Vendor Name, Vendor Address</i></p>
+            <p>Cuisine: <i>Cuisine tags</i> </p>
+            <p>Deal Type: {{deal.type}}</p>
+        </div>
       </div>  
     </div>
   </div>

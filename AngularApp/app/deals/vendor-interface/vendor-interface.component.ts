@@ -15,15 +15,19 @@ import { User, Date } from '../api/user/user';
 })
 
 export class VendorInterfaceComponent { 
-    mode:string;
-    dealMode:string;
+    deal = new Deal;
+    deals:Deal[];
+    mode:string; //saved searches or favorited deals
+    dealMode:string;//food or drink for deals
     days:string[];
     times:string[];
 
-    constructor(private router: Router, private route:ActivatedRoute){
+    constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository){
         this.mode = 'month';
         this.days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
         this.times = ['7:00','8:00','9:00','10:00','11:00','Noon'];
+        dealsService.listAll()
+			.then(x => this.deals = x);
     }
 
     updateMode(newMode:string){
@@ -32,6 +36,13 @@ export class VendorInterfaceComponent {
 
     updateDealMode(newMode:string){
         this.dealMode = newMode;
+    }
+
+    addDeal(){
+        this.deal.type = this.dealMode=='food' ? 'food' : 'drink';
+        this.dealsService.add(this.deal);
+        //reset modal form values afterwards
+        this.deal.name = this.deal.description = this.deal.type = '';
     }
 
 
