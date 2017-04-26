@@ -11,10 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
+const deal_repository_service_1 = require("../api/deal/deal-repository.service");
+const user_repository_service_1 = require("../api/user/user-repository.service");
 let SearchesComponent = class SearchesComponent {
-    constructor(router, route) {
+    constructor(router, route, userRepository, dealRepository) {
         this.router = router;
         this.route = route;
+        this.userRepository = userRepository;
+        this.dealRepository = dealRepository;
+        this.favorites = [];
+        var dealIds = this.userRepository.getUser().favorites;
+        for (let id in dealIds)
+            this.dealRepository.getDeal(id).then(x => this.favorites.push(x));
+        this.filters = this.userRepository.getUser().filters;
     }
     ngOnInit() {
         this.dealOrSearch = this.router.url == '/mysearches' ? 'search' : 'deal';
@@ -25,6 +34,13 @@ let SearchesComponent = class SearchesComponent {
     updateBoxMode() {
         this.dealOrSearch = this.dealOrSearch == 'search' ? 'deal' : 'search';
     }
+    getDeal(index) {
+        return this.favorites[index];
+    }
+    updateDeal() {
+    }
+    getFilter(id) {
+    }
 };
 SearchesComponent = __decorate([
     core_1.Component({
@@ -33,7 +49,9 @@ SearchesComponent = __decorate([
         templateUrl: 'searches.component.html',
         styleUrls: ['searches.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute,
+        user_repository_service_1.UserRepository,
+        deal_repository_service_1.DealRepository])
 ], SearchesComponent);
 exports.SearchesComponent = SearchesComponent;
 //# sourceMappingURL=searches.component.js.map

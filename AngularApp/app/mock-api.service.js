@@ -32,6 +32,9 @@ let MockApiService = class MockApiService {
                     accountType: "vendor",
                     address: "123 Fake St.",
                     dates: []
+                },
+                deal: {
+                    id: 0
                 }
             },
             empty: {

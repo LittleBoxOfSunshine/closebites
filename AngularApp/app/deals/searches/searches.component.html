@@ -1,6 +1,9 @@
 <div class = "row">
 	<h1>CloseBites
 		<div style = "float:right">
+            <a routerLink="/user">
+			    <span class="glyphicon glyphicon-home" title="Home"></span>
+            </a>
             <a routerLink="/mydeals">
 			    <span class="glyphicon glyphicon-heart" title="View favorited deals"
                 style="color:red"></span>
@@ -15,12 +18,17 @@
 </div>
 <div class = "row">
 	<div class = "col-sm-12" style = "height:500px">
-		<div *ngFor = "let value of [1,2,3,4,5,6]">
-			<div *ngIf = "dealOrSearch=='search'"class = "search" 
-            data-toggle="modal" data-target="#searchModal">Search Title</div>
-            <div *ngIf = "dealOrSearch=='deal'" class = "search" 
-            data-toggle="modal" data-target="#dealModal">Deal</div>
-		</div>
+        <div *ngIf = "dealOrSearch=='search'">
+		    <div  *ngFor = "let value of [1,2,3,4,5,6]">
+			    <div class = "search" data-toggle="modal" 
+                data-target="#searchModal">Search Title</div>
+		    </div>
+        </div>
+        <div *ngIf = "dealOrSearch=='deal'">
+            <div *ngFor = "let value of favorites">
+                <div class = "search" data-toggle="modal" data-target="#dealModal">Deal</div>
+		    </div>
+        </div>
 	</div>
 </div>
 

@@ -29,6 +29,9 @@ export class MockApiService implements InMemoryDbService {
                 dates: [
 
                 ]
+            },
+            deal: {
+                id: 0
             }
         },
         empty: {

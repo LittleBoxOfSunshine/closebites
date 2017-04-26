@@ -28,6 +28,10 @@ export class UserRepository {
 		return this.user.accountType;
 	}
 
+	public getUser() : User {
+		return this.user;
+	}
+
 	public login(email: string, password: string) {
 
 		// let body = {"email": email, "password": password};

@@ -31,6 +31,9 @@ let UserRepository = class UserRepository {
         this.user.id = jsonObj.id;
         return this.user.accountType;
     }
+    getUser() {
+        return this.user;
+    }
     login(email, password) {
         // let body = {"email": email, "password": password};
         // this.http

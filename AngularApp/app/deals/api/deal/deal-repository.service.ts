@@ -1,9 +1,32 @@
 import { Injectable } from '@angular/core';
-
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Deal } from './deal';
 
 @Injectable()
 export class DealRepository {
+
+	private options: RequestOptions;
+
+	constructor(private http: Http) {
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		this.options = new RequestOptions({ headers: headers });
+	}
+
+	getDeal(id: number) {
+		// let body = {"email": email, "password": password};
+		// this.http
+		// 	.post("User/login", JSON.stringify(body), this.options)
+		// 	.toPromise()
+		// 	.then(x => this.loadUser(x.json().data))
+		// 	.catch(x => false);
+
+		return this.http
+			.get("api/deal")
+			.toPromise()
+			.then(x => x.json().data)
+			.catch(x => x.message);
+	}
 
 	/*private _movies: Deal[];
 
