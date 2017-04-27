@@ -18,7 +18,7 @@ import * as Shared from './shared/index';
     DealsModule,
     RouterModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(MockApiService),
+    //InMemoryWebApiModule.forRoot(MockApiService),
     Shared.SharedModule
   ],
   declarations: [
