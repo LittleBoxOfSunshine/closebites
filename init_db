@@ -1,0 +1,32 @@
+#!/bin/bash
+
+mysql -u "root" -p << eof
+
+create database closebites;
+use closebites;
+
+create table user (user_id int(10),email varchar(20),
+password varchar(20),created datetime default current_timestamp,
+last_updated datetime on update current_timestamp);
+
+create table consumer (user_id int(10), favorite_filter int(1),
+favorite_vendor_type varchar(10), hours_logged_in int(5), 
+avg_mins_per_session int(7));
+
+create table vendor (user_id int(10), genre varchar(20), 
+location varchar(20),type varchar(10),phone int(10),verified tinyint(1));
+
+create table category (category_id int(10), title varchar(10), created datetime default current_timestamp, last_updated datetime on update current_timestamp);
+
+create table favorite (favrite_id int(10), user_id int(10), 
+deal_id int(10),created datetime default current_timestamp,
+last_updated datetime on update current_timestamp);
+
+create table filter (filter_id int(10), user_id int(10),
+created datetime default current_timestamp, last_updated datetime on update current_timestamp, filters_turned_on int(10));
+
+create table deal (deal_id int(10),category_id int(10), vendor_id int(10),title varchar(50),image varchar(50),description varchar(200),type tinyint(1),created datetime default current_timestamp,last_updated datetime on update current_timestamp,likes int(7));
+
+create table likes (like_id int(10),user_id int(10),deal_id int(10),location_liked_lat decimal(7,4),location_liked_long decimal(7,4)); 
+
+eof
