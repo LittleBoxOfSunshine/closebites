@@ -29,4 +29,14 @@ create table deal (deal_id int(10),category_id int(10), vendor_id int(10),title 
 
 create table likes (like_id int(10),user_id int(10),deal_id int(10),location_liked_lat decimal(7,4),location_liked_long decimal(7,4)); 
 
+
+
+
+
+insert into deal (deal_id,category_id,vendor_id,title,image,description,type,created,last_updated,likes)
+values
+(0,0,0,"Free Drinks","IMG","Free drinks with dinner purchase.",0,current_timestamp,current_timestamp,10),
+(1,1,1,"50% off meal!","IMG","Any entree 50% off.",1,current_timestamp,current_timestamp,20),
+(2,2,2,"Discount Doughnuts","IMG","Krispy Kreame is having our sale through Friday",0,current_timestamp,current_timestamp,30);
+
 eof
