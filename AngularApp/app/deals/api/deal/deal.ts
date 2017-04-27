@@ -7,4 +7,6 @@ export class Deal {
     repeat: string;             // "XXXXXXX"; // Bit vector for SMTWRFS
     normPrice: number;
     discountedPrice: number;
+    description: string; //added
+    type: string; //added
 }

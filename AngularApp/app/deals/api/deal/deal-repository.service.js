@@ -11,9 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
+require("rxjs/add/operator/toPromise");
 let DealRepository = class DealRepository {
     constructor(http) {
         this.http = http;
+        /*private _movies: Deal[];*/
+        this._apiUrl = 'api/deals';
         let headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
         this.options = new http_1.RequestOptions({ headers: headers });
@@ -29,6 +32,40 @@ let DealRepository = class DealRepository {
             .get("api/deal")
             .toPromise()
             .then(x => x.json().data)
+            .catch(x => x.message);
+    }
+    listAll() {
+        return this.http
+            .get(this._apiUrl)
+            .toPromise()
+            .then(x => x.json().data)
+            .catch(x => x.message);
+    }
+    getById(id) {
+        return this.http
+            .get(`${this._apiUrl}/${id}`)
+            .toPromise()
+            .then(x => x.json().data)
+            .catch(x => x.message);
+    }
+    add(Deal) {
+        return this.http
+            .post(this._apiUrl, Deal)
+            .toPromise()
+            .then(x => x.json().data)
+            .catch(x => x.message);
+    }
+    update(Deal) {
+        return this.http
+            .put(`${this._apiUrl}/${Deal.id}`, Deal)
+            .toPromise()
+            .then(() => Deal)
+            .catch(x => x.message);
+    }
+    delete(Deal) {
+        return this.http
+            .delete(`${this._apiUrl}/${Deal.id}`)
+            .toPromise()
             .catch(x => x.message);
     }
 };

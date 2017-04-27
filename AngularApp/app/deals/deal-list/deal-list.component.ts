@@ -17,14 +17,18 @@ export class DealListComponent {
 	food:Boolean;
 	drink:Boolean;
 	loggedIn:Boolean;
+	deals = new Array<Deal>(); //list of deals that show after searching
+	deal = new Deal; //used to bring up a specific deal in the modal
 
-	constructor(private router:Router){
+	constructor(private router:Router,private dealsService:DealRepository){
 		this.food = true;
 		this.drink = false;
 		this.loggedIn = this.router.url == '/user';
+		dealsService.listAll()
+			.then(x => this.deals = x);
 	}
 
-	updateMode(){ // this mode refers to food or drink
+	updateMode(){ // this mode refers to food or drink for when searching for deals
 		if (this.food){
 			this.food = false;
 			this.drink = true;
@@ -32,6 +36,11 @@ export class DealListComponent {
 			this.food = true;
 			this.drink = false;
 		}
+	}
+
+	identifyDeal(id: number){
+		this.dealsService.getById(id)
+			.then(x => this.deal = x);
 	}
 
 }
