@@ -1,0 +1,30 @@
+a.hover {
+    color: red;
+    text-decoration: none;
+}
+a.hover:hover {
+    text-decoration: underline;
+}
+.deal {
+    width: 40%;
+    height: 40%;
+    margin: 20px;
+    border-style:solid;
+    float: left;
+    display:block;
+    text-align: center;
+    line-height: 180px; 
+}
+.form-group {
+    margin:40px;
+}
+.btn-info,.btn-primary {
+    height:100px;
+    width: 145px;
+    margin:15px   
+}
+.glyphicon {
+    margin:20px;
+    top: 10px;
+}
+
