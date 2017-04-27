@@ -1,7 +1,6 @@
+/vendor/
+/logs/*
+!/logs/README.md
 .idea/
-.vagrant/
-AngularApp/typings/
-AngularApp/node_modules/
-.DS_Store
-AngularApp/app/**/*.js
-AngularApp/app/**/*.map
+/vagrant
+composer.lock

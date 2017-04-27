@@ -1,0 +1,13 @@
+DirectoryIndex AngularApp/index.html
+RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+#RewriteRule !^(api/|index\.php) [NC,F]
+RewriteRule !^(api/) - [F]
+
+#RewriteRule ^api/ app/core.php [L]
+#RewriteRule !^api AngularApp/index.html
+RewriteRule ^api/ app/core.php [L]
+
