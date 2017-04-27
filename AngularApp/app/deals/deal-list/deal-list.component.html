@@ -32,12 +32,12 @@
         </div>
 		<div id = "deal">
 			<strong><p style = "text-align:center">Deal Type</p></strong>
-			<button class = "btn" [ngClass] = "{'btn-info':food,'btn-primary':drink}"
+			<button class = "btn" [ngClass] = "{'btn-info':food,'btn-primary':!food}"
 			type="button"
-			(click) = "updateMode()">Food</button>
-			<button class = "btn" [ngClass] = "{'btn-info':drink,'btn-primary':food}"
+			(click) = "updateMode('food')">Food</button>
+			<button class = "btn" [ngClass] = "{'btn-info':drink,'btn-primary':!drink}"
 			type="button"
-			(click) = "updateMode()">Drink</button>
+			(click) = "updateMode('drink')">Drink</button>
 		</div>
 		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
 		class="btn btn-block btn-default">
@@ -93,7 +93,7 @@
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: <i>Vendor Name, Vendor Address</i></p>
             <p>Cuisine: <i>Cuisine tags</i> </p>
-            <p>Deal Type: {{deal.type}}</p>
+            <p>Deal Type: {{deal.type1}}<span *ngIf="deal.type2"> and </span>{{deal.type2}}</p>
         </div>
       </div>  
     </div>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Deal } from './deal';
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class DealRepository {
@@ -34,13 +35,17 @@ export class DealRepository {
 
 	private _apiUrl = 'api/deals';
 
-	listAll() : Promise<Deal[]>{
+	listAll() {//: Promise<Deal[]>{
 		return this.http
-			.get(this._apiUrl)
+			.get('52.36.27.212/temp')
 			.toPromise()
-			.then(x => x.json().data as Deal[])
-			.catch(x => x.message);
+			.then(x => x.json().data) // as Deal[])
+			.catch(x => console.log(x.message));
 	}
+	// listAll() {//: Promise<Deal[]>{
+	// 	console.log( this.http.get('52.36.27.212/temp')
+	// 		.map(res => res.json()));
+	// }
 
 	getById(id : number) : Promise<Deal>{
 		return this.http

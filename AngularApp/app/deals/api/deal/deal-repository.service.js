@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
+require("rxjs/add/operator/map");
 let DealRepository = class DealRepository {
     constructor(http) {
         this.http = http;
@@ -36,11 +37,15 @@ let DealRepository = class DealRepository {
     }
     listAll() {
         return this.http
-            .get(this._apiUrl)
+            .get('52.36.27.212/temp')
             .toPromise()
-            .then(x => x.json().data)
-            .catch(x => x.message);
+            .then(x => x.json().data) // as Deal[])
+            .catch(x => console.log(x.message));
     }
+    // listAll() {//: Promise<Deal[]>{
+    // 	console.log( this.http.get('52.36.27.212/temp')
+    // 		.map(res => res.json()));
+    // }
     getById(id) {
         return this.http
             .get(`${this._apiUrl}/${id}`)

@@ -19,20 +19,18 @@ let DealListComponent = class DealListComponent {
         this.dealsService = dealsService;
         this.deals = new Array(); //list of deals that show after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
-        this.food = true;
-        this.drink = false;
+        this.food = this.drink = false;
         this.loggedIn = this.router.url == '/user';
-        dealsService.listAll()
-            .then(x => this.deals = x);
+        //dealsService.listAll()
+        //.then(x => this.deals = x);
+        dealsService.listAll().then(x => console.log(x));
     }
-    updateMode() {
-        if (this.food) {
-            this.food = false;
-            this.drink = true;
+    updateMode(dealType) {
+        if (dealType == 'food') {
+            this.food = !this.food;
         }
         else {
-            this.food = true;
-            this.drink = false;
+            this.drink = !this.drink;
         }
     }
     identifyDeal(id) {

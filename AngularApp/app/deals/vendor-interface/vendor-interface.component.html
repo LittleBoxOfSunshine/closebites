@@ -10,7 +10,7 @@
 <div class = "row">
         <div class = "col-sm-2" style="text-align:center">
             <span class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px"
-            data-toggle="modal" data-target="#myModal"></span>
+            (click)="resetTypeNotChosen()" data-toggle="modal" data-target="#myModal"></span>
         </div>
         <div class = "container-fluid" style = "margin-top:20px;margin-left:200px">
             <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'month','btn-primary':mode != 'month'}"
@@ -74,11 +74,11 @@
             <input type="text" class="form-control" id="tags" name="tags" placeholder="Cuisine Tags">
         </div>
         <p>Deal Type
-            <button [ngClass] = "{'btn-info':dealMode == 'food','btn-primary':dealMode != 'food'}"
+            <button [ngClass] = "{'btn-info': food,'btn-primary':!food}"
                 (click)="updateDealMode('food')" type="button" class="btn btn-primary" 
                 style="width:30%;margin:10px">Food
             </button>
-            <button [ngClass] = "{'btn-info':dealMode == 'drink','btn-primary':dealMode != 'drink'}"
+            <button [ngClass] = "{'btn-info':drink,'btn-primary':!drink}"
                 (click)="updateDealMode('drink')" type="button" class="btn btn-primary" 
                 style="width:30%;margin:10px">Drink
             </button>
@@ -93,8 +93,13 @@
             </select>
         </form>
         <button type="button" class="btn btn-default" style="width:90%;background-color:black;color:white">Upload a photo</button>
-        <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px" data-dismiss="modal">Submit</button>  
-      </div>
+        <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  
+        <div *ngIf = 'typeNotChosen'class="alert alert-danger">
+            You must select a deal type.
+        </div>
+        <div *ngIf = 'typeNotChosen==false'class="alert alert-success">
+            You have successfully created a new deal.
+        </div>
       
     </div>
   </div>

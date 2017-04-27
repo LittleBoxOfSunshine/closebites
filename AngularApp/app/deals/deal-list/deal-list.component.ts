@@ -21,20 +21,18 @@ export class DealListComponent {
 	deal = new Deal; //used to bring up a specific deal in the modal
 
 	constructor(private router:Router,private dealsService:DealRepository){
-		this.food = true;
-		this.drink = false;
+		this.food = this.drink =false;
 		this.loggedIn = this.router.url == '/user';
-		dealsService.listAll()
-			.then(x => this.deals = x);
+		//dealsService.listAll()
+			//.then(x => this.deals = x);
+		dealsService.listAll().then(x => console.log(x));
 	}
 
-	updateMode(){ // this mode refers to food or drink for when searching for deals
-		if (this.food){
-			this.food = false;
-			this.drink = true;
+	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
+		if (dealType == 'food'){
+			this.food = !this.food;
 		} else {
-			this.food = true;
-			this.drink = false;
+			this.drink = !this.drink;
 		}
 	}
 

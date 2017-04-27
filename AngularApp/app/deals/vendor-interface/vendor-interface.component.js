@@ -19,6 +19,7 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.route = route;
         this.dealsService = dealsService;
         this.deal = new deal_1.Deal;
+        this.food = this.drink = false;
         this.mode = 'month';
         this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         this.times = ['7:00', '8:00', '9:00', '10:00', '11:00', 'Noon'];
@@ -28,14 +29,36 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
     updateMode(newMode) {
         this.mode = newMode;
     }
-    updateDealMode(newMode) {
-        this.dealMode = newMode;
+    updateDealMode(dealType) {
+        //change food and drink boolean values on click
+        if (dealType == 'food') {
+            this.food = !this.food;
+        }
+        else {
+            this.drink = !this.drink;
+        }
+    }
+    resetTypeNotChosen() {
+        this.typeNotChosen = null;
     }
     addDeal() {
-        this.deal.type = this.dealMode == 'food' ? 'food' : 'drink';
-        this.dealsService.add(this.deal);
-        //reset modal form values afterwards
-        this.deal.name = this.deal.description = this.deal.type = '';
+        if (!this.food && !this.drink) {
+            this.typeNotChosen = true;
+        }
+        else {
+            this.typeNotChosen = false;
+            if (this.food && !this.drink)
+                this.deal.type1 = 'Food';
+            else if (this.drink && !this.food)
+                this.deal.type1 = 'Drink';
+            else if (this.food && this.drink) {
+                this.deal.type1 = 'Food';
+                this.deal.type2 = 'Drink';
+            }
+            this.dealsService.add(this.deal);
+            //reset modal form values afterwards
+            this.deal = new deal_1.Deal;
+        }
     }
 };
 VendorInterfaceComponent = __decorate([

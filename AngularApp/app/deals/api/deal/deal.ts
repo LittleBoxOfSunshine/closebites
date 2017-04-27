@@ -8,5 +8,6 @@ export class Deal {
     normPrice: number;
     discountedPrice: number;
     description: string; //added
-    type: string; //added
+    type1: string; //added
+    type2: string; //added
 }
