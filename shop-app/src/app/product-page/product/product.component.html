@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{{data.name}}</div>
+  <div class="panel-body">
+    <div>{{data.description}}</div>
+    <div>Likes: {{data.price}}</div>
+    <div>Created: {{data.stock}}</div>
+  </div>
+  <div class="panel-footer">
+    <button class="btn btn-success" (click)="purchaseItem(data.name)">Add to favorites</button>
+    <button class="btn btn-primary" (click)="like(data.price)">Like</button>
+  </div>
+</div>

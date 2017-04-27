@@ -1,0 +1,28 @@
+[
+            {
+                "products": [
+                    {
+                        "name": "Hammer",
+                        "description": "insert description, names, and other stuff",
+                        "price": 5,
+                        "stock": 5
+                    }, {
+                        "name": "Nails",
+                        "description": "Code in php",
+                        "price": 5,
+                        "stock": 5
+                    }, {
+                        "name": "Drill",
+                        "description": "fix bugs using slim",
+                        "price": 5,
+                        "stock": 5
+                    }, {
+                        "name": "Screw",
+                        "description": "deploy to aws",
+                        "price": 5,
+                        "stock": 5
+                    }
+                ]
+            }
+        ]
+        

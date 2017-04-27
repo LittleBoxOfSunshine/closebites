@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel-heading">{{data.name}}</div>
+  <div class="panel-body">
+    <div>{{data.description}}</div>
+    <div>${{data.price}}.00</div>
+    <div>Number purchasing: {{data.stock}}</div>
+  </div>
+  <div class="panel-footer">
+    <div>${{data.price * data.stock}}.00</div>
+    <button class="btn btn-success" (click)="removeItem(data.name)">Remove</button>
+  </div>
+</div>
