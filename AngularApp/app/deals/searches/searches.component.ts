@@ -19,14 +19,15 @@ export class SearchesComponent {
     dealOrSearch:string;
     favorites: Deal[];
     filters: Filter[];
+    dealIds = new Array<number>();
 
     constructor(private router: Router, private route:ActivatedRoute, 
                 private userRepository : UserRepository, 
                 private dealRepository : DealRepository) {
         this.favorites = [];
-        var dealIds = this.userRepository.getUser().favorites;
+        this.dealIds = this.userRepository.getUser().favorites;
 
-        for(let id in dealIds)
+        for(let id of this.dealIds)
             this.dealRepository.getDeal(id).then(x => this.favorites.push(x));
         
         this.filters = this.userRepository.getUser().filters;

@@ -19,9 +19,10 @@ let SearchesComponent = class SearchesComponent {
         this.route = route;
         this.userRepository = userRepository;
         this.dealRepository = dealRepository;
+        this.dealIds = new Array();
         this.favorites = [];
-        var dealIds = this.userRepository.getUser().favorites;
-        for (let id in dealIds)
+        this.dealIds = this.userRepository.getUser().favorites;
+        for (let id of this.dealIds)
             this.dealRepository.getDeal(id).then(x => this.favorites.push(x));
         this.filters = this.userRepository.getUser().filters;
     }
