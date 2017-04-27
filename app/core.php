@@ -19,6 +19,6 @@ $config = ['settings' => [
 
 $app = new \Slim\App($config);
 
-require_once __DIR__.'/api/api.php';
+require_once __DIR__.'/routes/api.php';
 
 $app->run();

@@ -9,5 +9,5 @@ RewriteRule !^(api/) - [F]
 
 #RewriteRule ^api/ app/core.php [L]
 #RewriteRule !^api AngularApp/index.html
-RewriteRule ^api/ app/core.php [L]
+RewriteRule ^api/ index.php [L]
 
