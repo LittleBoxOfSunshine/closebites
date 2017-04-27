@@ -3,4 +3,5 @@
 !/logs/README.md
 .idea/
 /vagrant
+composer.lock
 
