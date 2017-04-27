@@ -13,7 +13,23 @@ $app->get('/temp', function($request, $response, $args){
 });
 
 $app->get('/', function($request,$response,$args) {
-    return "Welcome to Slim 3.0 based API";
+    //$connection = $this->get("db");
+    $dbhost="localhost";
+    $dbuser="root";
+    $dbpass="Jaav13!@G";
+    $dbname="closebites1";
+    $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    $query="select * from deal";
+    $result = $dbh->query($query);
+    
+    while($row = $result->fetch(PDO::FETCH_ASSOC)){
+        $data[] = $row;
+    }
+    return json_encode($data);
+
+    //return "Welcome to Slim 3.0 based API";
 });
 
 $app->post('/login', function($request,$response,$args) {
