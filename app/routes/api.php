@@ -2,14 +2,14 @@
 // Routes
 
 $app->get('/temp', function($request, $response, $args){
-   return $response->withJson(            ['deals' => [
+   return $response->withJson(            [
                 ['id'=>1,'name'=>"McDonald's",'description'=>"Deal 1 text",'type'=>'food'],
                 ['id'=>2,'name'=>'Burger King','description'=>'Deal 2 text','type'=>'drink'],
                 ['id'=>3,'name'=>'Chick Fil-A','description'=>'Deal 3 text','type'=>'drink'],
                 ['id'=>4,'name'=>'Subway','description'=>'Deal 4 text','type'=>'food'],
                 ['id'=>5,'name'=>'Pizzeria','description'=>'Deal 5 text','type'=>'food'],
                 ['id'=>6,'name'=>'Jamba Juice','description'=>'Deal 6 text','type'=>'drink'],
-            ]]);
+            ]);
 });
 
 $app->get('/', function($request,$response,$args) {
