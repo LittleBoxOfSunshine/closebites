@@ -2,7 +2,7 @@
 // Routes
 
 $app->get('/temp', function($request, $response, $args){
-   return $response->withJson(            [deals => [
+   return $response->withJson(            ['deals' => [
                 ['id'=>1,'name'=>"McDonald's",'description'=>"Deal 1 text",'type'=>'food'],
                 ['id'=>2,'name'=>'Burger King','description'=>'Deal 2 text','type'=>'drink'],
                 ['id'=>3,'name'=>'Chick Fil-A','description'=>'Deal 3 text','type'=>'drink'],
