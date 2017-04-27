@@ -1,0 +1,83 @@
+<div class = "row">
+	<h1>CloseBites
+		<div style = "float:right">
+			<span class="glyphicon glyphicon-heart"></span>
+            <a routeLink = "/mysearches" (click)="reset()">
+			<span class="glyphicon glyphicon-floppy-disk"></span></a>
+			<a routerLink = "/">
+			<button type="button" class="btn btn-danger">Log Out</button></a>
+		</div>
+	</h1>
+</div>
+<div class = "row">
+	<div class = "col-sm-12" style = "height:500px">
+		<div *ngFor = "let value of [1,2,3,4,5,6]">
+			<div *ngIf = "dealOrSearch=='search'"class = "search" 
+            data-toggle="modal" data-target="#searchModal">Search Title</div>
+            <div *ngIf = "dealOrSearch=='deal'" class = "search" 
+            data-toggle="modal" data-target="#dealModal">Deal</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="searchModal" role="dialog">
+    <div class="modal-dialog">  
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Search Title</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+                <label for="zip">Zip Code</label>
+                <input type="text" class="form-control" id="zip" name="zip" >
+            </div>
+            <div class="form-group">
+                <label for="cuisine">Cuisine</label>
+                <input type="text" class="form-control" id="cuisine" name="cuisine">
+            </div>
+            <div id = "deal">
+                <strong><p style = "text-align:center">Deal Type</p></strong>
+                <button class = "btn" [ngClass] = "{'btn-info':mode == 'food','btn-primary':mode != 'food'}"
+                type="button"
+                (click) = "updateMode('food')">Food</button>
+                <button class = "btn" [ngClass] = "{'btn-info':mode=='drink','btn-primary':mode!='drink'}"
+                type="button"
+                (click) = "updateMode('drink')">Drink</button>
+            </div>
+            <button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
+            class="btn btn-default" data-dismiss="modal" (click)= "updateBoxMode()">
+                Update</button>
+            <button type="button" style ="background-color:white;color:black;height:50px;margin-top:15px"
+            class="btn btn-default" data-dismiss="modal">
+                Delete</button>
+		</div>	
+      </div>  
+    </div>
+  </div>
+
+  <div class="modal fade" id="dealModal" role="dialog">
+    <div class="modal-dialog">  
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Deal Title</h4>
+		</div>
+		<div class="modal-body">
+            <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
+                <h2 style="text-align:center">PICTURE</h2>
+            </div> 
+            <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
+                <p>Deal Description
+                <span class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                </p>             
+            </div> 
+		</div>	
+        <div class="modal-footer" style="text-align:left">
+            <p>Deal Location: <i>Vendor Name, Vendor Address</i></p>
+            <p>Cuisine: <i>Cuisine tags</i> </p>
+            <p>Deal Type: <i>Deal tags</i></p>
+        </div>
+      </div>  
+    </div>
+  </div>
