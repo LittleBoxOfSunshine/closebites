@@ -36,7 +36,7 @@ export class UserRepository {
 
 		let body = {"email": email, "password": password};
 		return this.http
-			.post("http://52.36.27.212/api/User/login", JSON.stringify(body), this.options)
+			.post("/api/User/login", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json().data))
 			.catch(x => false);
