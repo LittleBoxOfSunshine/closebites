@@ -35,11 +35,11 @@ export class DealRepository {
 
 	private _apiUrl = 'api/deals';
 
-	listAll() {//: Promise<Deal[]>{
+	listAll() : Promise<Deal[]>{
 		return this.http
 			.get('http://52.36.27.212/temp')
 			.toPromise()
-			.then(x => x.json().data) // as Deal[])
+			.then(x => x.json() as Deal[])
 			.catch(x => console.log(x.message));
 	}
 	// listAll() {//: Promise<Deal[]>{

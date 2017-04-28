@@ -1,5 +1,5 @@
 (function () {
-
+ 
   var config = {
     paths: {
       'npm:': 'node_modules/'
