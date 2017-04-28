@@ -34,12 +34,12 @@ export class UserRepository {
 
 	public login(email: string, password: string) {
 
-		// let body = {"email": email, "password": password};
-		// this.http
-		// 	.post("User/login", JSON.stringify(body), this.options)
-		// 	.toPromise()
-		// 	.then(x => this.loadUser(x.json().data))
-		// 	.catch(x => false);
+		let body = {"email": email, "password": password};
+		this.http
+			.post("User/login", JSON.stringify(body), this.options)
+			.toPromise()
+			.then(x => this.loadUser(x.json().data))
+			.catch(x => false);
 
 		// Note, in production there is no "loginVendor"; sepearing just allows two different
 		// test cases to be derived from the mock API
