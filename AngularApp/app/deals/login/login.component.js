@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,11 +7,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const core_1 = require("@angular/core");
-const router_1 = require("@angular/router");
-const user_repository_service_1 = require("../api/user/user-repository.service");
-let LoginComponent = class LoginComponent {
+var core_1 = require('@angular/core');
+var router_1 = require('@angular/router');
+var user_repository_service_1 = require('../api/user/user-repository.service');
+let LoginComponent = class {
     constructor(router, route, userRepository) {
         this.router = router;
         this.route = route;
@@ -40,8 +38,8 @@ LoginComponent = __decorate([
         selector: 'login',
         templateUrl: 'login.component.html',
         styleUrls: ['login.component.css']
-    }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, user_repository_service_1.UserRepository])
+    }), 
+    __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, user_repository_service_1.UserRepository])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.component.js.map
