@@ -23,7 +23,7 @@ let DealListComponent = class DealListComponent {
         this.loggedIn = this.router.url == '/user';
         //dealsService.listAll()
         //.then(x => this.deals = x);
-        dealsService.listAll().then(x => console.log(x));
+        dealsService.listAll().then(x => this.deals = x);
     }
     updateMode(dealType) {
         if (dealType == 'food') {

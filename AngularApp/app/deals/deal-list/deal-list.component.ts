@@ -25,7 +25,7 @@ export class DealListComponent {
 		this.loggedIn = this.router.url == '/user';
 		//dealsService.listAll()
 			//.then(x => this.deals = x);
-		dealsService.listAll().then(x => console.log(x));
+		dealsService.listAll().then(x => this.deals = x);
 	}
 
 	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
