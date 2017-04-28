@@ -1,8 +1,11 @@
-DirectoryIndex index.php
+DirectoryIndex AngularApp/index.html
 RewriteEngine On
 
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteRule ^ index.php [L]
+RewriteRule !^(app/|node_modules/|system.js) index.php [L]
 
-RewriteRule !^(AngularApp/|Documentation/|styles/|scripts/|fonts/|images/|index\.php) [NC,F]
+RewriteRule ^(system.js|app/|node_modules/)(.*) AngularApp/$1$2 [L]
+#RewriteRule ^system.js AngularApp/system.js [L]
+
+#RewriteRule !^(system.js|app/|AngularApp/|Documentation/|styles/|scripts/|fonts/|images/) [NC,F]

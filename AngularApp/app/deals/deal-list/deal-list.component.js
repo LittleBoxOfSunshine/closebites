@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,24 +7,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require("@angular/core");
-const router_1 = require("@angular/router");
-let DealListComponent = class DealListComponent {
-    constructor(router) {
+var core_1 = require('@angular/core');
+var deal_repository_service_1 = require('../api/deal/deal-repository.service');
+var deal_1 = require('../api/deal/deal');
+var router_1 = require('@angular/router');
+let DealListComponent = class {
+    constructor(router, dealsService) {
         this.router = router;
-        this.food = true;
-        this.drink = false;
-        this.loggedIn = this.router.url == '/user' ? true : false;
+        this.dealsService = dealsService;
+        this.deals = new Array(); //list of deals that show after searching
+        this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
+        this.food = this.drink = false;
+        this.loggedIn = this.router.url == '/user';
+        //dealsService.listAll()
+        //.then(x => this.deals = x);
+        dealsService.listAll().then(x => this.deals = x);
     }
-    updateMode() {
-        if (this.food) {
-            this.food = false;
-            this.drink = true;
+    updateMode(dealType) {
+        if (dealType == 'food') {
+            this.food = !this.food;
         }
         else {
-            this.food = true;
-            this.drink = false;
+            this.drink = !this.drink;
         }
+    }
+    identifyDeal(id) {
+        this.dealsService.getById(id)
+            .then(x => this.deal = x);
     }
 };
 DealListComponent = __decorate([
@@ -34,9 +42,8 @@ DealListComponent = __decorate([
         selector: 'deal-list',
         templateUrl: 'deal-list.component.html',
         styleUrls: ['deal-list.component.css']
-    }),
-    __metadata("design:paramtypes", [typeof (_a = typeof router_1.Router !== "undefined" && router_1.Router) === "function" && _a || Object])
+    }), 
+    __metadata('design:paramtypes', [router_1.Router, deal_repository_service_1.DealRepository])
 ], DealListComponent);
 exports.DealListComponent = DealListComponent;
-var _a;
 //# sourceMappingURL=deal-list.component.js.map

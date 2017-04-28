@@ -1,28 +1,42 @@
+<!--top row containing buttons and closebites logo-->
 <div class = "row">
 	<h1>CloseBites
 		<div style = "float:right">
-			<span class="glyphicon glyphicon-heart"></span>
-            <a routeLink = "/mysearches" (click)="reset()">
-			<span class="glyphicon glyphicon-floppy-disk"></span></a>
+            <a routerLink="/user">
+			    <span class="glyphicon glyphicon-home" title="Home"></span>
+            </a>
+            <a routerLink="/mydeals">
+			    <span class="glyphicon glyphicon-heart" title="View favorited deals"></span>
+            </a>
+            <a routerLink = "/mysearches">
+			    <span class="glyphicon glyphicon-floppy-disk" title="View saved searches"></span>
+            </a>
 			<a routerLink = "/">
 			<button type="button" class="btn btn-danger">Log Out</button></a>
 		</div>
 	</h1>
 </div>
+<!--div shows favorited deals or saved searches-->
 <div class = "row">
 	<div class = "col-sm-12" style = "height:500px">
-		<div *ngFor = "let value of [1,2,3,4,5,6]">
-			<div *ngIf = "dealOrSearch=='search'"class = "search" 
-            data-toggle="modal" data-target="#searchModal">Search Title</div>
-            <div *ngIf = "dealOrSearch=='deal'" class = "search" 
-            data-toggle="modal" data-target="#dealModal">Deal</div>
-		</div>
+        <div *ngIf = "dealOrSearch=='search'">
+		    <div  *ngFor = "let value of [1,2,3,4,5,6]">
+			    <div class = "search" data-toggle="modal" 
+                data-target="#searchModal">Search Title</div>
+		    </div>
+        </div>
+        <div *ngIf = "dealOrSearch=='deal'">
+            <div *ngFor = "let value of favorites">
+                <div class = "search" data-toggle="modal" data-target="#dealModal">Deal</div>
+		    </div>
+        </div>
 	</div>
 </div>
 
+<!--modal for when clicking on saved searches-->
 <div class="modal fade" id="searchModal" role="dialog">
-    <div class="modal-dialog">  
-      <div class="modal-content" style="text-align:center">
+    <div class="modal-dialog" style="width:400px">  
+      <div class="modal-content" >
         <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
 			<h4 class="modal-title">Search Title</h4>
@@ -38,15 +52,15 @@
             </div>
             <div id = "deal">
                 <strong><p style = "text-align:center">Deal Type</p></strong>
-                <button class = "btn" [ngClass] = "{'btn-info':mode == 'food','btn-primary':mode != 'food'}"
+                <button class = "btn" [ngClass] = "{'btn-info':foodOrDrink == 'food','btn-primary':mode != 'food'}"
                 type="button"
                 (click) = "updateMode('food')">Food</button>
-                <button class = "btn" [ngClass] = "{'btn-info':mode=='drink','btn-primary':mode!='drink'}"
+                <button class = "btn" [ngClass] = "{'btn-info':foodOrDrink=='drink','btn-primary':mode!='drink'}"
                 type="button"
                 (click) = "updateMode('drink')">Drink</button>
             </div>
             <button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
-            class="btn btn-default" data-dismiss="modal" (click)= "updateBoxMode()">
+            class="btn btn-default" data-dismiss="modal">
                 Update</button>
             <button type="button" style ="background-color:white;color:black;height:50px;margin-top:15px"
             class="btn btn-default" data-dismiss="modal">
@@ -56,6 +70,7 @@
     </div>
   </div>
 
+<!--modal for when clicking on favorited deals-->
   <div class="modal fade" id="dealModal" role="dialog">
     <div class="modal-dialog">  
       <div class="modal-content" style="text-align:center">

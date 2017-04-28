@@ -5,9 +5,11 @@
 	<div class = "container-fluid" style = "margin:200px">
 		<a [routerLink] = "'/signup/' + 'user'">
 		<button type="button" class="btn btn-primary btn-lg">I want to <u>find</u> deals</button></a>
-		<a [routerLink] = "'/signup/' + 'business'">
+		<a [routerLink] = "'/signup/' + 'vendor'">
 		<button type="button" class="btn btn-success btn-lg">I want to <u>offer</u> deals</button></a>
-		<p style = "margin-top:50px; text-align:center">Already a member? <u>Log in here</u></p>
+		<p style = "margin-top:50px; text-align:center">
+			Already a member? <a routerLink = "/login"><u>Log in here</u></a>
+		</p>
 	</div>	
 </div>
 <div *ngIf = "mode != 'home'" class = "row" style = "height:800px">
@@ -15,20 +17,23 @@
 	<div class = "col-sm-4" style="margin-top:50px">
 		<h1 style="text-align:center">Sign Up</h1>
 		<form>
-				<div *ngIf = "mode == 'business'" class="form-group">
+				<div *ngIf = "mode == 'vendor'" class="form-group">
 					<input type="text" class="form-control" id="compName" name="compName" placeholder="Company Name">
 				</div>
-				<div *ngIf = "mode == 'business'" class="form-group">
+				<div *ngIf = "mode == 'vendor'" class="form-group">
 					<input type="text" class="form-control" id="compAddr" name="compAddr" placeholder="Company Address">
+				</div>
+				<div *ngIf = "mode == 'user'" class="form-group">
+					<input type="text" class="form-control" id="name" name="name" placeholder="Name">
 				</div>
 				<div class="form-group">
 					<input type="text" class="form-control" id="email" name="email" placeholder="Email">
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" id="pwd" name="pwd" placeholder="Password">
+					<input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" id="pwd2" name="pwd2" placeholder="Retype Password">
+					<input type="password" class="form-control" id="pwd2" name="pwd2" placeholder="Retype Password">
 				</div>
 		</form>
 		<button type="button" (click) = "go()" class="btn btn-primary btn-lg" 

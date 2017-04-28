@@ -12,7 +12,7 @@ $app->get('/temp', function($request, $response, $args){
             ]);
 });
 
-$app->get('/', function($request,$response,$args) {
+$app->get('api/find', function($request,$response,$args) {
     //$connection = $this->get("db");
     $dbhost="localhost";
     $dbuser="root";

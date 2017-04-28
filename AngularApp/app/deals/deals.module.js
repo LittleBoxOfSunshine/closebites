@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8,16 +7,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require("@angular/core");
-const platform_browser_1 = require("@angular/platform-browser");
-const router_1 = require("@angular/router");
-const forms_1 = require("@angular/forms");
-const Shared = require("../shared/index");
-const deal_list_component_1 = require("./deal-list/deal-list.component");
-const sign_up_component_1 = require("./sign-up/sign-up.component");
-const searches_component_1 = require("./searches/searches.component");
-const business_interface_component_1 = require("./business-interface/business-interface.component");
-const deal_repository_service_1 = require("./api/deal-repository.service");
+var core_1 = require('@angular/core');
+var platform_browser_1 = require('@angular/platform-browser');
+var router_1 = require('@angular/router');
+var forms_1 = require('@angular/forms');
+var http_1 = require('@angular/http');
+var Shared = require('../shared/index');
+var deal_list_component_1 = require('./deal-list/deal-list.component');
+var sign_up_component_1 = require('./sign-up/sign-up.component');
+var searches_component_1 = require('./searches/searches.component');
+var vendor_interface_component_1 = require('./vendor-interface/vendor-interface.component');
+var login_component_1 = require('./login/login.component');
+var deal_repository_service_1 = require('./api/deal/deal-repository.service');
+var user_repository_service_1 = require('./api/user/user-repository.service');
 var routes = [
     {
         path: '',
@@ -28,8 +30,8 @@ var routes = [
         component: deal_list_component_1.DealListComponent
     },
     {
-        path: 'business',
-        component: business_interface_component_1.BusinessInterfaceComponent
+        path: 'vendor',
+        component: vendor_interface_component_1.VendorInterfaceComponent
     },
     {
         path: 'mysearches',
@@ -38,9 +40,17 @@ var routes = [
     {
         path: 'signup/:mode',
         component: sign_up_component_1.SignUpComponent
+    },
+    {
+        path: 'login',
+        component: login_component_1.LoginComponent
+    },
+    {
+        path: 'mydeals',
+        component: searches_component_1.SearchesComponent
     }
 ];
-let DealsModule = class DealsModule {
+let DealsModule = class {
 };
 DealsModule = __decorate([
     core_1.NgModule({
@@ -48,19 +58,21 @@ DealsModule = __decorate([
             platform_browser_1.BrowserModule,
             router_1.RouterModule.forRoot(routes),
             forms_1.FormsModule,
-            Shared.SharedModule
+            Shared.SharedModule,
+            http_1.HttpModule
         ],
         declarations: [
-            deal_list_component_1.DealListComponent, sign_up_component_1.SignUpComponent, business_interface_component_1.BusinessInterfaceComponent, searches_component_1.SearchesComponent
+            deal_list_component_1.DealListComponent, sign_up_component_1.SignUpComponent, vendor_interface_component_1.VendorInterfaceComponent, searches_component_1.SearchesComponent, login_component_1.LoginComponent
         ],
         exports: [
             deal_list_component_1.DealListComponent
         ],
         providers: [
-            deal_repository_service_1.DealRepository
+            deal_repository_service_1.DealRepository,
+            user_repository_service_1.UserRepository
         ]
-    }),
-    __metadata("design:paramtypes", [])
+    }), 
+    __metadata('design:paramtypes', [])
 ], DealsModule);
 exports.DealsModule = DealsModule;
 //# sourceMappingURL=deals.module.js.map
