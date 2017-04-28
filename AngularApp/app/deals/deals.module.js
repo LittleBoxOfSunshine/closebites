@@ -1,25 +1,24 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var router_1 = require('@angular/router');
-var forms_1 = require('@angular/forms');
-var http_1 = require('@angular/http');
-var Shared = require('../shared/index');
-var deal_list_component_1 = require('./deal-list/deal-list.component');
-var sign_up_component_1 = require('./sign-up/sign-up.component');
-var searches_component_1 = require('./searches/searches.component');
-var vendor_interface_component_1 = require('./vendor-interface/vendor-interface.component');
-var login_component_1 = require('./login/login.component');
-var deal_repository_service_1 = require('./api/deal/deal-repository.service');
-var user_repository_service_1 = require('./api/user/user-repository.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+const core_1 = require("@angular/core");
+const platform_browser_1 = require("@angular/platform-browser");
+const router_1 = require("@angular/router");
+const forms_1 = require("@angular/forms");
+const http_1 = require("@angular/http");
+const Shared = require("../shared/index");
+const deal_list_component_1 = require("./deal-list/deal-list.component");
+const sign_up_component_1 = require("./sign-up/sign-up.component");
+const searches_component_1 = require("./searches/searches.component");
+const vendor_interface_component_1 = require("./vendor-interface/vendor-interface.component");
+const login_component_1 = require("./login/login.component");
+const deal_repository_service_1 = require("./api/deal/deal-repository.service");
+const user_repository_service_1 = require("./api/user/user-repository.service");
 var routes = [
     {
         path: '',
@@ -50,7 +49,7 @@ var routes = [
         component: searches_component_1.SearchesComponent
     }
 ];
-let DealsModule = class {
+let DealsModule = class DealsModule {
 };
 DealsModule = __decorate([
     core_1.NgModule({
@@ -71,8 +70,7 @@ DealsModule = __decorate([
             deal_repository_service_1.DealRepository,
             user_repository_service_1.UserRepository
         ]
-    }), 
-    __metadata('design:paramtypes', [])
+    })
 ], DealsModule);
 exports.DealsModule = DealsModule;
 //# sourceMappingURL=deals.module.js.map
