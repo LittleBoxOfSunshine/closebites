@@ -34,22 +34,12 @@ export class UserRepository {
 
 	public login(email: string, password: string) {
 
-		// let body = {"email": email, "password": password};
-		// this.http
-		// 	.post("User/login", JSON.stringify(body), this.options)
-		// 	.toPromise()
-		// 	.then(x => this.loadUser(x.json().data))
-		// 	.catch(x => false);
-
-		// Note, in production there is no "loginVendor"; sepearing just allows two different
-		// test cases to be derived from the mock API
+		let body = {"email": email, "password": password};
 		return this.http
-			.get(email == 'vendor' ? "api/loginVendor" : 'api/login' )
+			.post("http://52.36.27.212/api/User/login", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json().data))
-			.catch(x => x.message);
-		
-		//return this.user.accountType == undefined;
+			.catch(x => false);
 	}
 
 }
