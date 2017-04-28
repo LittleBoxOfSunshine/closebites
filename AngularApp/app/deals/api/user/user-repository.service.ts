@@ -42,4 +42,12 @@ export class UserRepository {
 			.catch(x => false);
 	}
 
+	public register(body) {
+		return this.http
+			.post("/api/User/register", JSON.stringify(body), this.options)
+			.toPromise()
+			.then(x => this.loadUser(x.json().data))
+			.catch(x => false);
+	}
+
 }

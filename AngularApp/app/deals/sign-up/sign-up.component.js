@@ -11,18 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
+const user_repository_service_1 = require("../api/user/user-repository.service");
 let SignUpComponent = class SignUpComponent {
-    constructor(router, route) {
+    constructor(router, route, userService) {
         this.router = router;
         this.route = route;
+        this.userService = userService;
         this.route.params.subscribe(params => {
             this.mode = params['mode'];
         });
     }
     go() {
-        if (this.mode == 'vendor') {
+        let body = { email: this.email, password: this.password, name: this.name };
+        if (this.mode == 'vendor')
+            body['address'] = this.address;
+        this.userService.register(body);
+        if (this.mode == 'vendor')
             this.router.navigate(['/vendor']);
-        }
         else
             this.router.navigate(['/user']);
     }
@@ -34,7 +39,7 @@ SignUpComponent = __decorate([
         templateUrl: 'sign-up.component.html',
         styleUrls: ['sign-up.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute])
+    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, user_repository_service_1.UserRepository])
 ], SignUpComponent);
 exports.SignUpComponent = SignUpComponent;
 //# sourceMappingURL=sign-up.component.js.map

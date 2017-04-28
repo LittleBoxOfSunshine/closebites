@@ -14,8 +14,12 @@ import { User } from '../api/user/user';
 
 export class SignUpComponent { 
   mode: string;
+  name: string;
+  address: string;
+  email: string;
+  password: string;
 
-  constructor(private router: Router, private route:ActivatedRoute){
+  constructor(private router: Router, private route:ActivatedRoute,private userService:UserRepository){
       this.route.params.subscribe(params => {
           this.mode = params['mode'];
     });
@@ -23,9 +27,16 @@ export class SignUpComponent {
   }
 
   go (){
-    if (this.mode == 'vendor'){
+
+    let body = { email: this.email, password: this.password, name: this.name }
+    if(this.mode == 'vendor')
+      body['address'] = this.address;
+
+    this.userService.register(body);
+
+    if (this.mode == 'vendor')
       this.router.navigate(['/vendor']);
-    } else 
+    else 
       this.router.navigate(['/user']);
   }
 
