@@ -80,7 +80,65 @@ $app->group('/api', function() use ($app) {
         });
 
         $app->post('/register', function($request,$response,$args) {
-            return "POST /register";
+            /**
+             *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
+             */
+
+            $body = $request->getParsedBody();
+
+            if($body['email'] != 'vendor') {
+                return $response->withJson([
+                    'id'=> 0,
+                    'name' => 'John Doe',
+                    'accountType' => 'consumer',
+                    'favorites' => [0, 1],
+                    'filters' => [
+                        [
+                            'name' => 'Chinese Food',
+                            'filterID' => 0,
+                            'filters' => [
+                                [
+                                    'type' => 'food',
+                                    'cuisine' => 'chinese'
+                                ]
+                            ]
+                        ],
+                        [
+                            'name' => 'Drinks',
+                            'filterID' => 1,
+                            'filters' => [
+                                [
+                                    'type' => 'drinks'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]);
+            }
+            else {
+                return $response->withJson([
+                    'id'=> 0,
+                    'name' => 'Tacos y Mas',
+                    'accountType' => 'vendor',
+                    'address' => '123 fake street',
+                    'calendar' => [
+                        [
+                            'name' => 'Taco Tuesday',
+                            'id' => 0,
+                            'start' => '2016/05/15 15:0',
+                            'end' => '2016/05/15 19:00',
+                            'repeat' => '0010000'
+                        ],
+                        [
+                            'name' => 'Thirsty Thursday',
+                            'id' => 1,
+                            'start' => '2016/05/15 17:30',
+                            'end' => '2016/05/15 19:30',
+                            'repeat' => '0000100'
+                        ]
+                    ]
+                ]);
+            }
         });
 
         $app->post('/favorite', function($request,$response,$args) {
