@@ -25,7 +25,8 @@ export class UserRepository {
 		this.user.accountType = jsonObj.accountType;
 		this.user.id = jsonObj.id;
 		
-		return this.user.accountType;
+		console.log(this.user.accountType == undefined);
+		return this.user.accountType == undefined;
 	}
 
 	public getUser() : User {
