@@ -37,7 +37,7 @@ export class DealRepository {
 
 	listAll() : Promise<Deal[]>{
 		return this.http
-			.get('/temp')
+			.get('/api/temp')
 			.toPromise()
 			.then(x => x.json() as Deal[])
 			.catch(x => console.log(x.message));
