@@ -25,8 +25,7 @@ export class UserRepository {
 		this.user.accountType = jsonObj.accountType;
 		this.user.id = jsonObj.id;
 		
-		console.log(this.user.accountType == undefined);
-		return this.user.accountType == undefined;
+		return this.user.accountType != undefined;
 	}
 
 	public getUser() : User {
@@ -39,7 +38,7 @@ export class UserRepository {
 		return this.http
 			.post("/api/User/login", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => this.loadUser(x.json().data))
+			.then(x => this.loadUser(x.json()))
 			.catch(x => false);
 	}
 
@@ -47,7 +46,7 @@ export class UserRepository {
 		return this.http
 			.post("/api/User/register", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => this.loadUser(x.json().data))
+			.then(x => this.loadUser(x.json()))
 			.catch(x => false);
 	}
 

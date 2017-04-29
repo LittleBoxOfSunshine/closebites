@@ -26,17 +26,15 @@ let SignUpComponent = class SignUpComponent {
             name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' };
         if (this.mode == 'vendor')
             body['address'] = this.address;
-        var that = this;
-        this.userService.register(body).then(function (x) {
+        this.userService.register(body).then((x) => {
             if (x) {
-                if (that.mode == 'vendor')
-                    that.router.navigate(['/vendor']);
+                if (this.mode == 'vendor')
+                    this.router.navigate(['/vendor']);
                 else
-                    that.router.navigate(['/user']);
+                    this.router.navigate(['/user']);
             }
             else {
-                that.error = true;
-                console.log(that.error);
+                this.error = true;
             }
         });
     }

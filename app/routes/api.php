@@ -115,7 +115,7 @@ $app->group('/api', function() use ($app) {
                     ]
                 ]);
             }
-            else if($body['accountType'] == 'Aconsumer') {
+            else if($body['accountType'] == 'vendor') {
                 return $response->withJson([
                     'id'=> 0,
                     'name' => 'Tacos y Mas',
