@@ -86,7 +86,7 @@ $app->group('/api', function() use ($app) {
 
             $body = $request->getParsedBody();
 
-            if($body['email'] != 'vendor') {
+            if($body['accountType'] == 'consumer') {
                 return $response->withJson([
                     'id'=> 0,
                     'name' => 'John Doe',
@@ -115,7 +115,7 @@ $app->group('/api', function() use ($app) {
                     ]
                 ]);
             }
-            else {
+            else if($body['accountType'] == 'Aconsumer') {
                 return $response->withJson([
                     'id'=> 0,
                     'name' => 'Tacos y Mas',
@@ -138,6 +138,9 @@ $app->group('/api', function() use ($app) {
                         ]
                     ]
                 ]);
+            }
+            else {
+                return $response->withStatus(422);
             }
         });
 
