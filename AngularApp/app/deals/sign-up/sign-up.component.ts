@@ -28,7 +28,8 @@ export class SignUpComponent {
 
   go (){
 
-    let body = { email: this.email, password: this.password, name: this.name }
+    let body = { email: this.email, password: this.password, 
+      name: this.name, accountType: this.mode }
     if(this.mode == 'vendor')
       body['address'] = this.address;
 
