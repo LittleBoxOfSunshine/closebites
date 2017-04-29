@@ -26,11 +26,12 @@ let SignUpComponent = class SignUpComponent {
             name: this.name, accountType: this.mode };
         if (this.mode == 'vendor')
             body['address'] = this.address;
-        this.userService.register(body);
-        if (this.mode == 'vendor')
-            this.router.navigate(['/vendor']);
-        else
-            this.router.navigate(['/user']);
+        if (this.userService.register(body)) {
+            if (this.mode == 'vendor')
+                this.router.navigate(['/vendor']);
+            else
+                this.router.navigate(['/user']);
+        }
     }
 };
 SignUpComponent = __decorate([
