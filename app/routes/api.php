@@ -24,7 +24,7 @@ $app->group('/api', function() use ($app) {
 
             $body = $request->getParsedBody();
 
-            if($body['email'] == 'vendor') {
+            if($body['email'] != 'vendor') {
                 return $response->withJson([
                     'id'=> 0,
                     'name' => 'John Doe',
@@ -96,7 +96,7 @@ $app->group('/api', function() use ($app) {
         });
 
     });
-    
+
 });
 
 
