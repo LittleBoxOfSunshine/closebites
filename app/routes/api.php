@@ -9,7 +9,11 @@ function getDB() {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
 }
+
 // Routes
+
+
+// *********************** testing ************************* //
 
 $app->get('/temp', function($request, $response, $args){
    return $response->withJson(            [
@@ -42,7 +46,10 @@ $app->get('api/find', function($request,$response,$args) {
     //return "Welcome to Slim 3.0 based API";
 });
 
-$app->post('/add', function($request,$response,$args) {
+
+// *********************** Vendor Collection ************************* //
+
+$app->post('/create', function($request,$response,$args) {
     $name = $app->request->post('title');
     $description = $app->request->post('description');
     $query = "insert into deal (deal_id,category_id,vendor_id,title,image,description,type,created,last_updated,likes)
@@ -57,9 +64,30 @@ $app->post('/add', function($request,$response,$args) {
     return "POST /login";
 });
 
-$app->post('/register', function($request,$response,$args) {
-    return "POST /register";
+$app->put('/publish', function($request,$response,$args) {
+    return "PUT /publish";
 });
+
+$app->get('/calendar', function($request,$response,$args) {
+    return "GET /calendar";
+});
+
+// *********************** User Collection ************************* //
+
+$app->post('/login', function($request,$response,$args) {
+    return "POST /login";
+});
+
+$app->put('/logout', function($request,$response,$args) {
+    return "PUT /logout";
+});
+
+$app->get('/exists', function($request,$response,$args) {
+    return "GET /exists";
+});
+
+
+// *********************** Consumer Collection ************************* //
 
 $app->post('/favorite', function($request,$response,$args) {
     return "POST /favorite";
@@ -69,6 +97,17 @@ $app->post('/unfavorite', function($request,$response,$args) {
     return "POST /unfavorite";
 });
 
+$app->get('/findDeals', function($request,$response,$args) {
+    return "GET /findDeals";
+});
+
 $app->get('/saveFilter', function($request,$response,$args) {
+    return "GET /saveFilter";
+});
+
+
+// *********************** Deal Collection ************************* //
+
+$app->get('/getFeedback', function($request,$response,$args) {
     return "GET /saveFilter";
 });
