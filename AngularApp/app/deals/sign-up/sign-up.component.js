@@ -32,6 +32,10 @@ let SignUpComponent = class SignUpComponent {
             else
                 this.router.navigate(['/user']);
         }
+        else {
+            this.error = true;
+            console.log(this.error);
+        }
     }
 };
 SignUpComponent = __decorate([

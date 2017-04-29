@@ -18,6 +18,7 @@ export class SignUpComponent {
   address: string;
   email: string;
   password: string;
+  error: boolean;
 
   constructor(private router: Router, private route:ActivatedRoute,private userService:UserRepository){
       this.route.params.subscribe(params => {
@@ -38,6 +39,10 @@ export class SignUpComponent {
         this.router.navigate(['/vendor']);
       else 
         this.router.navigate(['/user']);
+    }
+    else{
+      this.error = true;
+      console.log(this.error);
     }
   }
 
