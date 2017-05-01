@@ -33,6 +33,44 @@ $app->group('/api', function() use ($app) {
 
     $app->group('/User', function() use ($app) {
 
+        $app->get('/exists', function($request,$response,$args) {
+
+          $body = $request->getParsedBody();
+          $email = $body['email'];
+          $password = $body['password'];
+          $type = $body['email'];
+
+          if($type == 'consumer') {
+            $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
+            $db = getDB();
+            $result = $db->query($query);
+
+            if($result) {
+              return "200";
+            } else {
+              return "400";
+            }
+          }
+          else {
+            if($body['email'] == 'vendor') {
+              $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
+              $db = getDB();
+              $result = $db->query($query);
+
+              if($result) {
+                return "200";
+              } else {
+                return "400";
+              }
+            }
+          }
+
+
+
+
+
+        });
+
         $app->post('/login', function($request,$response,$args) {
 
             /**
@@ -100,8 +138,27 @@ $app->group('/api', function() use ($app) {
             /**
              *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
              */
+             $body = $request->getParsedBody();
+             $email = $body['email'];
+             $password = $body['password'];
 
-            $body = $request->getParsedBody();
+             $options = [
+               'cost' => 11,
+               'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+             ];
+
+             $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+            //  return $hash;
+             $query = "INSERT INTO user (user_id, email, password) VALUES (6, '$email', '$hash')";
+
+             $db = getDB();
+             $db->query($query);
+
+            //  if($result) {
+            //    return "200";
+            //  } else {
+            //    return "400";
+            //  }
 
             if($body['accountType'] == 'consumer') {
                 return $response->withJson([
@@ -161,8 +218,21 @@ $app->group('/api', function() use ($app) {
             }
         });
 
-        $app->post('/favorite', function($request,$response,$args) {
-            return "POST /favorite";
+        $app->get('/favorite', function($request,$response,$args) {
+          $dbhost="localhost";
+          $dbuser="root";
+          $dbpass="pass";
+          $dbname="closebites";
+          $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+          $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+          $query="select * from deal";
+          $result = $dbh->query($query);
+
+          while($row = $result->fetch(PDO::FETCH_ASSOC)){
+              $data[] = $row;
+          }
+          return json_encode($data);
         });
 
         $app->post('/unfavorite', function($request,$response,$args) {
@@ -170,7 +240,29 @@ $app->group('/api', function() use ($app) {
         });
 
         $app->get('/saveFilter', function($request,$response,$args) {
-            return "GET /saveFilter";
+            return $response->withJson([
+                'id'=> 0,
+                'name' => 'Steak n shake',
+                'accountType' => 'vendor',
+                'address' => '123 fake street',
+                'calendar' => [
+                    [
+                        'name' => 'Drinks Tuesday',
+                        'id' => 0,
+                        'start' => '2016/05/15 15:0',
+                        'end' => '2016/05/15 19:00',
+                        'repeat' => '0010000'
+                    ],
+                    [
+                        'name' => 'Shakes Saturday',
+                        'id' => 1,
+                        'start' => '2016/05/15 17:30',
+                        'end' => '2016/05/15 19:30',
+                        'repeat' => '0000100'
+                    ]
+                ]
+            ]);
+            // return "GET /saveFilter";
         });
 
     });
@@ -182,13 +274,16 @@ $app->post('/login', function($request,$response,$args) {
     $body = $request->getParsedBody();
     $email = $body['email'];
     $password = $body['password'];
-    if($body['email'] == 'consumer') {
-
+    if($body['email'] == 'matt') {
+      return "200";
+    } else {
+      return "400";
     }
     $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
 
     $db = getDB();
     $result = $db->query($query);
+    // $row = $result->fetch(PDO::FETCH_ASSOC)
 
     if($result) {
       return "200";
