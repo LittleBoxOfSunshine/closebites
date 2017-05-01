@@ -1,5 +1,4 @@
 <?php
-
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
@@ -9,17 +8,13 @@ function getDB() {
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
 }
-
 // Routes
 $app->get('/', function ($request, $response, $args) {
     // Sample log message
-
     // Render index view
     return "hello";
 });
-
 $app->group('/api', function() use ($app) {
-
     $app->get('/temp', function($request, $response, $args){
         return $response->withJson(            [
             ['id'=>1,'name'=>"McDonald's",'description'=>"Deal 1 text",'type'=>'food'],
@@ -30,17 +25,12 @@ $app->group('/api', function() use ($app) {
             ['id'=>6,'name'=>'Jamba Juice','description'=>'Deal 6 text','type'=>'drink'],
         ]);
     });
-
     $app->group('/User', function() use ($app) {
-
         $app->post('/login', function($request,$response,$args) {
-
             /**
              *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
              */
-
             $body = $request->getParsedBody();
-
             if($body['email'] != 'vendor') {
                 return $response->withJson([
                     'id'=> 0,
@@ -95,14 +85,11 @@ $app->group('/api', function() use ($app) {
                 ]);
             }
         });
-
         $app->post('/register', function($request,$response,$args) {
             /**
              *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
              */
-
             $body = $request->getParsedBody();
-
             if($body['accountType'] == 'consumer') {
                 return $response->withJson([
                     'id'=> 0,
@@ -160,45 +147,33 @@ $app->group('/api', function() use ($app) {
                 return $response->withStatus(422);
             }
         });
-
         $app->post('/favorite', function($request,$response,$args) {
             return "POST /favorite";
         });
-
         $app->post('/unfavorite', function($request,$response,$args) {
             return "POST /unfavorite";
         });
-
         $app->get('/saveFilter', function($request,$response,$args) {
             return "GET /saveFilter";
         });
-
     });
-
 });
-
 $app->post('/login', function($request,$response,$args) {
-
     $body = $request->getParsedBody();
     $email = $body['email'];
     $password = $body['password'];
     if($body['email'] == 'consumer') {
-
     }
     $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
-
     $db = getDB();
     $result = $db->query($query);
-
     if($result) {
       return "200";
     } else {
       return "400";
     }
-
     return $body['email'];
 });
-
 $app->get('/find', function($request,$response,$args) {
     //$connection = $this->get("db");
     $dbhost="localhost";
@@ -207,14 +182,11 @@ $app->get('/find', function($request,$response,$args) {
     $dbname="closebites";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $query="select * from deal";
     $result = $dbh->query($query);
-
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
         $data[] = $row;
     }
     return json_encode($data);
-
     //return "Welcome to Slim 3.0 based API";
 });
