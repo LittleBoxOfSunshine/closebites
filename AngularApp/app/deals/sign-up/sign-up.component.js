@@ -20,6 +20,7 @@ let SignUpComponent = class SignUpComponent {
         this.route.params.subscribe(params => {
             this.mode = params['mode'];
         });
+        this.error = true;
     }
     go() {
         let body = { email: this.email, password: this.password,

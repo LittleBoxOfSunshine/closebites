@@ -33,7 +33,6 @@ export class UserRepository {
 	}
 
 	public login(email: string, password: string) {
-
 		let body = {"email": email, "password": password};
 		return this.http
 			.post("/api/User/login", JSON.stringify(body), this.options)

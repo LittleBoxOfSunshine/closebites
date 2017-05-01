@@ -7,9 +7,9 @@
     margin-bottom:30px;
 }
 
-/*#error {
+#error {
     margin-top: 14px;
-}*/
+}
 *, *:before, *:after {
   box-sizing: border-box;
 }

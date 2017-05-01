@@ -24,7 +24,7 @@ export class SignUpComponent {
       this.route.params.subscribe(params => {
           this.mode = params['mode'];
     });
- 
+      this.error = true;
   }
 
   go (){
