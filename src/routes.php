@@ -1,5 +1,22 @@
 <?php
+
+function getDB() {
+  $dbhost="localhost";
+  $dbuser="root";
+  $dbpass="pass"; # CHANGE LATER
+  $dbname="closebites";
+  $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  return $dbh;
+}
+
 // Routes
+$app->get('/', function ($request, $response, $args) {
+    // Sample log message
+
+    // Render index view
+    return "hello";
+});
 
 $app->group('/api', function() use ($app) {
 
@@ -160,20 +177,40 @@ $app->group('/api', function() use ($app) {
 
 });
 
+$app->post('/login', function($request,$response,$args) {
 
+    $body = $request->getParsedBody();
+    $email = $body['email'];
+    $password = $body['password'];
+    if($body['email'] == 'consumer') {
 
-$app->get('api/find', function($request,$response,$args) {
+    }
+    $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
+
+    $db = getDB();
+    $result = $db->query($query);
+
+    if($result) {
+      return "200";
+    } else {
+      return "400";
+    }
+
+    return $body['email'];
+});
+
+$app->get('/find', function($request,$response,$args) {
     //$connection = $this->get("db");
     $dbhost="localhost";
     $dbuser="root";
-    $dbpass="Jaav13!@G";
-    $dbname="closebites1";
+    $dbpass="pass";
+    $dbname="closebites";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+
     $query="select * from deal";
     $result = $dbh->query($query);
-    
+
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
         $data[] = $row;
     }
@@ -181,8 +218,3 @@ $app->get('api/find', function($request,$response,$args) {
 
     //return "Welcome to Slim 3.0 based API";
 });
-
-
-
-
-
