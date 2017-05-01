@@ -2,23 +2,17 @@
 	<h1>CloseBites</h1>
 </div>
 <div class="form">
-	<h1 id="closebites"> Closebites </h1>
+	<h1 id="closebites"> Login </h1>
 	<div id="login">
 		<form>
 			<div class="top-row"></div>
 			<div class="field-wrap">
-              <!--<label>
-                Email Address<span class="req">*</span>
-              </label>-->
-              <input type="email"required autocomplete="off" placeholder="Email Address *" name="email" [(ngModel)]="email"/>
+              <input type="email" required autocomplete="off" placeholder="Email Address" name="email" [(ngModel)]="email"/>
             </div>
 			<div class="field-wrap">
-              <!--<label>
-                Set A Password<span class="req">*</span>
-              </label>-->
-              <input type="password"required autocomplete="off" placeholder="Set A Password *" name="password" [(ngModel)]="password"/>
+              <input type="password" required autocomplete="off" placeholder="Password" name="password" [(ngModel)]="password"/>
             </div>
-			<button type="button" class="button button-block" (click) = "submit()">Get Started</button>
+			<button style="width:500px" type="button" class="button button-block" (click) = "submit()">Next</button>
 		</form>
 	</div>
 </div>
