@@ -14,11 +14,13 @@ const deal_repository_service_1 = require("../api/deal/deal-repository.service")
 const deal_1 = require("../api/deal/deal");
 const user_repository_service_1 = require("../api/user/user-repository.service");
 const router_1 = require("@angular/router");
+const http_1 = require("@angular/http");
 let DealListComponent = class DealListComponent {
-    constructor(router, dealsService, userService) {
+    constructor(router, dealsService, userService, http) {
         this.router = router;
         this.dealsService = dealsService;
         this.userService = userService;
+        this.http = http;
         this.deals = new Array(); //list of deals that show after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
         this.food = this.drink = false;
@@ -26,6 +28,27 @@ let DealListComponent = class DealListComponent {
         //dealsService.listAll()
         //.then(x => this.deals = x);
         dealsService.listAll().then(x => this.deals = x);
+        var that = this;
+        window.navigator.geolocation.getCurrentPosition(function (pos) {
+            console.log(pos);
+            that.http
+                .get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
+                .toPromise()
+                .then(function (res) {
+                res = res.json()['results'];
+                console.log(res);
+                var temp = res["0"].address_components;
+                console.log(temp);
+                for (var i = 0; i < temp.length; i++) {
+                    console.log(temp[i]);
+                    var idx = temp[i]['types'].indexOf("postal_code");
+                    if (idx != -1) {
+                        console.log(temp[i]['long_name']);
+                        that.zip = temp[i]['long_name'];
+                    }
+                }
+            });
+        });
     }
     updateMode(dealType) {
         if (dealType == 'food') {
@@ -54,7 +77,8 @@ DealListComponent = __decorate([
         templateUrl: 'deal-list.component.html',
         styleUrls: ['deal-list.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, deal_repository_service_1.DealRepository, user_repository_service_1.UserRepository])
+    __metadata("design:paramtypes", [router_1.Router, deal_repository_service_1.DealRepository, user_repository_service_1.UserRepository,
+        http_1.Http])
 ], DealListComponent);
 exports.DealListComponent = DealListComponent;
 //# sourceMappingURL=deal-list.component.js.map
