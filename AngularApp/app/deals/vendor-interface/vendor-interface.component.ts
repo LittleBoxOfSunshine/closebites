@@ -26,7 +26,8 @@ export class VendorInterfaceComponent {
     dealTypes:string[];
     typeNotChosen:boolean;
 
-    constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository){
+    constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
+            private userService:UserRepository){
         this.food = this.drink = false;
         this.mode = 'month';
         this.days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -72,5 +73,11 @@ export class VendorInterfaceComponent {
         }
     }
 
-
+    logout(){
+        this.userService.logout();
+		this.food = this.drink = false;
+		this.deals = new Array<Deal>();
+		this.deal = new Deal;
+		this.router.navigate(['/']);
+	}
 }

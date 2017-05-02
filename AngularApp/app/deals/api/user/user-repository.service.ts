@@ -49,4 +49,12 @@ export class UserRepository {
 			.catch(x => false);
 	}
 
+	public logout() {
+		return this.http
+			.delete("/api/User/logout")
+			.toPromise()
+			.then(x => this.user = new User)
+			.catch(x => false);
+	}
+
 }

@@ -20,7 +20,7 @@ export class DealListComponent {
 	deals = new Array<Deal>(); //list of deals that show after searching
 	deal = new Deal; //used to bring up a specific deal in the modal
 
-	constructor(private router:Router,private dealsService:DealRepository){
+	constructor(private router:Router,private dealsService:DealRepository,private userService:UserRepository){
 		this.food = this.drink =false;
 		this.loggedIn = this.router.url == '/user';
 		//dealsService.listAll()
@@ -39,6 +39,15 @@ export class DealListComponent {
 	identifyDeal(id: number){
 		this.dealsService.getById(id)
 			.then(x => this.deal = x);
+	}
+
+	logout(){
+		this.userService.logout();
+		this.food = this.drink = false;
+		this.loggedIn = false;
+		this.deals = new Array<Deal>();
+		this.deal = new Deal;
+		this.router.navigate(['/']);
 	}
 
 }
