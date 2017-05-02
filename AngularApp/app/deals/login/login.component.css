@@ -1,6 +1,9 @@
 /*#error {
     margin-top: 14px;
 }*/
+button[disabled]{
+  opacity:.5
+}
 *, *:before, *:after {
   box-sizing: border-box;
 }

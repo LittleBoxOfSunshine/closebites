@@ -18,33 +18,40 @@ export class SignUpComponent {
   address: string;
   email: string;
   password: string;
+  password2: string;
   error: boolean;
+  passwordMatch:boolean;
 
   constructor(private router: Router, private route:ActivatedRoute,private userService:UserRepository){
       this.route.params.subscribe(params => {
           this.mode = params['mode'];
     });
+    this.passwordMatch = true;
  
   }
 
   go (){
+      if (this.password != this.password2){
+          this.passwordMatch = false;
+      } else {
+        this.passwordMatch=true;
+        let body = { email: this.email, password: this.password, 
+          name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' }
+        if(this.mode == 'vendor')
+          body['address'] = this.address;
 
-    let body = { email: this.email, password: this.password, 
-      name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' }
-    if(this.mode == 'vendor')
-      body['address'] = this.address;
-
-    this.userService.register(body).then((x)=>{
-      if(x) {
-        if (this.mode == 'vendor')
-          this.router.navigate(['/vendor']);
-        else 
-          this.router.navigate(['/user']);
+        this.userService.register(body).then((x)=>{
+          if(x) {
+            if (this.mode == 'vendor')
+              this.router.navigate(['/vendor']);
+            else 
+              this.router.navigate(['/user']);
+          }
+          else{
+            this.error = true;
+          }
+        });
       }
-      else{
-        this.error = true;
-      }
-    });
   }
 
 }

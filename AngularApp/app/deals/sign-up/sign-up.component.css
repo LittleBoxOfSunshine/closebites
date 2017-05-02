@@ -1,3 +1,6 @@
+button[disabled]{
+  opacity:.5;
+}
 .signup {
     width: 40%;
     margin: 30px;
