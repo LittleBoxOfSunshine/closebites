@@ -25,11 +25,15 @@
 	<div class = "col-sm-4" style = "height:500px;border-style:ridge">
 		<div class="form-group">
             <label for="zip">Zip Code</label>
-            <input type="text" class="form-control" id="zip" name="zip" >
+            <input type="text" class="form-control" id="zip" name="zip" [(ngModel)]="zip">
         </div>
-        <div class="form-group">
+        <div class="form-group" data-toggle="toggle">
             <label for="cuisine">Cuisine</label>
-            <input type="text" class="form-control" id="cuisine" name="cuisine">
+      			<label class="checkbox"><input type="checkbox" name="mexican" id="mexican"> Mexican</label>
+      			<label class="checkbox"><input type="checkbox" name="chinese" id="chinese"> Chinese</label>
+      			<label class="checkbox"><input type="checkbox" name="italian" id="italian"> Italian</label>
+				<label class="checkbox"><input type="checkbox" name="korean" id="korean"> Korean</label>
+				<label class="checkbox"><input type="checkbox" name="murican" id="murican"> Murican</label>
         </div>
 		<div id = "deal">
 			<strong><p style = "text-align:center">Deal Type</p></strong>
