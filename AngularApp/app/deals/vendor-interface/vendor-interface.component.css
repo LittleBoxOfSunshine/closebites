@@ -37,3 +37,6 @@ th {
 .btn-primary,.btn-info{
     width:150px;
 }
+a {
+    text-decoration:none;
+}

@@ -90,7 +90,8 @@
             </div> 
             <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
                 <p>{{deal.description}}
-                <span class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                <span [style.opacity]="favoriteDeal ? 1 : .5"
+								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
                 </p>             
             </div> 
 		</div>	

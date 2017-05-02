@@ -60,6 +60,10 @@ let DealListComponent = class DealListComponent {
     identifyDeal(id) {
         this.dealsService.getById(id)
             .then(x => this.deal = x);
+        if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+            this.favoriteDeal = true;
+        else
+            this.favoriteDeal = false;
     }
     logout() {
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;

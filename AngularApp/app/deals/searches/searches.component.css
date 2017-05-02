@@ -28,11 +28,7 @@
     top: 10px;
 }
 .glyphicon-heart {
-    opacity: 0.5;
     color:red;
-}
-.glyphicon-heart:hover {
-    opacity: 1;
 }
 a {
     text-decoration:none;

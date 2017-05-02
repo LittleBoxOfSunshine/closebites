@@ -28,7 +28,6 @@ a.hover:hover {
     top: 10px;
 }
 .glyphicon-heart {
-    opacity: 0.5;
     color:red;
 }
 .glyphicon-heart:hover {

@@ -27,6 +27,7 @@ export class DealListComponent {
 	korean:boolean;
 	murican:boolean;
 	foodAndDrinks:boolean;
+	favoriteDeal:boolean;
 
 	constructor(private router:Router,private dealsService:DealRepository,private userService:UserRepository,
 			private http: Http){
@@ -59,7 +60,6 @@ export class DealListComponent {
 		// 		}
   		// 	});
 		// });
-		
 	}
 
 	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
@@ -72,6 +72,9 @@ export class DealListComponent {
 	identifyDeal(id: number){
 		this.dealsService.getById(id)
 			.then(x => this.deal = x);
+		if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+			this.favoriteDeal = true;
+		else this.favoriteDeal = false;
 	}
 
 	logout(){
