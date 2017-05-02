@@ -15,27 +15,73 @@
 <div class="form" *ngIf = "mode != 'home'">
 	<h1 id="closebites"> Sign Up </h1>
 	<div id="login">
-		<form>
+		<form name="signupForm" #signupForm="ngForm" class="container" novalidate>
 			<div class="top-row"></div>
 			<div *ngIf = "mode == 'vendor'" class="field-wrap">
-              <input type="text" required autocomplete="off" placeholder="Company Name *" name="compName" [(ngModel)]="name"/>
+							<input type="text" id="comp_name" name="compName" class="form-control" [(ngModel)]="name"
+									#comp_name="ngModel" required autocomplete="off" placeholder="Company Name *" required />
+													<validation-messages
+															[model]="comp_name"
+															[messages]="{
+																	required: 'Name is required'}">
+													</validation-messages>
             </div>
 			<div *ngIf = "mode == 'vendor'" class="field-wrap">
-              <input type="text" required autocomplete="off" placeholder="Company Address *" name="compAddr" [(ngModel)]="address"/>
+							<input type="text" id="comp_addr" name="compAddr" class="form-control" [(ngModel)]="address"
+									#comp_addr="ngModel" required autocomplete="off" placeholder="Company Address *" required />
+													<validation-messages
+															[model]="comp_addr"
+															[messages]="{
+																	required: 'Address is required'}">
+													</validation-messages>
             </div>
 			<div *ngIf = "mode == 'user'" class="field-wrap">
-              <input type="text" required autocomplete="off" placeholder="Name *" name="name" [(ngModel)]="name"/>
+							<input type="text" id="user_name" name="name" class="form-control" [(ngModel)]="name"
+									#user_name="ngModel" required autocomplete="off" placeholder="Name *" required />
+													<validation-messages
+															[model]="user_name"
+															[messages]="{
+																	required: 'Name is required'}">
+													</validation-messages>
             </div>
 			<div class="field-wrap">
-              <input type="email" required autocomplete="off" placeholder="Email Address *" name="email" [(ngModel)]="email"/>
+							<input id="user_email" required autocomplete="off" placeholder="Email Address *" 
+								name="email" class="form-control" [(ngModel)]="email"
+												#user_email="ngModel" required email />
+													<validation-messages
+															[model]="user_email"
+															[messages]="{
+																	required: 'Email is required',
+																	email: 'Email is not valid'}">
+													</validation-messages>
             </div>
 			<div class="field-wrap">
-              <input type="password" required autocomplete="off" placeholder="Set A Password *" name="password" [(ngModel)]="password"/>
+							<input type="password" required autocomplete="off" placeholder="Set A Password *" 
+							id="user_pwd" name="password" class="form-control" [(ngModel)]="password"
+										#user_pwd="ngModel" required 
+										pattern="((?=.*\d)(?=.*[@#$%]).{6,20})"/>
+													<validation-messages
+															[model]="user_pwd"
+															[messages]="{
+																	required: 'Password is required',
+																	pattern: 'Password must be between 6-20 characters long 
+																				and contain 1 digit and 1 special character.'}">
+													</validation-messages>
             </div>
 			<div class="field-wrap">
-              <input type="password" required autocomplete="off" placeholder="Retype Password *" name="password"/>
+							<input type="password" required autocomplete="off" placeholder=" Retype Password *" 
+								id="pwd_two" name="password2" class="form-control" [(ngModel)]="password2"
+											#pwd_two="ngModel" required />
+																<validation-messages
+																		[model]="pwd_two"
+																		[messages]="{
+																				required: 'Retyped password is required'}">
+																</validation-messages>
             </div>
-			<button style="width:500px" type="button" class="button button-block" (click) = "go()">Get Started</button>
+			<div *ngIf = "!passwordMatch" class="alert alert-danger" style="width:500px;margin:5px0px">
+				Passwords don't match!
+			</div>
+			<button [disabled]="signupForm.invalid" style="width:500px" type="button" class="button button-block" (click) = "go()">Get Started</button>
 		</form>
 		 	<div *ngIf="error" id="error" class="alert alert-danger" style="width:500px">
   			<strong>Error:</strong> Incorrect email and/or password

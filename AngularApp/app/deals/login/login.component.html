@@ -4,15 +4,31 @@
 <div class="form">
 	<h1 id="closebites"> Login </h1>
 	<div id="login">
-		<form>
+		<form name="loginForm" #loginForm="ngForm" class="container" novalidate>
 			<div class="top-row"></div>
 			<div class="field-wrap">
-              <input type="email" required autocomplete="off" placeholder="Email Address" name="email" [(ngModel)]="email"/>
+				<input id="user_email" required autocomplete="off" placeholder="Email Address" 
+				name="email" class="form-control" [(ngModel)]="email"
+                #user_email="ngModel" required email />
+                        <validation-messages
+                            [model]="user_email"
+                            [messages]="{
+                                required: 'Email is required',
+                                email: 'Email is not valid'}">
+                        </validation-messages>
             </div>
 			<div class="field-wrap">
-              <input type="password" required autocomplete="off" placeholder="Password" name="password" [(ngModel)]="password"/>
+				<input type="password" required autocomplete="off" placeholder="Password" 
+				id="user_pwd" name="password" class="form-control" [(ngModel)]="password"
+            	#user_pwd="ngModel" required />
+                        <validation-messages
+                            [model]="user_pwd"
+                            [messages]="{
+                                required: 'Password is required'}">
+                        </validation-messages>
             </div>
-			<button style="width:500px" type="button" class="button button-block" (click) = "submit()">Next</button>
+			<button [disabled]="loginForm.invalid" style="width:500px" 
+			type="button" class="button button-block" (click) = "submit()">Next</button>
 		</form>
 	</div>
 </div>

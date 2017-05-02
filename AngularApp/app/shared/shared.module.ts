@@ -1,18 +1,25 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RatingComponent } from './rating/rating.component';
-
+import { ValidationMessagesComponent } from "./validation-messages/validation-messages.component";
+import { EmailValidatorDirective } from "./validators/email-validator.directive";
 
 @NgModule({
   imports: [ 
-      CommonModule
+      CommonModule,
+      FormsModule
   ],
   declarations: [
-    RatingComponent
+    RatingComponent,
+    ValidationMessagesComponent,
+    EmailValidatorDirective
   ],
   exports: [
-    RatingComponent
+    RatingComponent,
+    ValidationMessagesComponent,
+    EmailValidatorDirective
   ]
 })
 
