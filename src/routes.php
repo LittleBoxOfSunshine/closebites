@@ -4,8 +4,8 @@ session_start();
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="pass"; # CHANGE LATER
-  $dbname="closebites";
+  $dbpass="Jaav13!@G"; # CHANGE LATER
+  $dbname="closebites1";
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
