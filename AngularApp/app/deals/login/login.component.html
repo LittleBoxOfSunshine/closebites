@@ -1,6 +1,9 @@
 <div class = "row">
-	<h1>CloseBites</h1>
+	<a routerLink = "/">
+		<h1>CloseBites</h1>
+	<a>
 </div>
+<!--main login page form with email and password-->
 <div class="form">
 	<h1 id="closebites"> Login </h1>
 	<div id="login">
@@ -30,9 +33,12 @@
 			<button [disabled]="loginForm.invalid" style="width:500px" 
 			type="button" class="button button-block" (click) = "submit()">Next</button>
 		</form>
+		<div *ngIf="error" id="error" class="alert alert-danger" style="width:500px">
+  			<strong>Error:</strong> Incorrect email and/or password
+  		</div>
 	</div>
 </div>
 <div class= "footer">
-      No account? <a> Signup! </a>
+      No account? <a [routerLink] = "'/signup/' + 'home'"> Signup! </a>
 </div>
 

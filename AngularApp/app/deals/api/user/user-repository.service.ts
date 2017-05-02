@@ -41,6 +41,15 @@ export class UserRepository {
 			.catch(x => false);
 	}
 
+	public exists(email: string) {
+		let body = {"email": email};
+		return this.http
+			.put("/api/User/exists", JSON.stringify(body), this.options)
+			.toPromise()
+			.then(x => x.json())
+			.catch(x => false);
+	}
+
 	public register(body) {
 		return this.http
 			.post("/api/User/register", JSON.stringify(body), this.options)
