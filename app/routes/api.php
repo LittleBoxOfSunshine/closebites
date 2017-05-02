@@ -144,6 +144,10 @@ $app->group('/api', function() use ($app) {
             }
         });
 
+        $app->delete('/logout', function($request,$response,$args) {
+            return $response;
+        });
+
         $app->post('/favorite', function($request,$response,$args) {
             return "POST /favorite";
         });
