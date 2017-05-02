@@ -147,7 +147,7 @@ $app->group('/api', function() use ($app) {
         $app->put('/exists', function($request, $response, $args) {
             $body = $request->getParsedBody();
 
-            if($body['email'] == 'test')
+            if($body['email'] == 'test@test')
                 return $response->withJson(['exists'=>true]);
             else
                 return $response->withJson(['exists'=>false]);
