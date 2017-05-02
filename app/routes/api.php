@@ -199,8 +199,8 @@ $app->group('/api', function() use ($app) {
                 'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
             ];
             $hash = password_hash($password, PASSWORD_BCRYPT, $options);
-            $query = "INSERT INTO user (user_id, email, name, password, accountType)
-                      VALUES (NULL, '$email', '$body' '$hash', '$accountType')";
+            $query = "INSERT INTO user (email, name, password, accountType)
+                      VALUES ('$email', '$name', '$hash', '$accountType')";
             $db = getDB();
             $db->query($query);
 
