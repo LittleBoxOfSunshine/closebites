@@ -19,8 +19,8 @@ a.hover:hover {
     margin:40px;
 }
 .btn-info,.btn-primary {
-    height:100px;
-    width: 145px;
+    height:50px;
+    width: 75px;
     margin:15px   
 }
 .glyphicon {

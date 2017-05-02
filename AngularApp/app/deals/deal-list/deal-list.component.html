@@ -39,6 +39,9 @@
 			<button class = "btn" [ngClass] = "{'btn-info':drink,'btn-primary':!drink}"
 			type="button"
 			(click) = "updateMode('drink')">Drink</button>
+			<label class="radio-inline"><input type="radio" name="optradio">Food</label>
+			<label class="radio-inline"><input type="radio" name="optradio">Drinks</label>
+			<label class="radio-inline"><input type="radio" name="optradio">Food + Drinks</label>
 		</div>
 		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
 		class="btn btn-block btn-default">
