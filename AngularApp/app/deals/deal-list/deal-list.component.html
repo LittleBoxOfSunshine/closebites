@@ -29,22 +29,22 @@
         </div>
         <div class="form-group" data-toggle="toggle">
             <label for="cuisine">Cuisine</label>
-      			<label class="checkbox"><input type="checkbox" name="mexican" id="mexican"> Mexican</label>
-      			<label class="checkbox"><input type="checkbox" name="chinese" id="chinese"> Chinese</label>
-      			<label class="checkbox"><input type="checkbox" name="italian" id="italian"> Italian</label>
-				<label class="checkbox"><input type="checkbox" name="korean" id="korean"> Korean</label>
-				<label class="checkbox"><input type="checkbox" name="murican" id="murican"> Murican</label>
+      			<label class="checkbox"><input type="checkbox" [(ngModel)]="mexican"> Mexican</label>
+      			<label class="checkbox"><input type="checkbox" [(ngModel)]="chinese"> Chinese</label>
+      			<label class="checkbox"><input type="checkbox" [(ngModel)]="italian"> Italian</label>
+				<label class="checkbox"><input type="checkbox" [(ngModel)]="korean"> Korean</label>
+				<label class="checkbox"><input type="checkbox" [(ngModel)]="murican"> Murican</label>
         </div>
 		<div id = "deal">
 			<strong><p style = "text-align:center">Deal Type</p></strong>
 			<div class="btn-group" data-toggle="buttons">
-      			<label class="btn btn-primary"><input type="radio" name="options" id="food"> Food</label>
-      			<label class="btn btn-primary"><input type="radio" name="options" id="drinks"> Drinks</label>
-      			<label class="btn btn-primary active"><input type="radio" name="options" id="food_drinks" checked=""> Food + Drinks</label>
+      			<label class="btn btn-primary" (click)="updateMode('food')"><input type="radio" name="options"> Food</label>
+      			<label class="btn btn-primary" (click)="updateMode('drinks')"><input type="radio" name="options"> Drinks</label>
+      			<label class="btn btn-primary active" (click)="updateMode('foodAndDrinks')"><input type="radio" name="options" checked=""> Food + Drinks</label>
 			</div>
 		</div>
 		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
-		class="btn btn-block btn-default">
+		class="btn btn-block btn-default" (click)="updateSearch()">
 			Update</button>
 		<a href="javascript:void(0);">
 			<h4 *ngIf ="loggedIn" style="text-align:center" data-toggle="modal" data-target="#littleModal">Save Search</h4>

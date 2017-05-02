@@ -16,51 +16,57 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
 export class DealListComponent { 
 	food:Boolean;
-	drink:Boolean;
+	drinks:Boolean;
 	loggedIn:Boolean;
 	deals = new Array<Deal>(); //list of deals that show after searching
 	deal = new Deal; //used to bring up a specific deal in the modal
 	zip:number;
+	mexican:boolean;
+	chinese:boolean;
+	italian:boolean;
+	korean:boolean;
+	murican:boolean;
+	foodAndDrinks:boolean;
 
 	constructor(private router:Router,private dealsService:DealRepository,private userService:UserRepository,
 			private http: Http){
-		this.food = this.drink =false;
+		this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
+		this.foodAndDrinks = true;
 		this.loggedIn = this.router.url == '/user';
 		//dealsService.listAll()
 			//.then(x => this.deals = x);
 		dealsService.listAll().then(x => this.deals = x);
 
 		var that = this;
-		window.navigator.geolocation.getCurrentPosition(function(pos){
-    		console.log(pos);
-		  	that.http
-			  .get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
-			  .toPromise()
-			  .then(function(res){
-				res = res.json()['results'];
-				console.log(res);
-				var temp = res["0"].address_components;
-				console.log(temp);
+		// window.navigator.geolocation.getCurrentPosition(function(pos){
+    	// 	console.log(pos);
+		//   	that.http
+		// 	  .get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
+		// 	  .toPromise()
+		// 	  .then(function(res){
+		// 		res = res.json()['results'];
+		// 		console.log(res);
+		// 		var temp = res["0"].address_components;
+		// 		console.log(temp);
 
-				for(var i = 0; i < temp.length; i++) {
-					console.log(temp[i]);
-					var idx = temp[i]['types'].indexOf("postal_code")
-    				if(idx != -1) {
-						console.log(temp[i]['long_name']);
-						that.zip = temp[i]['long_name'];
-					}
-				}
-  			});
-		});
+		// 		for(var i = 0; i < temp.length; i++) {
+		// 			console.log(temp[i]);
+		// 			var idx = temp[i]['types'].indexOf("postal_code")
+    	// 			if(idx != -1) {
+		// 				console.log(temp[i]['long_name']);
+		// 				that.zip = temp[i]['long_name'];
+		// 			}
+		// 		}
+  		// 	});
+		// });
 		
 	}
 
 	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
-		if (dealType == 'food'){
-			this.food = !this.food;
-		} else {
-			this.drink = !this.drink;
-		}
+		console.log(dealType);
+		this.food = dealType == 'food';
+		this.drinks = dealType == 'drinks';
+		this.foodAndDrinks = dealType == 'foodAndDrinks';
 	}
 
 	identifyDeal(id: number){
@@ -69,11 +75,22 @@ export class DealListComponent {
 	}
 
 	logout(){
-		this.food = this.drink = false;
-		this.loggedIn = false;
+		this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
+		this.foodAndDrinks = true;
 		this.deals = new Array<Deal>();
 		this.deal = new Deal;
 		this.userService.logout();
+	}
+
+	updateSearch(){
+		console.log(this.mexican);
+		console.log(this.chinese);
+		console.log(this.italian);
+		console.log(this.korean);
+		console.log(this.murican);
+		console.log(this.food);
+		console.log(this.drinks);
+		console.log(this.foodAndDrinks);
 	}
 
 }
