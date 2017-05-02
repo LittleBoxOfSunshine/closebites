@@ -70,6 +70,7 @@ $app->group('/api', function() use ($app) {
             $body = $request->getParsedBody();
             $email = $body['email'];
             $password = $body['password'];
+            $accountType = $body['accountType'];
 
 
             // $getUser = "SELECT user_id FROM user WHERE user.email = '$email'";
