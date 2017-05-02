@@ -13,25 +13,24 @@ const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const user_repository_service_1 = require("../api/user/user-repository.service");
 let LoginComponent = class LoginComponent {
-    constructor(router, route, userRepository) {
+    constructor(router, route, userService) {
         this.router = router;
         this.route = route;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.error = false;
     }
     submit() {
-        // Allow promis callback to access this (parent scope)
-        var that = this;
-        // Make API call, provide "then" callback for when promise is satisfied
-        /*this.userRepository.login(this.email, this.password)
-                  .then(function(valid) {
-                      if(valid == 'consumer')
-                          that.router.navigateByUrl('user');
-                      else if(valid == 'vendor')
-                          that.router.navigateByUrl('vendor');
-                      else
-                          that.error = true;
-                  });*/
+        this.userService.login(this.email, this.password).then((x) => {
+            if (x) {
+                if (this.userService.getUser().accountType == 'vendor')
+                    this.router.navigate(['/vendor']);
+                else
+                    this.router.navigate(['/user']);
+            }
+            else {
+                this.error = true;
+            }
+        });
     }
 };
 LoginComponent = __decorate([

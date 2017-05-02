@@ -33,7 +33,6 @@ export class UserRepository {
 	}
 
 	public login(email: string, password: string) {
-
 		let body = {"email": email, "password": password};
 		return this.http
 			.post("/api/User/login", JSON.stringify(body), this.options)
@@ -47,6 +46,14 @@ export class UserRepository {
 			.post("/api/User/register", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json()))
+			.catch(x => false);
+	}
+
+	public logout() {
+		return this.http
+			.delete("/api/User/logout")
+			.toPromise()
+			.then(x => this.user = new User)
 			.catch(x => false);
 	}
 

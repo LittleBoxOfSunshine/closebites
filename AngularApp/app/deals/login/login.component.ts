@@ -17,23 +17,22 @@ export class LoginComponent {
   password: string;
   error: boolean;
 
-  constructor(private router: Router, private route:ActivatedRoute, private userRepository : UserRepository){
+  constructor(private router: Router, private route:ActivatedRoute, private userService : UserRepository){
       this.error = false;
   }
 
   submit() {
-      // Allow promis callback to access this (parent scope)
-      var that = this;
-      // Make API call, provide "then" callback for when promise is satisfied
-/*this.userRepository.login(this.email, this.password)
-          .then(function(valid) {
-              if(valid == 'consumer')
-                  that.router.navigateByUrl('user');
-              else if(valid == 'vendor')
-                  that.router.navigateByUrl('vendor');
-              else
-                  that.error = true;
-          });*/
+    this.userService.login(this.email, this.password).then((x)=>{
+      if(x) {
+        if (this.userService.getUser().accountType == 'vendor')
+          this.router.navigate(['/vendor']);
+        else 
+          this.router.navigate(['/user']);
+      }
+      else{
+        this.error = true;
+      }
+    });
   }
 
 }

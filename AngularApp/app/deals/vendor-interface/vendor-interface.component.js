@@ -13,11 +13,13 @@ const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const deal_repository_service_1 = require("../api/deal/deal-repository.service");
 const deal_1 = require("../api/deal/deal");
+const user_repository_service_1 = require("../api/user/user-repository.service");
 let VendorInterfaceComponent = class VendorInterfaceComponent {
-    constructor(router, route, dealsService) {
+    constructor(router, route, dealsService, userService) {
         this.router = router;
         this.route = route;
         this.dealsService = dealsService;
+        this.userService = userService;
         this.deal = new deal_1.Deal;
         this.food = this.drink = false;
         this.mode = 'month';
@@ -60,6 +62,12 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             this.deal = new deal_1.Deal;
         }
     }
+    logout() {
+        this.food = this.drink = false;
+        this.deals = new Array();
+        this.deal = new deal_1.Deal;
+        this.userService.logout();
+    }
 };
 VendorInterfaceComponent = __decorate([
     core_1.Component({
@@ -68,7 +76,8 @@ VendorInterfaceComponent = __decorate([
         templateUrl: 'vendor-interface.component.html',
         styleUrls: ['vendor-interface.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, deal_repository_service_1.DealRepository])
+    __metadata("design:paramtypes", [router_1.Router, router_1.ActivatedRoute, deal_repository_service_1.DealRepository,
+        user_repository_service_1.UserRepository])
 ], VendorInterfaceComponent);
 exports.VendorInterfaceComponent = VendorInterfaceComponent;
 //# sourceMappingURL=vendor-interface.component.js.map

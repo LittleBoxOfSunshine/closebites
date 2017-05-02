@@ -83,6 +83,9 @@
 			</div>
 			<button [disabled]="signupForm.invalid" style="width:500px" type="button" class="button button-block" (click) = "go()">Get Started</button>
 		</form>
+		 	<div *ngIf="error" id="error" class="alert alert-danger" style="width:500px">
+  			<strong>Error:</strong> Incorrect email and/or password
+  		</div>
 	</div>
 </div>
 

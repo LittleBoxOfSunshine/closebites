@@ -28,6 +28,7 @@ export class SignUpComponent {
     });
     this.passwordMatch = true;
  
+
   }
 
   go (){

@@ -12,11 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const deal_repository_service_1 = require("../api/deal/deal-repository.service");
 const deal_1 = require("../api/deal/deal");
+const user_repository_service_1 = require("../api/user/user-repository.service");
 const router_1 = require("@angular/router");
 let DealListComponent = class DealListComponent {
-    constructor(router, dealsService) {
+    constructor(router, dealsService, userService) {
         this.router = router;
         this.dealsService = dealsService;
+        this.userService = userService;
         this.deals = new Array(); //list of deals that show after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
         this.food = this.drink = false;
@@ -37,6 +39,13 @@ let DealListComponent = class DealListComponent {
         this.dealsService.getById(id)
             .then(x => this.deal = x);
     }
+    logout() {
+        this.food = this.drink = false;
+        this.loggedIn = false;
+        this.deals = new Array();
+        this.deal = new deal_1.Deal;
+        this.userService.logout();
+    }
 };
 DealListComponent = __decorate([
     core_1.Component({
@@ -45,7 +54,7 @@ DealListComponent = __decorate([
         templateUrl: 'deal-list.component.html',
         styleUrls: ['deal-list.component.css']
     }),
-    __metadata("design:paramtypes", [router_1.Router, deal_repository_service_1.DealRepository])
+    __metadata("design:paramtypes", [router_1.Router, deal_repository_service_1.DealRepository, user_repository_service_1.UserRepository])
 ], DealListComponent);
 exports.DealListComponent = DealListComponent;
 //# sourceMappingURL=deal-list.component.js.map

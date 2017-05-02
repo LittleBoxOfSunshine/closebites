@@ -15,7 +15,8 @@
 				<span class="glyphicon glyphicon-floppy-disk" title="View saved searches"></span>
 			</a>
 			<a routerLink = "/">
-			<button type="button" class="btn btn-danger">Log Out</button></a>
+			<button type="button" class="btn btn-danger"
+			(click)="logout()">Log Out</button></a>
 		</div>
 	</h1>
 </div>
@@ -32,12 +33,11 @@
         </div>
 		<div id = "deal">
 			<strong><p style = "text-align:center">Deal Type</p></strong>
-			<button class = "btn" [ngClass] = "{'btn-info':food,'btn-primary':!food}"
-			type="button"
-			(click) = "updateMode('food')">Food</button>
-			<button class = "btn" [ngClass] = "{'btn-info':drink,'btn-primary':!drink}"
-			type="button"
-			(click) = "updateMode('drink')">Drink</button>
+			<div class="btn-group" data-toggle="buttons">
+      			<label class="btn btn-primary"><input type="radio" name="options" id="food"> Food</label>
+      			<label class="btn btn-primary"><input type="radio" name="options" id="drinks"> Drinks</label>
+      			<label class="btn btn-primary"><input type="radio" name="options" id="food_drinks"> Food + Drinks</label>
+			</div>
 		</div>
 		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
 		class="btn btn-block btn-default">
