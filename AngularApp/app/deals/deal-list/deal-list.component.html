@@ -33,26 +33,11 @@
         </div>
 		<div id = "deal">
 			<strong><p style = "text-align:center">Deal Type</p></strong>
-			<button class = "btn" [ngClass] = "{'btn-info':food,'btn-primary':!food}"
-			type="button"
-			(click) = "updateMode('food')">Food</button>
-			<button class = "btn" [ngClass] = "{'btn-info':drink,'btn-primary':!drink}"
-			type="button"
-			(click) = "updateMode('drink')">Drink</button>
-			<label class="radio-inline"><input type="radio" name="optradio">Food</label>
-			<label class="radio-inline"><input type="radio" name="optradio">Drinks</label>
-			<label class="radio-inline"><input type="radio" name="optradio">Food + Drinks</label>
 			<div class="btn-group" data-toggle="buttons">
-      <label class="btn btn-primary">
-        <input type="radio" name="options" id="option1"> Option 1
-      </label>
-      <label class="btn btn-primary">
-        <input type="radio" name="options" id="option2"> Option 2
-      </label>
-      <label class="btn btn-primary">
-        <input type="radio" name="options" id="option3"> Option 3
-      </label>
-</div>
+      			<label class="btn btn-primary"><input type="radio" name="options" id="food"> Food</label>
+      			<label class="btn btn-primary"><input type="radio" name="options" id="drinks"> Drinks</label>
+      			<label class="btn btn-primary"><input type="radio" name="options" id="food_drinks"> Food + Drinks</label>
+			</div>
 		</div>
 		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
 		class="btn btn-block btn-default">
