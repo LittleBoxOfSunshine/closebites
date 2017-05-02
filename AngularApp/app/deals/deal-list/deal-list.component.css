@@ -18,10 +18,10 @@ a.hover:hover {
 .form-group {
     margin:40px;
 }
-.btn-info,.btn-primary {
+#deal > div > label.btn.btn-primary {
     height:50px;
     width: 75px;
-    margin:15px   
+    margin:15px;
 }
 .glyphicon {
     margin:20px;
