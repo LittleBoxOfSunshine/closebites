@@ -144,6 +144,15 @@ $app->group('/api', function() use ($app) {
             }
         });
 
+        $app->get('/exists', function($request, $response, $args) {
+            $body = $request->getParsedBody();
+
+            if($body['email'] == 'test')
+                return $response->withJson(['exists'=>true);
+            else
+                return $response->withJson(['exists'=>false);
+        });
+
         $app->delete('/logout', function($request,$response,$args) {
             return $response;
         });
