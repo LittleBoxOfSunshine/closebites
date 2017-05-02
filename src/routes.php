@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 function getDB() {
   $dbhost="localhost";
@@ -37,15 +38,16 @@ $app->group('/api', function() use ($app) {
 
           $body = $request->getParsedBody();
           $email = $body['email'];
-          // $password = $body['password'];
-          // $type = $body['accountType'];
 
           if($type == 'consumer') {
             // $query = "SELECT email, name FROM user WHERE user.email = '$email' AND user.password = '$password'";
             $query = "SELECT email, name FROM user WHERE user.email = '$email'";
             $db = getDB();
             $result = $db->query($query);
-            return $result;
+            while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                $data[] = $row;
+            }
+            return json_encode($data[0]['email']);
           }
           else {
             // $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
@@ -58,11 +60,6 @@ $app->group('/api', function() use ($app) {
             }
             return json_encode($data[0]['email']);
           }
-
-
-
-
-
         });
 
         $app->post('/login', function($request,$response,$args) {
@@ -72,8 +69,7 @@ $app->group('/api', function() use ($app) {
             $password = $body['password'];
             $accountType = $body['accountType'];
 
-
-            // $getUser = "SELECT user_id FROM user WHERE user.email = '$email'";
+            // Password Verification
             $getPassword = "SELECT password
                             FROM user
                             WHERE
@@ -89,191 +85,182 @@ $app->group('/api', function() use ($app) {
             $passwordClean = stripslashes($hash);
 
             if (password_verify($password, $passwordClean)) {
-                return 'YAY';
+                echo 'Valid password';
             } else {
-                return 'Invalid password.';
+                echo 'Invalid password.';
             }
 
-            /*
-            *************************************************************
-            ******************GET FAVORITES AND FILTERS******************
-            *************************************************************
-            */
-            // GET user INFO
-            $getInfo = "SELECT user_id, name, accountType
-                        FROM user
-                        WHERE
-                          email = '$email'
-                       ";
-            $infoResult = $db->query($getInfo);
+            // Vendor Login - if password is correct
+            if($accountType == 'vendor') {
+              // Retreive vendor account information
+              // $getVendorInfo = "SELECT name, locationer
+              //                   FROM vendor
+              //                   WHERE user_id IN (
+              //                     SELECT user_id
+              //                     FROM user
+              //                     WHERE email = '$email'
+              //                   )
+              //                  ";
+              // $vendorInfo = $db->query($getVendorInfo);
+              // while($row = $vendorInfo->fetch(PDO::FETCH_ASSOC)){
+              //     $vendor[] = $row;
+              // }
 
-            // GET Favorites
-            $getFavorites = "SELECT title, description
-                             FROM deal
-                             WHERE deal_id IN
-                               (SELECT deal_id
-                                FROM favorite
-                                WHERE user_id IN (
-                                  SELECT user_id
-                                  FROM user
-                                  WHERE email = '$email'
-                                ))
-                            ";
-            $favResult = $db->query($getFavorites);
-            while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
-                $favData[] = $row;
+// broken
+              // Get deals associated with vendor
+              // $getVendorDeals = "SELECT title, description, start_date, end_date, repeat
+              //                    FROM deal
+              //                    WHERE vendor_id IN
+              //                      (SELECT vendor_id
+              //                       FROM vendor
+              //                       WHERE user_id IN (
+              //                         SELECT user_id
+              //                         FROM user
+              //                         WHERE email = '$email'
+              //                       ))
+              //                     ";
+
+              // Get deals associated with vendor
+              $getVendorDeals = "SELECT title, description, start_date, end_date, repeat
+                                 FROM deal
+                                 WHERE vendor_id IN
+                                   (SELECT user_id
+                                    FROM user
+                                    WHERE email = '$email')
+                                  ";
+              $vendorDeals = $db->query($getVendorDeals);
+              while($row = $vendorDeals->fetch(PDO::FETCH_ASSOC)){
+                  $deals[] = $row;
+              }
+
+
+              // Return vendor information
+              return $response->withJson([
+                'id'=> 0,
+                'name' => $vendor,
+                'accountType' => 'vendor',
+                'address' => $vendor,
+                'calendar' => $deals
+              ]);
             }
-            $user = json_encode($favData);
-            // return json_encode($favData);
-
-
-            // GET Filters
-            $getFilters = "SELECT type, cuisine
-                           FROM filter
-                           WHERE user_id IN (
-                             SELECT user_id
-                             FROM user
-                             WHERE email = '$email'
-                           )
-                          ";
-            $filterResult = $db->query($getFilters);
-            while($row = $filterResult->fetch(PDO::FETCH_ASSOC)){
-                $filterData[] = $row;
-            }
-            $getFilter = json_encode($filterData);
-            // return $getFilter;
-
-            if($body['email'] != 'vendor') {
-                return $response->withJson([
-                    'id'=> 0,
-                    'name' => 'John Doe',
-                    'accountType' => 'consumer',
-                    'favorites' => [0, 1],
-                    'filters' => [
-                        [
-                            'name' => 'Chinese Food',
-                            'filterID' => 0,
-                            'filters' => [
-                                [
-                                    'type' => 'food',
-                                    'cuisine' => 'chinese'
-                                ]
-                            ]
-                        ],
-                        [
-                            'name' => 'Drinks',
-                            'filterID' => 1,
-                            'filters' => [
-                                [
-                                    'type' => 'drinks'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]);
-            }
+            // User login - if password is correct
             else {
-                return $response->withJson([
-                    'id'=> 0,
-                    'name' => 'Tacos y Mas',
-                    'accountType' => 'vendor',
-                    'address' => '123 fake street',
-                    'calendar' => [
-                        [
-                            'name' => 'Taco Tuesday',
-                            'id' => 0,
-                            'start' => '2016/05/15 15:0',
-                            'end' => '2016/05/15 19:00',
-                            'repeat' => '0010000'
-                        ],
-                        [
-                            'name' => 'Thirsty Thursday',
-                            'id' => 1,
-                            'start' => '2016/05/15 17:30',
-                            'end' => '2016/05/15 19:30',
-                            'repeat' => '0000100'
-                        ]
-                    ]
-                ]);
+              // Get user account information
+
+
+              $getInfo = "SELECT user_id, name, accountType
+                          FROM user
+                          WHERE
+                            email = '$email'
+                         ";
+              $infoResult = $db->query($getInfo);
+
+              $getFavorites = "SELECT favorite_id
+                                  FROM favorite
+                                  WHERE user_id IN (
+                                    SELECT user_id
+                                    FROM user
+                                    WHERE email = '$email'
+                                  )
+                              ";
+              $favResult = $db->query($getFavorites);
+              while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
+                  $favData[] = $row['favorite_id'];
+              }
+
+              // return $favs;
+
+              // GET Filters associated with the consumer
+              $getFilters = "SELECT type, cuisine
+                             FROM filter
+                             WHERE user_id IN (
+                               SELECT user_id
+                               FROM user
+                               WHERE email = '$email'
+                             )
+                            ";
+              $filterResult = $db->query($getFilters);
+              while($row = $filterResult->fetch(PDO::FETCH_ASSOC)){
+                  $filterData[] = $row;
+              }
+
+
+              // Return information regarding user
+              return $response->withJson([
+                  'id'=> 0,
+                  'name' => $email,
+                  'accountType' => 'consumer',
+                  'favorites' => $favData,
+                  'filters' => $filterData
+              ]);
             }
         });
 
         $app->post('/register', function($request,$response,$args) {
-            /**
-             *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
-            */
-
+            // Retreive registration information from json
             $body = $request->getParsedBody();
             $email = $body['email'];
+            $name = $body['name'];
             $password = $body['password'];
+            $accountType = $body['accountType'];
 
-
+            // Hash and salt user password
             $options = [
              'cost' => 11,
              'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
             ];
-
             $hash = password_hash($password, PASSWORD_BCRYPT, $options);
-
-            //  return $hash;
-            $query = "INSERT INTO user (user_id, email, password) VALUES (NULL, '$email', '$hash')";
-
+            $query = "INSERT INTO user (user_id, email, name, password, accountType)
+                      VALUES (NULL, '$email', '$body' '$hash', '$accountType')";
             $db = getDB();
             $db->query($query);
 
-            return 200;
+            return "200";
+            // Get user information
 
+            // Return user information
             if($body['accountType'] == 'consumer') {
+                // Retreive account info
+                $userInfoQuery = "SELECT user_id, name, accountType
+                            FROM user
+                            WHERE
+                              email = '$email'
+                           ";
+                $infoResult = $db->query($userInfoQuery);
+                while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
+                    $userData[] = $row;
+                }
+                $userinformation = json_encode($userData);
+
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => 'John Doe',
+                    'name' => $userinformation[1]['name'],
                     'accountType' => 'consumer',
-                    'favorites' => [0, 1],
-                    'filters' => [
-                        [
-                            'name' => 'Chinese Food',
-                            'filterID' => 0,
-                            'filters' => [
-                                [
-                                    'type' => 'food',
-                                    'cuisine' => 'chinese'
-                                ]
-                            ]
-                        ],
-                        [
-                            'name' => 'Drinks',
-                            'filterID' => 1,
-                            'filters' => [
-                                [
-                                    'type' => 'drinks'
-                                ]
-                            ]
-                        ]
-                    ]
+                    'favorites' => [],
+                    'filters' => []
                 ]);
             }
+
+            //Return vendor information
             else if($body['accountType'] == 'vendor') {
+                $vendorInfoQuery = "SELECT name, location
+                                FROM vendor
+                                WHERE user_id IN (
+                                  SELECT user_id
+                                  FROM user
+                                  WHERE email = '$email'
+                                )";
+                $infoResult = $db->query($vendorInfoQuery);
+                while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
+                    $vendorData[] = $row;
+                }
+                $vendorinformation = json_encode($vendorData);
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => 'Tacos y Mas',
+                    'name' => $vendorinformation[0]['name'],
                     'accountType' => 'vendor',
-                    'address' => '123 fake street',
-                    'calendar' => [
-                        [
-                            'name' => 'Taco Tuesday',
-                            'id' => 0,
-                            'start' => '2016/05/15 15:0',
-                            'end' => '2016/05/15 19:00',
-                            'repeat' => '0010000'
-                        ],
-                        [
-                            'name' => 'Thirsty Thursday',
-                            'id' => 1,
-                            'start' => '2016/05/15 17:30',
-                            'end' => '2016/05/15 19:30',
-                            'repeat' => '0000100'
-                        ]
-                    ]
+                    'address' => $vendorinformation[0]['location'],
+                    'calendar' => []
                 ]);
             }
             else {
