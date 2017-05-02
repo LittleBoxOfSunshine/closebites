@@ -33,36 +33,30 @@ $app->group('/api', function() use ($app) {
 
     $app->group('/User', function() use ($app) {
 
-        $app->get('/exists', function($request,$response,$args) {
+        $app->post('/exists', function($request,$response,$args) {
 
           $body = $request->getParsedBody();
           $email = $body['email'];
-          $password = $body['password'];
-          $type = $body['email'];
+          // $password = $body['password'];
+          // $type = $body['accountType'];
 
           if($type == 'consumer') {
-            $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
+            // $query = "SELECT email, name FROM user WHERE user.email = '$email' AND user.password = '$password'";
+            $query = "SELECT email, name FROM user WHERE user.email = '$email'";
             $db = getDB();
             $result = $db->query($query);
-
-            if($result) {
-              return "200";
-            } else {
-              return "400";
-            }
+            return $result;
           }
           else {
-            if($body['email'] == 'vendor') {
-              $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
-              $db = getDB();
-              $result = $db->query($query);
-
-              if($result) {
-                return "200";
-              } else {
-                return "400";
-              }
+            // $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
+            $query = "SELECT email FROM user WHERE user.email = '$email'";
+            // return $query;
+            $db = getDB();
+            $result = $db->query($query);
+            while($row = $result->fetch(PDO::FETCH_ASSOC)){
+                $data[] = $row;
             }
+            return json_encode($data[0]['email']);
           }
 
 
@@ -137,28 +131,59 @@ $app->group('/api', function() use ($app) {
         $app->post('/register', function($request,$response,$args) {
             /**
              *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
-             */
-             $body = $request->getParsedBody();
-             $email = $body['email'];
-             $password = $body['password'];
+            */
+            $body = $request->getParsedBody();
+            $email = $body['email'];
+            $password = $body['password'];
 
-             $options = [
-               'cost' => 11,
-               'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-             ];
+            $options = [
+             'cost' => 11,
+             'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+            ];
 
-             $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+            $hash = password_hash($password, PASSWORD_BCRYPT, $options);
             //  return $hash;
-             $query = "INSERT INTO user (user_id, email, password) VALUES (6, '$email', '$hash')";
+            $query = "INSERT INTO user (user_id, email, password) VALUES (NULL, '$email', '$hash')";
 
-             $db = getDB();
-             $db->query($query);
+            $db = getDB();
+            $db->query($query);
 
-            //  if($result) {
-            //    return "200";
-            //  } else {
-            //    return "400";
-            //  }
+            $getUser = "SELECT user_id FROM user WHERE email = '$email'";
+            $userResult = $db->query($getUser);
+            while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
+                $data[] = $row;
+            }
+            $user = json_encode($data[0]['user_id']);
+            // return $user[0]['email'];------------------
+
+            $getInfo = "SELECT user_id, name, accountType
+                        FROM user
+                        WHERE
+                          email = '$email'
+                       ";
+            $infoResult = $db->query($getInfo);
+            // return $infoResult['user_id'];
+
+            $getFavorites = "SELECT title, description
+                             FROM deal
+                             WHERE deal_id IN
+                               (SELECT deal_id
+                                FROM favorite
+                                WHERE favorite.user_id = '$user')
+                            ";
+            $favResult = $db->query($getFavorites);
+            while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
+                $favData[] = $row;
+            }
+            $user = json_encode($favData);
+            return json_encode($favData);
+            ///////////////////////////////////////////////////////
+            $getFilters = "SELECT type, cuisine
+                           FROM filter
+                           WHERE filter.user_id = '$user'
+                          ";
+            $filterResult = $db->query($getFilters);
+
 
             if($body['accountType'] == 'consumer') {
                 return $response->withJson([
