@@ -74,10 +74,9 @@ export class VendorInterfaceComponent {
     }
 
     logout(){
-        this.userService.logout();
 		this.food = this.drink = false;
 		this.deals = new Array<Deal>();
 		this.deal = new Deal;
-		this.router.navigate(['/']);
+        this.userService.logout();
 	}
 }

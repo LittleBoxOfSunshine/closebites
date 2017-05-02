@@ -40,12 +40,11 @@ let DealListComponent = class DealListComponent {
             .then(x => this.deal = x);
     }
     logout() {
-        this.userService.logout();
         this.food = this.drink = false;
         this.loggedIn = false;
         this.deals = new Array();
         this.deal = new deal_1.Deal;
-        this.router.navigate(['/']);
+        this.userService.logout();
     }
 };
 DealListComponent = __decorate([

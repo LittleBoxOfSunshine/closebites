@@ -63,11 +63,10 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         }
     }
     logout() {
-        this.userService.logout();
         this.food = this.drink = false;
         this.deals = new Array();
         this.deal = new deal_1.Deal;
-        this.router.navigate(['/']);
+        this.userService.logout();
     }
 };
 VendorInterfaceComponent = __decorate([
