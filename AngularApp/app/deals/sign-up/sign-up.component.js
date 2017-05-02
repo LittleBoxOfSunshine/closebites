@@ -21,13 +21,18 @@ let SignUpComponent = class SignUpComponent {
             this.mode = params['mode'];
         });
         this.passwordMatch = true;
+        this.emailExists = false;
     }
     go() {
         if (this.password != this.password2) {
             this.passwordMatch = false;
         }
+        else if (this.userService.exists(this.email)) {
+            this.emailExists = true;
+        }
         else {
             this.passwordMatch = true;
+            this.emailExists = false;
             let body = { email: this.email, password: this.password,
                 name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' };
             if (this.mode == 'vendor')

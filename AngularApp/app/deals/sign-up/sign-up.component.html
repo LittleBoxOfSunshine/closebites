@@ -1,6 +1,9 @@
 <div class = "row">
-	<h1>CloseBites</h1>
+	<a routerLink = "/">
+		<h1>CloseBites</h1>
+	</a>
 </div>
+<!--shown on signup/home => choose either consumer or vendor-->
 <div *ngIf = "mode == 'home'" class = "row" style = "height:800px">
 	<div class = "container-fluid" style = "margin:200px">
 		<a [routerLink] = "'/signup/' + 'user'">
@@ -15,6 +18,7 @@
 <div class="form" *ngIf = "mode != 'home'">
 	<h1 id="closebites"> Sign Up </h1>
 	<div id="login">
+		<!--signup page form fields depend on either consumer or vendor mode-->
 		<form name="signupForm" #signupForm="ngForm" class="container" novalidate>
 			<div class="top-row"></div>
 			<div *ngIf = "mode == 'vendor'" class="field-wrap">
@@ -81,11 +85,11 @@
 			<div *ngIf = "!passwordMatch" class="alert alert-danger" style="width:500px;margin:5px0px">
 				Passwords don't match!
 			</div>
+			<div *ngIf = "emailExists" class="alert alert-danger" style="width:500px;margin:5px0px">
+				This email address is taken!
+			</div>
 			<button [disabled]="signupForm.invalid" style="width:500px" type="button" class="button button-block" (click) = "go()">Get Started</button>
 		</form>
-		 	<div *ngIf="error" id="error" class="alert alert-danger" style="width:500px">
-  			<strong>Error:</strong> Incorrect email and/or password
-  		</div>
 	</div>
 </div>
 

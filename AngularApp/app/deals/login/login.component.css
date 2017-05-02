@@ -1,6 +1,6 @@
-/*#error {
+#error {
     margin-top: 14px;
-}*/
+}
 button[disabled]{
   opacity:.5
 }
