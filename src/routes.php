@@ -199,7 +199,7 @@ $app->get('/favorite', function($request,$response,$args) {
   $dbname="closebites";
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $query="select * from deal";
+  $query="select * from filter";
   $result = $dbh->query($query);
   while($row = $result->fetch(PDO::FETCH_ASSOC)){
       $data[] = $row;
@@ -208,13 +208,39 @@ $app->get('/favorite', function($request,$response,$args) {
 });
 
 $app->post('/unfavorite', function($request,$response,$args) {
+  // $favorite_id = 1;
+  // $query = "DELETE FROM `favorite` where favorite_id=1";
+  // $db = getDB();
+  // $result = $db->query($query);
+  return "deleted!";
 
 });
 
 $app->post('/saveFilter', function($request,$response,$args) {
+  $user_id = 1;
+  $cuisine = "mexican";
+  $type = "drinks"
+
+  $query = "INSERT INTO filter ( user_id, type, cuisine, created, last_updated, filters_turned_on)
+  VALUES ( 1, '$type', '$cuisine', NULL, NULL, 1);";
+
+  $db = getDB();
+  $result = $db->query($query);
 
 });
 
 $app->post('/unsaveFilter', function($request,$response,$args) {
+  $dbhost="localhost";
+  $dbuser="root";
+  $dbpass="pass";
+  $dbname="closebites";
+  $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $query="select * from filter";
+  $result = $dbh->query($query);
+  while($row = $result->fetch(PDO::FETCH_ASSOC)){
+      $data[] = $row;
+  }
+  return json_encode($data);
 
 });
