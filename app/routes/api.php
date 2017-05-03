@@ -4,7 +4,7 @@
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="Jaav13!@G"; // Jaav13!@G
+  $dbpass="pass"; // Jaav13!@G
   $dbname="closebites"; // closebites1
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -63,6 +63,7 @@ $app->group('/api', function() use ($app) {
             $body = $request->getParsedBody();
             $email = $body['email'];
             $password = $body['password'];
+
             // TEMP REMOVE THIS
             //$accountType = $body['accountType'];
 
@@ -81,12 +82,17 @@ $app->group('/api', function() use ($app) {
                 $data[] = $row;
                 $accountType = $row['accountType'];
             }
-
+            // echo "\r\n";
+            // echo $password;
+            // echo "\r\n";
+            // echo "---------------------- \r\n";
+            // echo $data[0]['password'];
+            // echo "---------------------- \r\n";
 
             if (password_verify($password, $data[0]['password'])) {
               // echo $password;
             } else {
-              echo $password;
+              // echo $password;
                 return false;
             }
 
@@ -201,7 +207,36 @@ $app->group('/api', function() use ($app) {
             $db = getDB();
             $db->query($query);
 
+            // Password Verification
+            $getPassword = "SELECT password, accountType
+                            FROM user
+                            WHERE
+                              user.email = '$email'
+                           ";
 
+            $db = getDB();
+            $userResult = $db->query($getPassword);
+            $pass;
+
+            while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
+                $data[] = $row;
+                $pass = $row['accountType'];
+            }
+            // echo "\r\n";
+            // echo $password;
+            // echo "\r\n";
+            // echo "---------------------- \r\n";
+            // echo $data[0]['password'];
+            // echo "---------------------- \r\n";
+
+            if (password_verify($password, $hash)) {
+              // echo "SUCCESS";
+            } else {
+              // echo $password;
+                return false;
+            }
+
+//////////////////////////////////////////////////////////////////////
             // Return user information - after register
             if($body['accountType'] == 'consumer') {
                 // Retreive account info
