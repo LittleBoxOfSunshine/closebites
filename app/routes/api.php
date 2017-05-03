@@ -4,7 +4,7 @@
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="pass"; // Jaav13!@G
+  $dbpass="Jaav13!@G"; // Jaav13!@G
   $dbname="closebites"; // closebites1
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -45,7 +45,7 @@ $app->group('/api', function() use ($app) {
           $query = "SELECT email FROM user WHERE user.email = '$email'";
           // return $query;
           $db = getDB();
-          $result = $db->query($query); 
+          $result = $db->query($query);
           $emailExists;
           while($row = $result->fetch(PDO::FETCH_ASSOC)){
               $emailExists = $row['email'];
