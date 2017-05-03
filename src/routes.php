@@ -396,12 +396,8 @@ $app->group('/Deal', function() use ($app) {
       //getFeedback query 
       $sql = $dbh->prepare("select comment from comment where comment.deal_id = '$deal_id'");
       $sql->execute(); //run it
-      $data = $sql->fetchAll(PDO::FETCH_ASSOC);
-   
-      var_dump($data);
-
-      //make json
-      return $data;
+      $results = $sql->fetchAll();
+      return json_encode($results);  
 
    });//end getFeedback
 
