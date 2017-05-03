@@ -35,11 +35,12 @@ export class SignUpComponent {
   go (){
       if (this.password != this.password2 || this.userService.exists(this.email)){
           this.passwordMatch = (this.password == this.password2); //passwords don't match
-          
+          console.log('Fail');
           //if (this.userService.exists(this.email))  //email address already exists
           //    this.emailExists = true;
           //else this.emailExists = false;
       } else { //top two conditions don't apply
+
           this.passwordMatch=true;
           this.emailExists=false;
           let body = { email: this.email, password: this.password, 
@@ -48,6 +49,7 @@ export class SignUpComponent {
             body['address'] = this.address;
 
           this.userService.register(body).then((x)=>{
+            console.log(x);
             if(x) {
               if (this.mode == 'vendor')
                 this.router.navigate(['/vendor']);

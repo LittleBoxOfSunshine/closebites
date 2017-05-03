@@ -54,7 +54,7 @@ export class UserRepository {
 			.post("/api/User/register", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json()))
-			.catch(x => false);
+			.catch(x => x.message);
 	}
 
 	public logout() {

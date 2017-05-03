@@ -27,7 +27,7 @@
         </div>
         <div *ngIf = "dealOrSearch=='deal'">
             <div *ngFor = "let value of favorite_deals">
-                <div class = "search" data-toggle="modal" data-target="#dealModal" (click)="getDeal(value)">{{deal.name}}</div>
+                <div class = "search" data-toggle="modal" data-target="#dealModal" (click)="getDeal(value.id)">{{deal.name}}</div>
 		    </div>
         </div>
 	</div>

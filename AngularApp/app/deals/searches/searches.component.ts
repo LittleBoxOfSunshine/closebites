@@ -46,8 +46,11 @@ export class SearchesComponent {
         this.dealOrSearch = this.dealOrSearch=='search' ? 'deal': 'search';
     }
 
-    getDeal(index: number) {
-        this.deal = this.favorite_deals[index];
+    getDeal(identification: number) {
+        for (let deal of this.favorite_deals){
+            if (deal.id == identification)
+                this.deal = deal;
+        }
     }
 
     updateDeal() {
