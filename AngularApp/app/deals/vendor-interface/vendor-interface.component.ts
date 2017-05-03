@@ -102,7 +102,6 @@ export class VendorInterfaceComponent {
                 this.deal.type1='Food';
                 this.deal.type2='Drink';
             }*/
-            //this.dealsService.add(this.deal);
             this.startDate = this.startDate.replace(/-/g,"/");
             this.endDate = this.startDate.replace(/-/g,"/");
             this.startDate = this.startDate.concat(' ',this.startTime);
@@ -112,12 +111,16 @@ export class VendorInterfaceComponent {
             this.deal.end = this.endDate;
             this.deal.normPrice = this.startPrice;
             this.deal.discountedPrice = this.endPrice;
-            this.dealsService.add(this.deal);
+            this.dealsService.add(this.deal).then((x) => {
+                console.log(x);
+            });
 
             //reset modal form values afterwards
             this.deal = new Deal;
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
+            this.food = this.drink = false;
+            
         }
     }
 
