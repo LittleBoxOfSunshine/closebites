@@ -122,6 +122,7 @@ $app->group('/api', function() use ($app) {
                                     WHERE email = '$email')
                                 ";
               $vendorDeals = $db->query($getVendorDeals);
+              $deals = [];
               while($row = $vendorDeals->fetch(PDO::FETCH_ASSOC)){
                   $deals[] = $row;
               }
