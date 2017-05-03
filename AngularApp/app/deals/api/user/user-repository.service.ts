@@ -43,9 +43,9 @@ export class UserRepository {
 	public exists(email: string) {
 		let body = {"email": email};
 		return this.http
-			.put("/api/User/exists", JSON.stringify(body), this.options)
+			.post("/api/User/exists", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => true)
+			.then(x => x.json())
 			.catch(x => false);
 	}
 
