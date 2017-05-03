@@ -34,30 +34,25 @@ $app->group('/api', function() use ($app) {
 
     $app->group('/User', function() use ($app) {
 
-        $app->post('/exists', function($request,$response,$args) {
+        $app->put('/exists', function($request,$response,$args) {
 
           $body = $request->getParsedBody();
           $email = $body['email'];
-          $accountType = $body['accountType'];
+          // $accountType = $body['accountType'];
 
-          if($accountType == 'consumer') {
-            $query = "SELECT email, name FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
-            $db = getDB();
-            $result = $db->query($query);
-            while($row = $result->fetch(PDO::FETCH_ASSOC)){
-                $data[] = $row;
-            }
 
+          $query = "SELECT email FROM user WHERE user.email = '$email'";
+          $db = getDB();
+          $result = $db->query($query);
+          $emailExists;
+          while($row = $result->fetch(PDO::FETCH_ASSOC)){
+              $emailExists = $row['email'];
+          }
+          if($emailExists) {
             return true;
           }
           else {
-            $query = "SELECT email FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
-            $db = getDB();
-            $result = $db->query($query);
-            while($row = $result->fetch(PDO::FETCH_ASSOC)){
-                $data[] = $row;
-            }
-            return true;
+            return false;
           }
         });
 
