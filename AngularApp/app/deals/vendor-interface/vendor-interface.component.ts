@@ -118,9 +118,6 @@ export class VendorInterfaceComponent {
             this.deal = new Deal;
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
-            for (let day of this.days2){
-                day = false;
-            }
         }
     }
 

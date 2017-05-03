@@ -33,7 +33,7 @@ export class DealRepository {
 
 	/*private _movies: Deal[];*/
 
-	private _apiUrl = 'api/deals';
+	//private _apiUrl = 'api/deals';
 
 	listAll() : Promise<Deal[]>{
 		return this.http
@@ -47,13 +47,13 @@ export class DealRepository {
 	// 		.map(res => res.json()));
 	// }
 
-	getById(id : number) : Promise<Deal>{
+	/*getById(id : number) : Promise<Deal>{
 		return this.http
 			.get(`${this._apiUrl}/${id}`)
 			.toPromise()
 			.then(x => x.json().data as Deal)
 			.catch(x => x.message);
-	}
+	}*/
 	
 	add(deal: Deal){
 		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
@@ -65,7 +65,7 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 	
-	update(Deal: Deal) : Promise<Deal>{
+	/*update(Deal: Deal) : Promise<Deal>{
 		return this.http
 			.put(`${this._apiUrl}/${Deal.id}`, Deal)
 			.toPromise()
@@ -78,5 +78,5 @@ export class DealRepository {
 			.delete(`${this._apiUrl}/${Deal.id}`)
 			.toPromise()
 			.catch(x => x.message);
-	}
+	}*/
 }
