@@ -41,9 +41,10 @@ $app->group('/api', function() use ($app) {
           // $accountType = $body['accountType'];
 
 
-          $query = "SELECT email FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
+          $query = "SELECT email FROM user WHERE user.email = '$email'";
           $db = getDB();
           $result = $db->query($query);
+          $emailExists;
           while($row = $result->fetch(PDO::FETCH_ASSOC)){
               $emailExists = $row['email'];
           }
