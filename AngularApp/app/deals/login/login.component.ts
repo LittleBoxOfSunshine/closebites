@@ -23,6 +23,7 @@ export class LoginComponent {
 
   submit() {
     this.userService.login(this.email, this.password).then((x)=>{
+      console.log(x);
       if(x) {
         if (this.userService.getUser().accountType == 'vendor')
           this.router.navigate(['/vendor']);
