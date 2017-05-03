@@ -1,25 +1,4 @@
 <!--top row containing buttons and closebites logo-->
-<div class = "row">
-	<h1>CloseBites
-		<div *ngIf = "!loggedIn" style = "float:right">
-			<a [routerLink] = "'/signup/' + 'home'">
-			<button type="button" class="btn btn-success">Sign Up</button></a>
-			<a routerLink = "/login">
-			<button type="button" class="btn btn-danger">Log In</button></a>
-		</div>
-		<div *ngIf = "loggedIn" style="float:right">
-			<a routerLink="/mydeals" style="text-decoration:none">
-				<span class="glyphicon glyphicon-heart" title="View favorited deals"></span>
-			</a>
-			<a routerLink = "/mysearches" style="text-decoration:none">
-				<span class="glyphicon glyphicon-floppy-disk" title="View saved searches"></span>
-			</a>
-			<a routerLink = "/">
-			<button type="button" class="btn btn-danger"
-			(click)="logout()">Log Out</button></a>
-		</div>
-	</h1>
-</div>
 <!--next row contains search fields to filter deals and the deals on the right-->
 <div class = "row">
 	<div class = "col-sm-4" style = "height:500px;border-style:ridge">
@@ -60,7 +39,7 @@
 
 <!--Modal for saving searches-->
 <div class="modal fade" id="littleModal" role="dialog">
-    <div class="modal-dialog">  
+    <div class="modal-dialog">
       <div class="modal-content" style="text-align:center">
         <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -71,14 +50,14 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-		</div> 
-      </div>  
+		</div>
+      </div>
     </div>
   </div>
 
   <!--modal for when clicking on a deal-->
   <div class="modal fade" id="dealModal" role="dialog">
-    <div class="modal-dialog">  
+    <div class="modal-dialog">
       <div class="modal-content" style="text-align:center">
         <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -87,19 +66,19 @@
 		<div class="modal-body">
             <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
                 <h2 style="text-align:center">PICTURE</h2>
-            </div> 
+            </div>
             <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
                 <p>{{deal.description}}
                 <span [style.opacity]="favoriteDeal ? 1 : .5"
 								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
-                </p>             
-            </div> 
-		</div>	
+                </p>
+            </div>
+		</div>
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: <i>Vendor Name, Vendor Address</i></p>
             <p>Cuisine: <i>Cuisine tags</i> </p>
             <p>Deal Type: {{deal.type1}}<span *ngIf="deal.type2"> and </span>{{deal.type2}}</p>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
