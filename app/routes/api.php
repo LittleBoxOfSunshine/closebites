@@ -34,7 +34,7 @@ $app->group('/api', function() use ($app) {
 
     $app->group('/User', function() use ($app) {
 
-        $app->get('/exists', function($request,$response,$args) {
+        $app->put('/exists', function($request,$response,$args) {
 
           $body = $request->getParsedBody();
           $email = $body['email'];
