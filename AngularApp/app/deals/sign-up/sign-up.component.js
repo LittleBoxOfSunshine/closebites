@@ -26,10 +26,9 @@ let SignUpComponent = class SignUpComponent {
     go() {
         if (this.password != this.password2 || this.userService.exists(this.email)) {
             this.passwordMatch = (this.password == this.password2); //passwords don't match
-            if (this.userService.exists(this.email))
-                this.emailExists = true;
-            else
-                this.emailExists = false;
+            //if (this.userService.exists(this.email))  //email address already exists
+            //    this.emailExists = true;
+            //else this.emailExists = false;
         }
         else {
             this.passwordMatch = true;
