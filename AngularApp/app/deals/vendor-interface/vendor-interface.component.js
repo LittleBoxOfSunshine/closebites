@@ -49,14 +49,14 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         }
         else {
             this.typeNotChosen = false;
-            if (this.food && !this.drink)
+            /*if (this.food && !this.drink)
                 this.deal.type1 = 'Food';
             else if (this.drink && !this.food)
                 this.deal.type1 = 'Drink';
-            else if (this.food && this.drink) {
-                this.deal.type1 = 'Food';
-                this.deal.type2 = 'Drink';
-            }
+            else if (this.food && this.drink){
+                this.deal.type1='Food';
+                this.deal.type2='Drink';
+            }*/
             this.dealsService.add(this.deal);
             //reset modal form values afterwards
             this.deal = new deal_1.Deal;

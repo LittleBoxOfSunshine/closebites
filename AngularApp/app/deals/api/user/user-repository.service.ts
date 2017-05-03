@@ -18,18 +18,12 @@ export class UserRepository {
 
 	public loadUser(jsonObj) {
 		this.user.name = jsonObj.name;
-		console.log(this.user.name);
-		//this.user.addr = jsonObj.address;
+		this.user.addr = jsonObj.address;
 		this.user.favorites = jsonObj.favorites;
-		console.log(this.user.favorites);
 		this.user.filters = jsonObj.filters;
-		console.log(this.user.filters);
 		this.user.calendar = jsonObj.calendar;
-		console.log(this.user.calendar);
 		this.user.accountType = jsonObj.accountType;
-		console.log(this.user.accountType);
 		this.user.id = jsonObj.id;
-		console.log(this.user.id);
 		return this.user.accountType != undefined;
 	}
 
@@ -43,7 +37,7 @@ export class UserRepository {
 			.post("/api/User/login", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json()))
-			.catch(x => console.log(x));
+			.catch(x => false);
 	}
 
 	public exists(email: string) {
