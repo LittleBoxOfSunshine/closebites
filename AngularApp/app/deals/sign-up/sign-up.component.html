@@ -63,13 +63,13 @@
 							<input type="password" required autocomplete="off" placeholder="Set A Password *" 
 							id="user_pwd" name="password" class="form-control" [(ngModel)]="password"
 										#user_pwd="ngModel" required 
-										pattern="((?=.*\d)(?=.*[@#$%]).{6,20})"/>
+										pattern="((?=.*\d)(?=.*[!@#$%^*]).{6,20})"/>
 													<validation-messages
 															[model]="user_pwd"
 															[messages]="{
 																	required: 'Password is required',
 																	pattern: 'Password must be between 6-20 characters long 
-																				and contain 1 digit and 1 special character.'}">
+																	and contain at least 1 digit and at least 1 special character.'}">
 													</validation-messages>
             </div>
 			<div class="field-wrap">
@@ -82,10 +82,10 @@
 																				required: 'Retyped password is required'}">
 																</validation-messages>
             </div>
-			<div *ngIf = "!passwordMatch" class="alert alert-danger" style="width:500px;margin:5px0px">
+			<div *ngIf = "!passwordMatch" class="alert alert-danger">
 				Passwords don't match!
 			</div>
-			<div *ngIf = "emailExists" class="alert alert-danger" style="width:500px;margin:5px0px">
+			<div *ngIf = "emailExists" class="alert alert-danger">
 				This email address is taken!
 			</div>
 			<button [disabled]="signupForm.invalid" style="width:500px" type="button" class="button button-block" (click) = "go()">Get Started</button>

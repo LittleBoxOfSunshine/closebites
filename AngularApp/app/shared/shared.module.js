@@ -9,7 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const forms_1 = require("@angular/forms");
 const core_1 = require("@angular/core");
 const common_1 = require("@angular/common");
-const rating_component_1 = require("./rating/rating.component");
 const validation_messages_component_1 = require("./validation-messages/validation-messages.component");
 const email_validator_directive_1 = require("./validators/email-validator.directive");
 let SharedModule = class SharedModule {
@@ -21,12 +20,10 @@ SharedModule = __decorate([
             forms_1.FormsModule
         ],
         declarations: [
-            rating_component_1.RatingComponent,
             validation_messages_component_1.ValidationMessagesComponent,
             email_validator_directive_1.EmailValidatorDirective
         ],
         exports: [
-            rating_component_1.RatingComponent,
             validation_messages_component_1.ValidationMessagesComponent,
             email_validator_directive_1.EmailValidatorDirective
         ]

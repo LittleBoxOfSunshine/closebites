@@ -9,7 +9,7 @@ import { NG_VALIDATORS, Validator, AbstractControl } from "@angular/forms";
 })
 export class EmailValidatorDirective implements Validator {  
   validate(control: AbstractControl): { [key: string]: any } {
-      var isValid = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$").test(control.value);
+      var isValid = !control.value || new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$").test(control.value);
       return isValid ? null : { 'email': true };
   }
 }

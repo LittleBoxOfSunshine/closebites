@@ -33,29 +33,31 @@ export class SignUpComponent {
   }
 
   go (){
-      if (this.password != this.password2){ //passwords don't match
-          this.passwordMatch = false;
-      } else if (this.userService.exists(this.email)) { //email address already exists
-          this.emailExists = true;
+      if (this.password != this.password2 || this.userService.exists(this.email)){
+          this.passwordMatch = (this.password == this.password2); //passwords don't match
+          
+          if (this.userService.exists(this.email))  //email address already exists
+              this.emailExists = true;
+          else this.emailExists = false;
       } else { //top two conditions don't apply
-        this.passwordMatch=true;
-        this.emailExists=false;
-        let body = { email: this.email, password: this.password, 
-          name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' }
-        if(this.mode == 'vendor')
-          body['address'] = this.address;
+          this.passwordMatch=true;
+          this.emailExists=false;
+          let body = { email: this.email, password: this.password, 
+            name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' }
+          if(this.mode == 'vendor')
+            body['address'] = this.address;
 
-        this.userService.register(body).then((x)=>{
-          if(x) {
-            if (this.mode == 'vendor')
-              this.router.navigate(['/vendor']);
-            else 
-              this.router.navigate(['/user']);
-          }
-          else{
-            this.error = true;
-          }
-        });
+          this.userService.register(body).then((x)=>{
+            if(x) {
+              if (this.mode == 'vendor')
+                this.router.navigate(['/vendor']);
+              else 
+                this.router.navigate(['/user']);
+            }
+            else{
+              this.error = true;
+            }
+          });
       }
   }
 

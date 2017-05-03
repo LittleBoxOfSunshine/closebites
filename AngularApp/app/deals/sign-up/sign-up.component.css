@@ -5,14 +5,14 @@ button[disabled]{
     width: 40%;
     margin: 30px;
 }
-
+.alert-danger {
+  width:500px;
+  margin:5px0px;
+}
 .form-group {
     margin-bottom:30px;
 }
 
-#error {
-    margin-top: 14px;
-}
 *, *:before, *:after {
   box-sizing: border-box;
 }

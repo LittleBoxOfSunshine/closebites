@@ -4,5 +4,4 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./shared.module"));
-__export(require("./rating/rating.component"));
 //# sourceMappingURL=index.js.map

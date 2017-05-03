@@ -24,11 +24,12 @@ let SignUpComponent = class SignUpComponent {
         this.emailExists = false;
     }
     go() {
-        if (this.password != this.password2) {
-            this.passwordMatch = false;
-        }
-        else if (this.userService.exists(this.email)) {
-            this.emailExists = true;
+        if (this.password != this.password2 || this.userService.exists(this.email)) {
+            this.passwordMatch = (this.password == this.password2); //passwords don't match
+            if (this.userService.exists(this.email))
+                this.emailExists = true;
+            else
+                this.emailExists = false;
         }
         else {
             this.passwordMatch = true;
