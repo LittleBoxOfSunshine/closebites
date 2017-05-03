@@ -110,21 +110,7 @@ $app->group('/api', function() use ($app) {
               while($row = $vendorInfo->fetch(PDO::FETCH_ASSOC)){
                   $vendor[] = $row;
               }
-              echo $vendor;
 
-// broken
-              // Get deals associated with vendor
-              // $getVendorDeals = "SELECT title, description, start_date, end_date, repeat
-              //                    FROM deal
-              //                    WHERE vendor_id IN
-              //                      (SELECT vendor_id
-              //                       FROM vendor
-              //                       WHERE user_id IN (
-              //                         SELECT user_id
-              //                         FROM user
-              //                         WHERE email = '$email'
-              //                       ))
-              //                     ";
 
               // Get deals associated with vendor
               $getVendorDeals = "SELECT title, description, start_date, end_date, repeats
@@ -250,13 +236,28 @@ $app->group('/api', function() use ($app) {
 
             //Return vendor information -- after register
             else if($body['accountType'] == 'vendor') {
-                // Setup vendor in table
-                ////////////////////////////////////////////////////////
-                // $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type, phone)
-                //                  VALUES ('$user_id', '$name', '$genre', '$location', '$type')
-                //
-                //                 ";
+                //Get user_id to create vendor
 
+                $user_id_query = "SELECT user_id FROM user WHERE email = '$email'";
+                $getUserId = $db->query($user_id_query);
+                while($row = $getUserId->fetch(PDO::FETCH_ASSOC)){
+                    $user_id = $row['user_id'];
+                }
+                echo $user_id;
+
+                // Setup vendor in table
+                $storename = $body['storename'];
+                $genre = $body['genre'];
+                $location = $body['location'];
+                $type = $body['type'];
+                $phone = $body['phone'];
+                ////////////////////////////////////////////////////////
+                $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type, phone)
+                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type', $phone)
+                                ";
+                $db->query($createVendor);
+
+                //Retreive vendor information
                 $vendorInfoQuery = "SELECT name, location
                                     FROM vendor
                                     WHERE user_id IN (
@@ -266,15 +267,16 @@ $app->group('/api', function() use ($app) {
                                    ";
                 $infoResult = $db->query($vendorInfoQuery);
                 while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
-                    $vendorData[] = $row;
+                    $vendorName = $row['name'];
+                    $vendorAddress = $row['location'];
                 }
                 // $vendorinformation = json_encode($vendorData);
 //***************************************************MUST TEST
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => $vendorData['name'],
+                    'name' => $vendorName,
                     'accountType' => 'vendor',
-                    'address' => $vendorData['location'],
+                    'address' => $vendorAddress,
                     'calendar' => []
                 ]);
             }
