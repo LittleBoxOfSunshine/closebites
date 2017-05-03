@@ -87,8 +87,9 @@ $app->group('/api', function() use ($app) {
             $passwordClean = stripslashes($hash);
 
             if (password_verify($password, $passwordClean)) {
-              echo $password;
+              // echo $password;
             } else {
+              echo $password;
                 return false;
             }
 
@@ -376,13 +377,13 @@ $app->group('/Vendor', function() use ($app) {
    // vendor/create route
    $app->post('/create', function($request,$response) {
 
-      //run the connection to the database again 
+      //run the connection to the database again
       $dbh = getDB();
 
       //parse request
       $body = $request->getParsedBody();
 
-      //insert deal query 
+      //insert deal query
       $sql = $dbh->prepare("insert into deal (user_id,category_id,title,start_date,end_date,repeats,description,norm_price,discount_price,type) values (:user_id,:category_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:type)");
       $sql->bindParam('title',$title);
       $sql->bindParam('start_date',$start_date);
@@ -406,7 +407,7 @@ $app->group('/Vendor', function() use ($app) {
       $discount_price = $body['discount_price'];
       $type = $body['type'];
       $category_id = $body['category_id'];
-      $sql->execute(); //run insert deal 
+      $sql->execute(); //run insert deal
       $deal_id = $dbh->lastInsertId();
 
       //return deal_id
@@ -417,13 +418,13 @@ $app->group('/Vendor', function() use ($app) {
    // vendor/update route
    $app->post('/update/{deal_id}', function($request,$response,$args) {
 
-      //run the connection to the database again 
+      //run the connection to the database again
       $dbh = getDB();
 
       //parse request
       $body = $request->getParsedBody();
 
-      //update deal query 
+      //update deal query
       $sql = $dbh->prepare("update deal set user_id=:user_id,category_id=:category_id,title=:title,start_date=:start_date,end_date=:end_date,repeats=:repeats,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type where :deal_id=deal.deal_id");
       $sql->bindParam('title',$title);
       $sql->bindParam('start_date',$start_date);
@@ -449,7 +450,7 @@ $app->group('/Vendor', function() use ($app) {
       $type = $body['type'];
       $category_id = $body['category_id'];
       $deal_id = $args['deal_id'];
-      $sql->execute(); //run insert deal 
+      $sql->execute(); //run insert deal
 
    });//end vendor/create route
 
@@ -463,13 +464,13 @@ $app->group('/Deal', function() use ($app) {
       //pull out deal_id
       $deal_id = $args['deal_id'];
 
-      //run the connection to the database again 
+      //run the connection to the database again
       $dbh = getDB();
 
       //parse request
       $body = $request->getParsedBody();
 
-      //getFeedback query 
+      //getFeedback query
       $sql = $dbh->prepare("select comment from comment where comment.deal_id = '$deal_id'");
       $sql->execute(); //run it
       $results = $sql->fetchAll();
@@ -480,13 +481,13 @@ $app->group('/Deal', function() use ($app) {
    //post feedback route
    $app->post('/feedback/{deal_id}', function($request,$response,$args) {
 
-      //run the connection to the database again 
+      //run the connection to the database again
       $dbh = getDB();
 
       //parse request
       $body = $request->getParsedBody();
 
-      //insert feedback query 
+      //insert feedback query
       $sql = $dbh->prepare("insert into comment (user_id,deal_id,comment) values (:user_id,:deal_id,:comment)");
 
       $sql->bindParam('user_id',$user_id);
