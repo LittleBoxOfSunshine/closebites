@@ -105,14 +105,14 @@ $app->group('/api', function() use ($app) {
                             'id' => 0,
                             'start' => '2016/05/15 15:0',
                             'end' => '2016/05/15 19:00',
-                            '_repeat' => '0010000'
+                            'repeats' => '0010000'
                         ],
                         [
                             'name' => 'Thirsty Thursday',
                             'id' => 1,
                             'start' => '2016/05/15 17:30',
                             'end' => '2016/05/15 19:30',
-                            '_repeat' => '0000100'
+                            'repeats' => '0000100'
                         ]
                     ]
                 ]);
@@ -180,14 +180,14 @@ $app->group('/api', function() use ($app) {
                             'id' => 0,
                             'start' => '2016/05/15 15:0',
                             'end' => '2016/05/15 19:00',
-                            '_repeat' => '0010000'
+                            'repeats' => '0010000'
                         ],
                         [
                             'name' => 'Thirsty Thursday',
                             'id' => 1,
                             'start' => '2016/05/15 17:30',
                             'end' => '2016/05/15 19:30',
-                            '_repeat' => '0000100'
+                            'repeats' => '0000100'
                         ]
                     ]
                 ]);
@@ -225,14 +225,14 @@ $app->group('/api', function() use ($app) {
                         'id' => 0,
                         'start' => '2016/05/15 15:0',
                         'end' => '2016/05/15 19:00',
-                        '_repeat' => '0010000'
+                        'repeats' => '0010000'
                     ],
                     [
                         'name' => 'Shakes Saturday',
                         'id' => 1,
                         'start' => '2016/05/15 17:30',
                         'end' => '2016/05/15 19:30',
-                        '_repeat' => '0000100'
+                        'repeats' => '0000100'
                     ]
                 ]
             ]);
@@ -244,20 +244,30 @@ $app->post('/login', function($request,$response,$args) {
     $body = $request->getParsedBody();
     $email = $body['email'];
     $password = $body['password'];
+
+/*
     if($body['email'] == 'matt') {
       return "200";
     } else {
       return "400";
     }
-    $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
+
+*/
+
+    $query = "SELECT email,user_id FROM user WHERE user.email = '$email' AND user.password = '$password'";
     $db = getDB();
     $result = $db->query($query);
-    // $row = $result->fetch(PDO::FETCH_ASSOC)
+
+    //store user_id into SESSION array
+    $row = $result->fetch(PDO::FETCH_ASSOC);
+    $_SESSION['user_id'] = $row['user_id'];
+
     if($result) {
       return "200";
     } else {
       return "400";
     }
+
     return $body['email'];
 });
 $app->get('/findAll', function($request,$response,$args) {
@@ -281,11 +291,8 @@ $app->get('/findAll', function($request,$response,$args) {
 $app->group('/Vendor', function() use ($app) {
 
    // vendor/create route
-   $app->post('/create/{vendor_id}', function($request,$response,$args) {
+   $app->post('/create', function($request,$response) {
 
-      //pull out arg into variable
-      $vendor_id = $args['vendor_id'];
-      
       //run the connection to the database again 
       $dbh = getDB();
 
@@ -293,40 +300,73 @@ $app->group('/Vendor', function() use ($app) {
       $body = $request->getParsedBody();
       
       //insert deal query 
-      $sql = $dbh->prepare("insert into deal (vendor_id,title,start_time,end_time,_repeat,description,norm_price,discount,type) values (:vendor_id,:title,:start_time,:end_time,:_repeat,:description,:norm_price,:discount,:type)"); 
+      $sql = $dbh->prepare("insert into deal (user_id,category_id,title,start_date,end_date,repeats,description,norm_price,discount_price,type) values (:user_id,:category_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:type)"); 
       $sql->bindParam('title',$title);
-      $sql->bindParam('start_time',$start_time);
-      $sql->bindParam('end_time',$end_time);
-      $sql->bindParam('_repeat',$_repeat);
+      $sql->bindParam('start_date',$start_date);
+      $sql->bindParam('end_date',$end_date);
+      $sql->bindParam('repeats',$repeats);
       $sql->bindParam('description',$description);
       $sql->bindParam('norm_price',$norm_price);
-      $sql->bindParam('discount',$discount);
+      $sql->bindParam('discount_price',$discount_price);
       $sql->bindParam('type',$type);
-      $sql->bindParam('vendor_id',$vendor_id);
+      $sql->bindParam('user_id',$user_id);
+      $sql->bindParam('category_id',$category_id);
 
       //set variables for insert deal query
+      $user_id = $_SESSION['user_id'];
       $title = $body['title'];
-      $start_time = $body['start_time'];
-      $end_time = $body['end_time'];
-      $_repeat = $body['_repeat'];
+      $start_date = $body['start_date'];
+      $end_date = $body['end_date'];
+      $repeats = $body['repeats'];
       $description = $body['description'];
       $norm_price = $body['norm_price'];
-      $discount = $body['discount'];
+      $discount_price = $body['discount_price'];
       $type = $body['type'];
+      $category_id = $body['category_id'];
       $sql->execute(); //run insert deal 
       $deal_id = $dbh->lastInsertId();
 
-      /*
-      $last_inserted = $dbh->query("SELECT LAST_INSERT_ID()");
-      $deal_id = $last_inserted->fetchColumn();
-      */
-
-      //create category query
-      $sql = $dbh->prepare("insert into category (title) values ('$type')");
-      $sql->execute(); //run insert category
-
       //return deal_id
       return $deal_id;
+
+   });//end vendor/create route
+
+   // vendor/update route
+   $app->post('/update/{deal_id}', function($request,$response,$args) {
+
+      //run the connection to the database again 
+      $dbh = getDB();
+
+      //parse request
+      $body = $request->getParsedBody();
+      
+      //update deal query 
+      $sql = $dbh->prepare("update deal set user_id=:user_id,category_id=:category_id,title=:title,start_date=:start_date,end_date=:end_date,repeats=:repeats,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type where :deal_id=deal.deal_id");
+      $sql->bindParam('title',$title);
+      $sql->bindParam('start_date',$start_date);
+      $sql->bindParam('end_date',$end_date);
+      $sql->bindParam('repeats',$repeats);
+      $sql->bindParam('description',$description);
+      $sql->bindParam('norm_price',$norm_price);
+      $sql->bindParam('discount_price',$discount_price);
+      $sql->bindParam('type',$type);
+      $sql->bindParam('user_id',$user_id);
+      $sql->bindParam('category_id',$category_id);
+      $sql->bindParam('deal_id',$deal_id);
+
+      //set variables for update deal query
+      $user_id = $_SESSION['user_id'];
+      $title = $body['title'];
+      $start_date = $body['start_date'];
+      $end_date = $body['end_date'];
+      $repeats = $body['repeats'];
+      $description = $body['description'];
+      $norm_price = $body['norm_price'];
+      $discount_price = $body['discount_price'];
+      $type = $body['type'];
+      $category_id = $body['category_id'];
+      $deal_id = $args['deal_id'];
+      $sql->execute(); //run insert deal 
 
    });//end vendor/create route
 
