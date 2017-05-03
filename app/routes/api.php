@@ -66,7 +66,8 @@ $app->group('/api', function() use ($app) {
             $body = $request->getParsedBody();
             $email = $body['email'];
             $password = $body['password'];
-            $accountType = $body['accountType'];
+            // TEMP REMOVE THIS
+            // $accountType = $body['accountType'];
 
             // Password Verification
             $getPassword = "SELECT password
@@ -89,7 +90,7 @@ $app->group('/api', function() use ($app) {
             if (password_verify($password, $passwordClean)) {
 
             } else {
-                
+
                 return false;
             }
 
