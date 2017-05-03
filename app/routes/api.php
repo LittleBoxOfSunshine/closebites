@@ -67,31 +67,32 @@ $app->group('/api', function() use ($app) {
             $email = $body['email'];
             $password = $body['password'];
             $accountType = $body['accountType'];
-            echo "1";
+
             // Password Verification
             $getPassword = "SELECT password
                             FROM user
                             WHERE
                               user.email = '$email'
                            ";
-            echo "2";
+
             $db = getDB();
             $userResult = $db->query($getPassword);
-            echo "3";
+
             while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
             }
-            echo "4";
+
             $passwordDB = json_encode($data[0]['password']);
             $hash = str_replace('"', "", $passwordDB);
             $passwordClean = stripslashes($hash);
-            echo "5";
+
             if (password_verify($password, $passwordClean)) {
-                echo 'Valid password';
+
             } else {
-                echo 'Invalid password.';
+                
+                return false;
             }
-            echo "6";
+
             // Vendor Login - if password is correct
             if($accountType == 'vendor') {
               // Retreive vendor account information
@@ -122,7 +123,7 @@ $app->group('/api', function() use ($app) {
                   $deals[] = $row;
               }
 
-              echo "7";
+
               // Return vendor information
               return $response->withJson([
                 'id'=> 0,
@@ -234,7 +235,7 @@ $app->group('/api', function() use ($app) {
                 while($row = $getUserId->fetch(PDO::FETCH_ASSOC)){
                     $user_id = $row['user_id'];
                 }
-                echo $user_id;
+
 
                 // Setup vendor in table
                 $storename = $body['storename'];
