@@ -45,7 +45,7 @@ export class UserRepository {
 		return this.http
 			.put("/api/User/exists", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => x.json())
+			.then(x => true)
 			.catch(x => false);
 	}
 
