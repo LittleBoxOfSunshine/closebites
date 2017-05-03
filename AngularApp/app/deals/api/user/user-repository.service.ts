@@ -18,7 +18,7 @@ export class UserRepository {
 
 	public loadUser(jsonObj) {
 		this.user.name = jsonObj.name;
-		this.user.addr = jsonObj.address;
+		//this.user.addr = jsonObj.address;
 		this.user.favorites = jsonObj.favorites;
 		this.user.filters = jsonObj.filters;
 		this.user.calendar = jsonObj.calendar;
