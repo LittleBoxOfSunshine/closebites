@@ -25,12 +25,12 @@ export class VendorInterfaceComponent {
     times:string[];
     dealTypes:string[];
     typeNotChosen:boolean;
-    startDate:string;
-    startTime:string;
-    endDate:string;
+    startDate = new String;
+    startTime: string;
+    endDate = new String;
     endTime:string;
-    startPrice:number;
-    endPrice:number;
+    startPrice = new Number;
+    endPrice = new Number;
     mon:boolean;
     tue:boolean;
     wed:boolean;
