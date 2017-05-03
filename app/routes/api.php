@@ -44,10 +44,12 @@ $app->group('/api', function() use ($app) {
           $query = "SELECT email FROM user WHERE user.email = '$email'";
           $db = getDB();
           $result = $db->query($query);
+          $update;
           $emailExists;
           while($row = $result->fetch(PDO::FETCH_ASSOC)){
               $emailExists = $row['email'];
           }
+
           if($emailExists) {
             return true;
           }
