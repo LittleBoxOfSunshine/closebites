@@ -87,9 +87,8 @@ $app->group('/api', function() use ($app) {
             $passwordClean = stripslashes($hash);
 
             if (password_verify($password, $passwordClean)) {
-
+              echo $password;
             } else {
-
                 return false;
             }
 
@@ -242,7 +241,7 @@ $app->group('/api', function() use ($app) {
                 $genre = $body['genre'];
                 $location = $body['location'];
                 $type = $body['type'];
-                
+
                 ////////////////////////////////////////////////////////
                 $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
                                  VALUES ('$user_id', '$storename', '$genre', '$location', '$type')
