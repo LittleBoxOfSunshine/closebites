@@ -150,6 +150,7 @@ $app->group('/api', function() use ($app) {
                                   )
                               ";
               $favResult = $db->query($getFavorites);
+              $favData = [];
               while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
                   $favData[] = $row['favorite_id'];
               }
@@ -164,6 +165,7 @@ $app->group('/api', function() use ($app) {
                              )
                             ";
               $filterResult = $db->query($getFilters);
+              $filterData = [];
               while($row = $filterResult->fetch(PDO::FETCH_ASSOC)){
                   $filterData[] = $row;
               }
