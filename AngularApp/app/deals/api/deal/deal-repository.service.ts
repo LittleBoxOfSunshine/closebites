@@ -55,9 +55,11 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 	
-	add(Deal: Deal){
+	add(deal: Deal){
+		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
+	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice};
 		return this.http
-			.post("/api/Vendor/create", JSON.stringify(Deal),this.options)
+			.post("/api/Vendor/create", JSON.stringify(body),this.options)
 			.toPromise()
 			.then(x => x.json().data as Deal)
 			.catch(x => x.message);
