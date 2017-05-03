@@ -55,9 +55,9 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 	
-	add(Deal: Deal) : Promise<Deal>{
+	add(Deal: Deal){
 		return this.http
-			.post(this._apiUrl, Deal)
+			.post("/api/Vendor/create", JSON.stringify(Deal),this.options)
 			.toPromise()
 			.then(x => x.json().data as Deal)
 			.catch(x => x.message);
