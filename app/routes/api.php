@@ -245,7 +245,7 @@ $app->group('/api', function() use ($app) {
                 $phone = $body['phone'];
                 ////////////////////////////////////////////////////////
                 $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type, phone)
-                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type', $phone)
+                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type', '$phone')
                                 ";
                 $db->query($createVendor);
 
