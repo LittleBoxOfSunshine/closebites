@@ -4,8 +4,8 @@ session_start();
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="Jaav13!@G"; # CHANGE LATER
-  $dbname="closebites1";
+  $dbpass="pass"; # CHANGE LATER
+  $dbname="closebites";
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
@@ -123,11 +123,11 @@ $app->group('/api', function() use ($app) {
               // Get deals associated with vendor
               $getVendorDeals = "SELECT title, description, start_date, end_date, repeat
                                  FROM deal
-                                 WHERE vendor_id IN
+                                 WHERE user_id IN
                                    (SELECT user_id
                                     FROM user
                                     WHERE email = '$email')
-                                  ";
+                                ";
               $vendorDeals = $db->query($getVendorDeals);
               while($row = $vendorDeals->fetch(PDO::FETCH_ASSOC)){
                   $deals[] = $row;
@@ -146,8 +146,6 @@ $app->group('/api', function() use ($app) {
             // User login - if password is correct
             else {
               // Get user account information
-
-
               $getInfo = "SELECT user_id, name, accountType
                           FROM user
                           WHERE
@@ -205,61 +203,65 @@ $app->group('/api', function() use ($app) {
             $accountType = $body['accountType'];
 
             // Hash and salt user password
-            $options = [
-             'cost' => 11,
-             'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
-            ];
-            $hash = password_hash($password, PASSWORD_BCRYPT, $options);
-            $query = "INSERT INTO user (user_id, email, name, password, accountType)
-                      VALUES (NULL, '$email', '$body' '$hash', '$accountType')";
-            $db = getDB();
-            $db->query($query);
-
-            return "200";
+            // $options = [
+            //  'cost' => 11,
+            //  'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+            // ];
+            // $hash = password_hash($password, PASSWORD_BCRYPT, $options);
+            // $query = "INSERT INTO user (user_id, email, name, password, accountType)
+            //           VALUES (NULL, '$email', '$body' '$hash', '$accountType')";
+            // $db = getDB();
+            // $db->query($query);
+            //
+            // return "200";
             // Get user information
 
-            // Return user information
+
+            // Return user information - after register
             if($body['accountType'] == 'consumer') {
                 // Retreive account info
                 $userInfoQuery = "SELECT user_id, name, accountType
-                            FROM user
-                            WHERE
-                              email = '$email'
-                           ";
+                                  FROM user
+                                  WHERE
+                                    email = '$email'
+                                  ";
+                return $userInfoQuery;
                 $infoResult = $db->query($userInfoQuery);
                 while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
                     $userData[] = $row;
                 }
-                $userinformation = json_encode($userData);
+                return $userData;
+                // $userinformation = json_encode($userData);
 
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => $userinformation[1]['name'],
+                    'name' => $userData,
                     'accountType' => 'consumer',
                     'favorites' => [],
                     'filters' => []
                 ]);
             }
 
-            //Return vendor information
+            //Return vendor information -- after register
             else if($body['accountType'] == 'vendor') {
                 $vendorInfoQuery = "SELECT name, location
-                                FROM vendor
-                                WHERE user_id IN (
-                                  SELECT user_id
-                                  FROM user
-                                  WHERE email = '$email'
-                                )";
+                                    FROM vendor
+                                    WHERE user_id IN (
+                                      SELECT user_id
+                                      FROM user
+                                      WHERE email = '$email')
+                                   ";
                 $infoResult = $db->query($vendorInfoQuery);
                 while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
                     $vendorData[] = $row;
                 }
-                $vendorinformation = json_encode($vendorData);
+                // $vendorinformation = json_encode($vendorData);
+//***************************************************MUST TEST
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => $vendorinformation[0]['name'],
+                    'name' => $vendorData['name'],
                     'accountType' => 'vendor',
-                    'address' => $vendorinformation[0]['location'],
+                    'address' => $vendorData['location'],
                     'calendar' => []
                 ]);
             }
