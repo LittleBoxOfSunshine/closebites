@@ -1,10 +1,10 @@
 <?php
-if(!isset($_SESSION) session_start();
+// if(!isset($_SESSION) session_start();
 
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="pass"; // Jaav13!@G
+  $dbpass="Jaav13!@G"; // Jaav13!@G
   $dbname="closebites"; // closebites1
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
