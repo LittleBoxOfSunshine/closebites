@@ -4,8 +4,8 @@ session_start();
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="pass"; # CHANGE LATER
-  $dbname="closebites";
+  $dbpass="pass"; // Jaav13!@G
+  $dbname="closebites"; // closebites1
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
@@ -41,28 +41,22 @@ $app->group('/api', function() use ($app) {
           $accountType = $body['accountType'];
 
           if($accountType == 'consumer') {
-            echo "consumer exists";
-            // $query = "SELECT email, name FROM user WHERE user.email = '$email' AND user.password = '$password'";
             $query = "SELECT email, name FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
             $db = getDB();
             $result = $db->query($query);
             while($row = $result->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
             }
-            // return json_encode($data);
+
             return true;
           }
           else {
-            echo "vendor exists";
-            // $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
             $query = "SELECT email FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
-            // return $query;
             $db = getDB();
             $result = $db->query($query);
             while($row = $result->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
             }
-            // return json_encode($data);
             return true;
           }
         });
@@ -145,6 +139,7 @@ $app->group('/api', function() use ($app) {
                          ";
               $infoResult = $db->query($getInfo);
 
+              // Get user account favorites
               $getFavorites = "SELECT favorite_id
                                   FROM favorite
                                   WHERE user_id IN (
@@ -157,8 +152,6 @@ $app->group('/api', function() use ($app) {
               while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
                   $favData[] = $row['favorite_id'];
               }
-
-              // return $favs;
 
               // GET Filters associated with the consumer
               $getFilters = "SELECT type, cuisine
@@ -205,9 +198,6 @@ $app->group('/api', function() use ($app) {
             $db = getDB();
             $db->query($query);
 
-            // return "200";
-            // Get user information
-
 
             // Return user information - after register
             if($body['accountType'] == 'consumer') {
@@ -222,8 +212,6 @@ $app->group('/api', function() use ($app) {
                 while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
                     $userData[] = $row;
                 }
-                // return $userData;
-                // $userinformation = json_encode($userData);
 
                 return $response->withJson([
                     'id'=> 0,
@@ -270,8 +258,7 @@ $app->group('/api', function() use ($app) {
                     $vendorName = $row['name'];
                     $vendorAddress = $row['location'];
                 }
-                // $vendorinformation = json_encode($vendorData);
-//***************************************************MUST TEST
+
                 return $response->withJson([
                     'id'=> 0,
                     'name' => $vendorName,
