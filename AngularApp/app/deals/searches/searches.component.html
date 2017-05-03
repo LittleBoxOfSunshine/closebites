@@ -1,6 +1,6 @@
 <!--top row containing buttons and closebites logo-->
 <div class = "row">
-	<h1><a routerLink = "/user">CloseBites</a>
+	<h1><a routerLink="/user">CloseBites</a>
 		<div style = "float:right">
             <a routerLink="/user">
 			    <span class="glyphicon glyphicon-home" title="Home"></span>
@@ -26,8 +26,8 @@
 		    </div>
         </div>
         <div *ngIf = "dealOrSearch=='deal'">
-            <div *ngFor = "let value of favorites">
-                <div class = "search" data-toggle="modal" data-target="#dealModal" (click)="getDeal(value)">Deal</div>
+            <div *ngFor = "let value of favorite_deals">
+                <div class = "search" data-toggle="modal" data-target="#dealModal" (click)="getDeal(value)">{{deal.name}}</div>
 		    </div>
         </div>
 	</div>
