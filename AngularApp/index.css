@@ -18,5 +18,9 @@
 }
 
 .nav navbar-nav{
-  padding-top: 100px; 
+  padding-top: 100px;
+}
+
+.body{
+  background-color: #dcdcdc; 
 }
