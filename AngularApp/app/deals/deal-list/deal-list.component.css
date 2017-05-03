@@ -8,10 +8,11 @@ a.hover:hover {
 .deal {
     width: 40%;
     height: 40%;
-    margin: 20px;
-    border-style:solid;
-    float: left;
+    margin: 15px;
+    border-radius: 10px;
+    background-color: #fff;
     display:block;
+    float: left;
     text-align: center;
     line-height: 180px;
 }
@@ -22,7 +23,10 @@ a.hover:hover {
 }
 
 .vertical-menu {
-    width: 300px; /* Set a width if you like */
+    width: 300px;
+    border-radius: 10px;
+    position: fixed;
+
 }
 
 .vertical-menu a {

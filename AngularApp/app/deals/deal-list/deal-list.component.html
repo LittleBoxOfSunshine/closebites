@@ -1,0 +1,112 @@
+<!--top row containing buttons and closebites logo-->
+<!--next row contains search fields to filter deals and the deals on the right-->
+<div style="float:left;">
+<div class="vertical-menu" style="padding:0px;">
+  <a href="#" class="active">
+		<div class="form-group">
+						<label for="zip">Zip Code</label>
+						<input type="text" class="form-control" id="zip" name="zip" [(ngModel)]="zip">
+				</div>
+	</a>
+  <a href="#" style="padding-bottom:35px;">
+		<div class="slideThree" style="float: left; margin-top: 5px; ">
+			<input type="checkbox" [(ngModel)]="mexican" value="None" id="slideThree" name="check" />
+			<label for="slideThree"></label>
+		</div>
+		<div style="float: right; margin-right: 135px; font-weight: bold; ">
+			Mexican
+		</div>
+	</a>
+	<a href="#" style="padding-bottom:35px;">
+		<div class="slideThree" style="float: left; margin-top: 5px; ">
+			<input type="checkbox" [(ngModel)]="chinese" value="None" id="slideThree" name="check" />
+			<label for="slideThree"></label>
+		</div>
+		<div style="float: right; margin-right: 135px; font-weight: bold; ">
+			Chinese
+		</div>
+	</a>
+	<a href="#" style="padding-bottom:35px;">
+		<div class="slideThree" style="float: left; margin-top: 5px; ">
+			<input type="checkbox" [(ngModel)]="italian" value="None" id="slideThree" name="check" />
+			<label for="slideThree"></label>
+		</div>
+		<div style="float: right; margin-right: 140px; font-weight: bold; ">
+			Italian
+		</div>
+	</a>
+
+	<a href="#">
+		<div id = "deal">
+			<strong><p style = "text-align:center">Deal Type</p></strong>
+			<div class="btn-group" data-toggle="buttons" >
+      			<label class="btn btn-primary" style="width:82px;" (click)="updateMode('food')"><input type="radio" name="options"> Food</label>
+      			<label class="btn btn-primary" style="width:82px;" (click)="updateMode('drinks')"><input type="radio" name="options"> Drinks</label>
+      			<label class="btn btn-primary active" style="width:82px;" (click)="updateMode('foodAndDrinks')"><input type="radio" name="options" checked=""> Both </label>
+			</div>
+		</div>
+	</a>
+	<a href="#">
+		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
+		class="btn btn-block btn-default" (click)="updateSearch()">
+			Update</button>
+	</a>
+</div>
+</div>
+
+
+<div style="float:right; width: 70%">
+<div style = "width: 100%;" >
+  <div *ngFor = "let deal of deals">
+    <div class="deal">
+      <div (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal">{{deal.name}}</div>
+      <div style="height: 12px; border-style:solid;  ">{{deal.description}}</div>
+    </div>
+</div>
+</div>
+<!--Modal for saving searches-->
+<div class="modal fade" id="littleModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Name this search</h4>
+		</div>
+		<div class="modal-body">
+			<input type="text" class="form-control" id="searchTitle" name="searchTitle">
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+		</div>
+      </div>
+    </div>
+
+</div>
+
+  <!--modal for when clicking on a deal-->
+  <div class="modal fade" id="dealModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">{{deal.name}}</h4>
+		</div>
+		<div class="modal-body">
+            <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
+                <h2 style="text-align:center">PICTURE</h2>
+            </div>
+            <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
+                <p>{{deal.description}}
+                <span [style.opacity]="favoriteDeal ? 1 : .5"
+								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                </p>
+            </div>
+		</div>
+        <div class="modal-footer" style="text-align:left">
+            <p>Deal Location: <i>Vendor Name, Vendor Address</i></p>
+            <p>Cuisine: <i>Cuisine tags</i> </p>
+            <p>Deal Type: {{deal.type1}}<span *ngIf="deal.type2"> and </span>{{deal.type2}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
