@@ -34,7 +34,7 @@ $app->group('/api', function() use ($app) {
 
     $app->group('/User', function() use ($app) {
 
-        $app->put('/exists', function($request,$response,$args) {
+        $app->post('/exists', function($request,$response,$args) {
 
           $body = $request->getParsedBody();
           $email = $body['email'];
@@ -44,7 +44,6 @@ $app->group('/api', function() use ($app) {
           $query = "SELECT email FROM user WHERE user.email = '$email'";
           $db = getDB();
           $result = $db->query($query);
-          $update;
           $emailExists;
           while($row = $result->fetch(PDO::FETCH_ASSOC)){
               $emailExists = $row['email'];
