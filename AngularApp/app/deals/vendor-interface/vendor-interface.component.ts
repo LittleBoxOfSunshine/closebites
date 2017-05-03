@@ -93,6 +93,7 @@ export class VendorInterfaceComponent {
         if (!this.food && !this.drink){ //when neither 'food' nor 'drink' not selected
             this.typeNotChosen = true;
         } else {
+            console.log('test');
             this.typeNotChosen = false;
             /*if (this.food && !this.drink) 
                 this.deal.type1 = 'Food';
@@ -103,7 +104,7 @@ export class VendorInterfaceComponent {
                 this.deal.type2='Drink';
             }*/
             this.startDate = this.startDate.replace(/-/g,"/");
-            this.endDate = this.startDate.replace(/-/g,"/");
+            this.endDate = this.endDate.replace(/-/g,"/");
             this.startDate = this.startDate.concat(' ',this.startTime);
             this.endDate = this.endDate.concat(' ',this.endTime);
             this.deal.repeat = this.repeat;
