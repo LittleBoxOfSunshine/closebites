@@ -43,7 +43,7 @@ export class UserRepository {
 			.post("/api/User/login", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json()))
-			.catch(x => false);
+			.catch(x => x.message);
 	}
 
 	public exists(email: string) {
