@@ -19,6 +19,7 @@ $app->get('/', function ($request, $response, $args) {
     // Render index view
     return "hello";
 });
+
 $app->group('/api', function() use ($app) {
     $app->get('/temp', function($request, $response, $args){
         return $response->withJson(            [
@@ -29,8 +30,10 @@ $app->group('/api', function() use ($app) {
             ['id'=>5,'name'=>'Pizzeria','description'=>'Deal 5 text','type'=>'food'],
             ['id'=>6,'name'=>'Jamba Juice','description'=>'Deal 6 text','type'=>'drink'],
         ]);
-    });
-    $app->group('/User', function() use ($app) {
+});
+
+$app->group('/User', function() use ($app) {
+
         $app->get('/exists', function($request,$response,$args) {
           $body = $request->getParsedBody();
           $email = $body['email'];
@@ -59,6 +62,7 @@ $app->group('/api', function() use ($app) {
             }
           }
         });
+
         $app->post('/login', function($request,$response,$args) {
             /**
              *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
@@ -118,6 +122,7 @@ $app->group('/api', function() use ($app) {
                 ]);
             }
         });
+
         $app->post('/register', function($request,$response,$args) {
             /**
              *  THIS IS A HARDCODED TEST RESPONSE FOR FRONTEND TESTING
@@ -196,6 +201,7 @@ $app->group('/api', function() use ($app) {
                 return $response->withStatus(422);
             }
         });
+
         $app->get('/favorite', function($request,$response,$args) {
           $dbhost="localhost";
           $dbuser="root";
@@ -240,6 +246,7 @@ $app->group('/api', function() use ($app) {
         });
     });
 });
+
 $app->post('/login', function($request,$response,$args) {
     $body = $request->getParsedBody();
     $email = $body['email'];
@@ -369,5 +376,59 @@ $app->group('/Vendor', function() use ($app) {
       $sql->execute(); //run insert deal 
 
    });//end vendor/create route
+
+});//end Vendor group
+
+//deal group
+$app->group('/Deal', function() use ($app) {
+
+   //get feedback route
+   $app->get('/getFeedback/{deal_id}', function($request,$response,$args) {
+      //pull out deal_id
+      $deal_id = $args['deal_id'];
+
+      //run the connection to the database again 
+      $dbh = getDB();
+
+      //parse request
+      $body = $request->getParsedBody();
+      
+      //getFeedback query 
+      $sql = $dbh->prepare("select comment from comment where comment.deal_id = '$deal_id'");
+      $sql->execute(); //run it
+      $data = $sql->fetchAll(PDO::FETCH_ASSOC);
+   
+      var_dump($data);
+
+      //make json
+      return $data;
+
+   });//end getFeedback
+
+   //post feedback route
+   $app->post('/feedback/{deal_id}', function($request,$response,$args) {
+      
+      //run the connection to the database again 
+      $dbh = getDB();
+
+      //parse request
+      $body = $request->getParsedBody();
+      
+      //insert feedback query 
+      $sql = $dbh->prepare("insert into comment (user_id,deal_id,comment) values (:user_id,:deal_id,:comment)");
+
+      $sql->bindParam('user_id',$user_id);
+      $sql->bindParam('deal_id',$deal_id);
+      $sql->bindParam('comment',$comment);
+      
+      //set variables for insert feedback query
+      $user_id = $_SESSION['user_id'];
+      $comment = $body['comment'];
+      $deal_id = $args['deal_id'];
+      $arr = array($deal_id,$comment,$user_id);
+
+      $sql->execute();
+
+   });//end insert feedback route
 
 });//end Vendor group
