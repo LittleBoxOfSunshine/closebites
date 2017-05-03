@@ -67,10 +67,10 @@ $app->group('/api', function() use ($app) {
             $email = $body['email'];
             $password = $body['password'];
             // TEMP REMOVE THIS
-            // $accountType = $body['accountType'];
+            //$accountType = $body['accountType'];
 
             // Password Verification
-            $getPassword = "SELECT password
+            $getPassword = "SELECT password, accountType
                             FROM user
                             WHERE
                               user.email = '$email'
@@ -78,9 +78,11 @@ $app->group('/api', function() use ($app) {
 
             $db = getDB();
             $userResult = $db->query($getPassword);
+            $accountType;
 
             while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
+                $accountType = $row['accountType'];
             }
 
             $passwordDB = json_encode($data[0]['password']);
