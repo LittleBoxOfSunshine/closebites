@@ -82,11 +82,8 @@ $app->group('/api', function() use ($app) {
                 $accountType = $row['accountType'];
             }
 
-            $passwordDB = json_encode($data[0]['password']);
-            $hash = str_replace('"', "", $passwordDB);
-            $passwordClean = stripslashes($hash);
 
-            if (password_verify($password, $passwordClean)) {
+            if (password_verify($password, $data[0]['password'])) {
               // echo $password;
             } else {
               echo $password;
