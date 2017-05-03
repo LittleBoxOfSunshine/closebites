@@ -5,7 +5,7 @@ function getDB() {
   $dbhost="localhost";
   $dbuser="root";
   $dbpass="Jaav13!@G"; // Jaav13!@G
-  $dbname="closebites"; // closebites1
+  $dbname="closebites2"; // closebites2
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
