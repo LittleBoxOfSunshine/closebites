@@ -419,7 +419,7 @@ $app->group('/Vendor', function() use ($app) {
       $body = $request->getParsedBody();
 
       //insert deal query
-      $sql = $dbh->prepare("insert into deal (user_id,category_id,title,start_date,end_date,repeats,description,norm_price,discount_price,type) values (:user_id,:category_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:type)");
+      $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price)");
       $sql->bindParam('title',$title);
       $sql->bindParam('start_date',$start_date);
       $sql->bindParam('end_date',$end_date);
@@ -427,9 +427,9 @@ $app->group('/Vendor', function() use ($app) {
       $sql->bindParam('description',$description);
       $sql->bindParam('norm_price',$norm_price);
       $sql->bindParam('discount_price',$discount_price);
-      $sql->bindParam('type',$type);
+      //$sql->bindParam('type',$type);
       $sql->bindParam('user_id',$user_id);
-      $sql->bindParam('category_id',$category_id);
+      //$sql->bindParam('category_id',$category_id);
 
       //set variables for insert deal query
       $user_id = $_SESSION['user_id'];
@@ -440,8 +440,8 @@ $app->group('/Vendor', function() use ($app) {
       $description = $body['description'];
       $norm_price = $body['norm_price'];
       $discount_price = $body['discount_price'];
-      $type = $body['type'];
-      $category_id = $body['category_id'];
+      //$type = $body['type'];
+      //$category_id = $body['category_id'];
       $sql->execute(); //run insert deal
       $deal_id = $dbh->lastInsertId();
 
