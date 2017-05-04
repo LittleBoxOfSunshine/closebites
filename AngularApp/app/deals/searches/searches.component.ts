@@ -17,18 +17,19 @@ import { User, Filter, FilterItem } from '../api/user/user';
 export class SearchesComponent { 
     foodOrDrink:string;
     dealOrSearch:string;
-    favorites: Deal[];
+    favorite_deals: Deal[];
     filters: Filter[];
     dealIds = new Array<number>();
+    deal: Deal;//current favorited deal
 
     constructor(private router: Router, private route:ActivatedRoute, 
                 private userRepository : UserRepository, 
                 private dealRepository : DealRepository) {
-        this.favorites = [];
+        this.favorite_deals = [];
         this.dealIds = this.userRepository.getUser().favorites;
 
         for(let id of this.dealIds)
-            this.dealRepository.getDeal(id).then(x => this.favorites.push(x));
+            this.dealRepository.getDeal(id).then(x => this.favorite_deals.push(x));
         
         this.filters = this.userRepository.getUser().filters;
     }
@@ -45,8 +46,11 @@ export class SearchesComponent {
         this.dealOrSearch = this.dealOrSearch=='search' ? 'deal': 'search';
     }
 
-    getDeal(index: number) {
-        return this.favorites[index];
+    getDeal(identification: number) {
+        for (let deal of this.favorite_deals){
+            if (deal.id == identification)
+                this.deal = deal;
+        }
     }
 
     updateDeal() {

@@ -1,5 +1,5 @@
 <div class = "row">
-	<h1><a routerLink = "/">CloseBites</a>
+	<h1><a routerLink = "/vendor">CloseBites</a>
 		<div style = "float:right">
 			<a routerLink = "/">
 			<button type="button" class="btn btn-danger"
@@ -86,12 +86,26 @@
         </p>
         
         <form style="display:inline-block">
-            <select id="dDay" name="dDay">
-                <option value="" selected disabled>Deal Day</option>
-            </select>
-            <select id="dTime" name="dTime">
-                <option value="" selected disabled>Deal Time</option>
-            </select>
+            <span>From</span>
+            <input type="date" name ="start" [(ngModel)]="startDate">
+            <input type="time" name="start" [(ngModel)]="startTime">
+        </form>
+        <form style="display:inline-block">
+            <span>To  </span>
+            <input type="date" name="end" [(ngModel)]="endDate">
+            <input type="time" name="end" [(ngModel)]="endTime">
+        </form>
+        <form style="display:inline-block">
+            Start Price
+            <input type="number" min="0.01" step="0.01" max="2500" value="0.00" name="price" [(ngModel)]="startPrice" />
+            Discounted
+            <input type="number" min="0.01" step="0.01" max="2500" value="0.00" name="otherPrice" [(ngModel)]="endPrice"/>
+        </form>
+        <p> Choose the days on which this deal will repeat. </p>
+        <form style="display:inline-block" *ngFor = "let day of days;let i = index">
+            <div class="checkbox">
+                <label><input type="checkbox" name="day" (click)="clickDay(i)">{{day}}</label>
+            </div>
         </form>
         <button type="button" class="btn btn-default" style="width:90%;background-color:black;color:white">Upload a photo</button>
         <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  

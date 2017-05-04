@@ -24,7 +24,6 @@ export class UserRepository {
 		this.user.calendar = jsonObj.calendar;
 		this.user.accountType = jsonObj.accountType;
 		this.user.id = jsonObj.id;
-		
 		return this.user.accountType != undefined;
 	}
 
@@ -44,7 +43,7 @@ export class UserRepository {
 	public exists(email: string) {
 		let body = {"email": email};
 		return this.http
-			.put("/api/User/exists", JSON.stringify(body), this.options)
+			.post("/api/User/exists", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => x.json())
 			.catch(x => false);
@@ -55,7 +54,7 @@ export class UserRepository {
 			.post("/api/User/register", JSON.stringify(body), this.options)
 			.toPromise()
 			.then(x => this.loadUser(x.json()))
-			.catch(x => false);
+			.catch(x => x.message);
 	}
 
 	public logout() {

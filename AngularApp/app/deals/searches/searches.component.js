@@ -20,10 +20,10 @@ let SearchesComponent = class SearchesComponent {
         this.userRepository = userRepository;
         this.dealRepository = dealRepository;
         this.dealIds = new Array();
-        this.favorites = [];
+        this.favorite_deals = [];
         this.dealIds = this.userRepository.getUser().favorites;
         for (let id of this.dealIds)
-            this.dealRepository.getDeal(id).then(x => this.favorites.push(x));
+            this.dealRepository.getDeal(id).then(x => this.favorite_deals.push(x));
         this.filters = this.userRepository.getUser().filters;
     }
     ngOnInit() {
@@ -35,8 +35,11 @@ let SearchesComponent = class SearchesComponent {
     updateBoxMode() {
         this.dealOrSearch = this.dealOrSearch == 'search' ? 'deal' : 'search';
     }
-    getDeal(index) {
-        return this.favorites[index];
+    getDeal(identification) {
+        for (let deal of this.favorite_deals) {
+            if (deal.id == identification)
+                this.deal = deal;
+        }
     }
     updateDeal() {
     }
