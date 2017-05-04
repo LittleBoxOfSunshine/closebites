@@ -19,7 +19,8 @@ export class VendorInterfaceComponent {
     deals:Deal[];
     mode:string; //month,week,day
     food:boolean;
-    drink:boolean;
+    drinks:boolean;
+    foodAndDrinks:boolean;
     dealMode:string;//food or drink for deals
     days:string[];
     times:string[];
@@ -40,7 +41,6 @@ export class VendorInterfaceComponent {
     sun: boolean;
     days2 = new Array<boolean>();
     repeat = new String;
-
 
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
@@ -72,18 +72,12 @@ export class VendorInterfaceComponent {
 
     }
 
-    updateMode(newMode:string){
-        this.mode = newMode;
-    }
-
-    updateDealMode(dealType:string){
-        //change food and drink boolean values on click
-        if (dealType == 'food'){
-			this.food = !this.food;
-		} else {
-			this.drink = !this.drink;
-		}
-    }
+	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
+		console.log(dealType);
+		this.food = dealType == 'food';
+		this.drinks = dealType == 'drinks';
+		this.foodAndDrinks = dealType == 'foodAndDrinks';
+	}
 
     resetTypeNotChosen(){
         this.typeNotChosen = null;
@@ -112,6 +106,16 @@ export class VendorInterfaceComponent {
             this.deal.end = this.endDate;
             this.deal.normPrice = this.startPrice;
             this.deal.discountedPrice = this.endPrice;
+
+            var active;
+            if(this.food)
+                active = 'food';
+            else if(this.drinks)
+                active = 'drinks';
+            else if(this.foodAndDrinks)
+                active = 'foodAndDrinks';
+            this.deal.type = active;
+            
             this.dealsService.add2(this.deal).then((x) => {
                 console.log(x);
             });
@@ -120,7 +124,7 @@ export class VendorInterfaceComponent {
             this.deal = new Deal;
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
-            this.food = this.drink = false;
+            this.food = this.drinks = this.foodAndDrinks = false;
             
         }
     }

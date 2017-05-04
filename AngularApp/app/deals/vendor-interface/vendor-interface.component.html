@@ -71,17 +71,18 @@
         <div class="form-group">
             <textarea class="form-control" rows="5" id="description" placeholder="Deal Description" [(ngModel)]="deal.description"></textarea>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="tags" name="tags" placeholder="Cuisine Tags">
-        </div>
         <p>Deal Type
             <button [ngClass] = "{'btn-info': food,'btn-primary':!food}"
                 (click)="updateDealMode('food')" type="button" class="btn btn-primary" 
                 style="width:30%;margin:10px">Food
             </button>
-            <button [ngClass] = "{'btn-info':drink,'btn-primary':!drink}"
-                (click)="updateDealMode('drink')" type="button" class="btn btn-primary" 
-                style="width:30%;margin:10px">Drink
+            <button [ngClass] = "{'btn-info':drinks,'btn-primary':!drinks}"
+                (click)="updateDealMode('drinks')" type="button" class="btn btn-primary" 
+                style="width:30%;margin:10px">Drinks
+            </button>
+            <button [ngClass] = "{'btn-info':foodAndDrinks,'btn-primary':!foodAndDrinks}"
+                (click)="updateDealMode('foodAndDrinks')" type="button" class="btn btn-primary" 
+                style="width:30%;margin:10px">Both
             </button>
         </p>
         
@@ -107,7 +108,9 @@
                 <label><input type="checkbox" name="day" (click)="clickDay(i)">{{day}}</label>
             </div>
         </form>
-        <button type="button" class="btn btn-default" style="width:90%;background-color:black;color:white">Upload a photo</button>
+        <div class="form-group">
+            <input type="text" class="form-control" id="photoURL" name="photoURL" placeholder="Photo URL" [(ngModel)]="deal.photoURL">
+        </div>
         <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  
         <div *ngIf = 'typeNotChosen'class="alert alert-danger">
             You must select a deal type.

@@ -37,7 +37,7 @@ export class DealListComponent {
 		//dealsService.listAll()
 			//.then(x => this.deals = x);
 		dealsService.listAll().then(x => this.deals = x);
-
+		
 		var that = this;
 		// window.navigator.geolocation.getCurrentPosition(function(pos){
     	// 	console.log(pos);

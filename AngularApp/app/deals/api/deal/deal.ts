@@ -8,4 +8,6 @@ export class Deal {
     normPrice: Number;
     discountedPrice: Number;
     description: String; //added
+    photoUrl:string;
+    type:string;
 }
