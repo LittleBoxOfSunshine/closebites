@@ -34,8 +34,6 @@ export class DealListComponent {
 		this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
 		this.foodAndDrinks = true;
 		this.loggedIn = this.router.url == '/user';
-		//dealsService.listAll()
-			//.then(x => this.deals = x);
 		dealsService.listAll().then(x => this.deals = x); 
 
 		var that = this;
@@ -70,11 +68,20 @@ export class DealListComponent {
 	}
 
 	identifyDeal(id: number){
-		this.dealsService.getById(id)
-			.then(x => this.deal = x);
-		if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
-			this.favoriteDeal = true;
-		else this.favoriteDeal = false;
+		this.dealsService.getDeal(id)
+			.then(x => this.deal = x)
+			.catch(x => console.log(x.message));
+			/*.then(x => function(x) {
+				console.log(x);
+				console.log("test");
+				console.log(this);
+				this.deal = x;
+				
+				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+					this.favoriteDeal = true;
+				else 
+					this.favoriteDeal = false;
+			});*/
 	}
 
 	logout(){

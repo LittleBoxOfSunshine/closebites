@@ -109,7 +109,7 @@
             </div>
         </form>
         <div class="form-group">
-            <input type="text" class="form-control" id="photoURL" name="photoURL" placeholder="Photo URL" [(ngModel)]="deal.photoURL">
+            <input type="text" class="form-control" id="photoURL" name="photoURL" placeholder="Photo URL" [(ngModel)]="deal.photoUrl">
         </div>
         <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  
         <div *ngIf = 'typeNotChosen'class="alert alert-danger">

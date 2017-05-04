@@ -153,9 +153,8 @@
   <div *ngFor = "let deal of deals">
     <div class="deal">
       <div (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal">{{deal.name}}</div>
-      <div style="height: 12px; border-style:solid;  ">{{deal.description}}{{deal.photoURL}}</div>
-			<img src="{{ deal.photoURL }}">
-			<img src="https://www.w3schools.com/tags/smiley.gif">
+      <div style="height: 12px; border-style:solid;  ">{{deal.description}}</div>
+			<img src="{{ deal.photoUrl }}">
     </div>
 </div>
 </div>
@@ -188,7 +187,7 @@
 		</div>
 		<div class="modal-body">
             <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
-                <h2 style="text-align:center">PICTURE</h2>
+                <img style="text-align:center" src="{{ deal.photoUrl }}">
             </div>
             <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
                 <p>{{deal.description}}
@@ -199,8 +198,8 @@
 		</div>
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: {{deal.address}}</p>
-            <p>Cuisine: <i>Cuisine tags</i> </p>
-            <p>Deal Type: {{deal.type1}}<span *ngIf="deal.type2"> and </span>{{deal.type2}}</p>
+            <p>Cuisine: <i>{{deal.type}}</i> </p>
+            <p>Deal Type: {{deal.dType}}</p>
         </div>
       </div>
     </div>

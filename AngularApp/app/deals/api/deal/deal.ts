@@ -10,4 +10,5 @@ export class Deal {
     description: String; //added
     photoUrl:string;
     type:string;
+    dType:string;
 }

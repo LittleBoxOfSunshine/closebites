@@ -18,7 +18,9 @@ export class DealRepository {
 	
 	add2(deal: Deal) : Promise<Deal> {
 		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
-	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice};
+	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice,"photoUrl":deal.photoUrl,
+	"dType": deal.dType};
+		console.log(body);
 		return this.http
 			.post("/api/Vendor/create", JSON.stringify(body),this.options)
 			.toPromise()
@@ -31,10 +33,10 @@ export class DealRepository {
 
 	getDeal(id: number) {
 		let body = {"dealId": id};
-		this.http
+		return this.http
 			.post("/api/Deal/details", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => x.json() as Deal)
+			.then(x => x.json())
 			.catch(x => false);
 	}
 

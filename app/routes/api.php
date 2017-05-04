@@ -33,8 +33,28 @@ $app->group('/api', function() use ($app) {
          $dbh = getDB();
          //parse request
          $body = $request->getParsedBody();
+
+          //set variables for insert deal query
+          $user_id = $_SESSION['user_id'];
+          $title = $body['title'];
+          $start_date = $body['start_date'];
+          $end_date = $body['end_date'];
+          $repeats = $body['repeats'];
+          $description = $body['description'];
+          $norm_price = $body['norm_price'];
+          $discount_price = $body['discount_price'];
+          $photoUrl = $body['photoUrl'];
+          $type = $body['dType'];
+
+          //get vendor_id
+          $query = "select vendor_id, location from vendor where vendor.user_id = '$user_id'";
+          $result = $dbh->query($query);
+          $arr = $result->fetch();
+          $vendor_id = $arr['vendor_id'];
+          $address = $arr['location'];
+
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,category_id,type,vendor_id) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:category_id,:type,:vendor_id)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture,type,address) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture,:type,:address)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -42,32 +62,19 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('description',$description);
          $sql->bindParam('norm_price',$norm_price);
          $sql->bindParam('discount_price',$discount_price);
-         $sql->bindParam('type',$type);
          $sql->bindParam('user_id',$user_id);
-         $sql->bindParam('category_id',$category_id);
          $sql->bindParam('vendor_id',$vendor_id);
-         //set variables for insert deal query
-         $user_id = $_SESSION['user_id'];
-         $title = $body['title'];
-         $start_date = $body['start_date'];
-         $end_date = $body['end_date'];
-         $repeats = $body['repeats'];
-         $description = $body['description'];
-         $norm_price = $body['norm_price'];
-         $discount_price = $body['discount_price'];
-         $type = $body['type'];
-         $category_id = $body['category_id'];
-         //get vendor_id
-	 $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
-	 $result = $dbh->query($query);
-	 $arr = $result->fetch();
-	 $vendor_id = $arr['vendor_id'];
+         $sql->bindParam('picture',$photoUrl);
+         $sql->bindParam('type',$type);
+         $sql->bindParam('address',$address);
+
+
          if($vendor_id)	$sql->execute(); //run insert deal
          else echo "error: vendor id not found";
 	 //get deal_id of deal just created
          $deal_id = $dbh->lastInsertId();
          //return deal_id
-         return $deal_id;
+         return $response->withJson(["dealID" => $deal_id]);
       });//end vendor/create route
       // vendor/update route
       $app->post('/update/{deal_id}', function($request,$response,$args) {
@@ -106,12 +113,54 @@ $app->group('/api', function() use ($app) {
    //deal group
    $app->group('/Deal', function() use ($app) {
 
+       $app->post('/details', function($request, $response, $args){
+           $dbh = getDB();
+           $body = $request->getParsedBody();
+           $query = "select title as name, picture, description, address, type as dType, user_id FROM deal where deal_id=:deal_id ";
+           $stmt = $dbh->prepare($query);
+           $stmt->bindParam('deal_id',$body['dealId']);
+           $stmt->execute();
+           $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+           $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
+           $result = $dbh->query($cuisineQuery);
+           $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
+
+           $data = [
+               "name" => $row['name'],
+               "description" => $row['description'],
+               "address" => $row['address'],
+               "dType" => $row['dType'],
+               "type" => $cuisine,
+               "photoUrl" => $row['picture']
+           ];
+
+           return $response->withJson($data);
+       });
+
        $app->get('/find', function($request,$response,$args) {
            $dbh = getDB();
+
+
            $query="select * from deal";
            $result = $dbh->query($query);
-           while($row = $result->fetch(PDO::FETCH_ASSOC)){
-               $data[] = $row;
+           $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+           foreach($rows as $row){
+               $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
+               $result = $dbh->query($cuisineQuery);
+               $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
+               $data[] = [
+                 "id" => $row['deal_id'],
+                 "name" => $row['title'],
+                 "start" => $row['start_date'],
+                 "end" => $row['end_date'],
+                 "repeat" => $row['repeats'],
+                 "normPrice" => $row['norm_price'],
+                 "discountedPrice" => $row['discount_price'],
+                 "description" => $row['description'],
+                 "photoUrl" => $row['picture'],
+                 "type" => $cuisine,
+               ];
            }
            return json_encode($data);
            //return "Welcome to Slim 3.0 based API";
@@ -362,7 +411,7 @@ $app->group('/api', function() use ($app) {
                 // Setup vendor in table
                 $storename = $body['storename'];
                 $genre = $body['genre'];
-                $location = $body['location'];
+                $location = $body['address'];
                 $type = $body['type'];
                 ////////////////////////////////////////////////////////
                 $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
