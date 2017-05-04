@@ -146,8 +146,12 @@ $app->group('/api', function() use ($app) {
            $result = $dbh->query($query);
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
            foreach($rows as $row){
-               if(isset($body['type']) && $body['type'] != 'Food+Drinks' && $row['type'] != $body['type'])
-                   continue;
+               if(isset($body['type']) && $body['type'] != 'Food+Drinks') {
+                   if ($body['type'] == 'Food' && $row['type'] != 'Drinks')
+                       continue;
+                   else if($body['type'] == 'Drinks' && $row['type'] != 'Food')
+                       continue;
+               }
                else if($body['isVendor'] && $_SESSION['user_id'] != $row['user_id'])
                    continue;
                $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
