@@ -167,6 +167,6 @@ body {
 
 }
 
-#slideThreeM input[type=checkbox]:checked + label {
+.slideThreeM input[type=checkbox]:checked + label {
 	left: 43px;
 }
