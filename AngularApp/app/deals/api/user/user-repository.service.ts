@@ -46,8 +46,8 @@ export class UserRepository {
 		return this.http
 			.post("/api/User/exists", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => x.json())
-			.catch(x => false);
+			.then(x => x.json()['exists'])
+			.catch(x => x.message);
 	}
 
 	public register(body) {
