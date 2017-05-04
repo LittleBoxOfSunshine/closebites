@@ -33,8 +33,25 @@ $app->group('/api', function() use ($app) {
          $dbh = getDB();
          //parse request
          $body = $request->getParsedBody();
+
+          //set variables for insert deal query
+          $user_id = $_SESSION['user_id'];
+          $title = $body['title'];
+          $start_date = $body['start_date'];
+          $end_date = $body['end_date'];
+          $repeats = $body['repeats'];
+          $description = $body['description'];
+          $norm_price = $body['norm_price'];
+          $discount_price = $body['discount_price'];
+
+          //get vendor_id
+          $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
+          $result = $dbh->query($query);
+          $arr = $result->fetch();
+          $vendor_id = $arr['vendor_id'];
+
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,category_id,type,vendor_id) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:category_id,:type,:vendor_id)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -42,32 +59,16 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('description',$description);
          $sql->bindParam('norm_price',$norm_price);
          $sql->bindParam('discount_price',$discount_price);
-         $sql->bindParam('type',$type);
          $sql->bindParam('user_id',$user_id);
-         $sql->bindParam('category_id',$category_id);
          $sql->bindParam('vendor_id',$vendor_id);
-         //set variables for insert deal query
-         $user_id = $_SESSION['user_id'];
-         $title = $body['title'];
-         $start_date = $body['start_date'];
-         $end_date = $body['end_date'];
-         $repeats = $body['repeats'];
-         $description = $body['description'];
-         $norm_price = $body['norm_price'];
-         $discount_price = $body['discount_price'];
-         $type = $body['type'];
-         $category_id = $body['category_id'];
-         //get vendor_id
-	 $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
-	 $result = $dbh->query($query);
-	 $arr = $result->fetch();
-	 $vendor_id = $arr['vendor_id'];
+
+
          if($vendor_id)	$sql->execute(); //run insert deal
          else echo "error: vendor id not found";
 	 //get deal_id of deal just created
          $deal_id = $dbh->lastInsertId();
          //return deal_id
-         return $deal_id;
+         return $response->withJson(["dealID" => $deal_id]);
       });//end vendor/create route
       // vendor/update route
       $app->post('/update/{deal_id}', function($request,$response,$args) {
