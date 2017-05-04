@@ -113,7 +113,8 @@ $app->group('/api', function() use ($app) {
 
            $query="select * from deal";
            $result = $dbh->query($query);
-           while($row = $result->fetch(PDO::FETCH_ASSOC)){
+           $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+           foreach($rows as $row){
                $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
                $result = $dbh->query($cuisineQuery);
                $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
