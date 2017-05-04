@@ -88,19 +88,6 @@
             </div>
             </div>
         </div>
-
-          <div *ngFor = "let deal of deals">
-        <div class="deal">
-              <div class="card">
-                  <img class="card-img-top" src="{{ deal.photoUrl }}"  >
-                  <div class="card-block">
-                      <h4 class="card-title"> {{deal.name}}</h4>
-                      <p class="card-text">{{deal.description}}</p>
-                      <a href="#" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal" class="btn btn-primary">See More</a>
-                  </div>
-              </div>
-          </div>
-    </div>
 </div>
 
 <!--modal to add deal-->
