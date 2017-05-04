@@ -108,10 +108,26 @@ $app->group('/api', function() use ($app) {
 
        $app->get('/find', function($request,$response,$args) {
            $dbh = getDB();
+
+
            $query="select * from deal";
            $result = $dbh->query($query);
            while($row = $result->fetch(PDO::FETCH_ASSOC)){
-               $data[] = $row;
+               $cuisineQuery = "SELECT type FROM vendor WHERE user_id = ".$row['user_id'];
+               $result = $dbh->query($cuisineQuery);
+               $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
+               $data[] = [
+                 "id" => $row['deal_id'],
+                 "name" => $row['title'],
+                 "start" => $row['start_date'],
+                 "end" => $row['end_date'],
+                 "repeat" => $row['repeats'],
+                 "normPrice" => $row['norm_price'],
+                 "discountedPrice" => $row['discount_price'],
+                 "description" => $row['description'],
+                 "photoUrl" => $row['picture'],
+                 "type" => $cuisine,
+               ];
            }
            return json_encode($data);
            //return "Welcome to Slim 3.0 based API";
