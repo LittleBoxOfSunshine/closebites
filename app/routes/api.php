@@ -47,13 +47,14 @@ $app->group('/api', function() use ($app) {
           $type = $body['dType'];
 
           //get vendor_id
-          $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
+          $query = "select vendor_id, location from vendor where vendor.user_id = '$user_id'";
           $result = $dbh->query($query);
           $arr = $result->fetch();
           $vendor_id = $arr['vendor_id'];
+          $address = $arr['location'];
 
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture,type) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture,:type)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture,type,address) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture,:type,:address)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -65,6 +66,7 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('vendor_id',$vendor_id);
          $sql->bindParam('picture',$photoUrl);
          $sql->bindParam('type',$type);
+         $sql->bindParam('address',$address);
 
 
          if($vendor_id)	$sql->execute(); //run insert deal
@@ -409,7 +411,7 @@ $app->group('/api', function() use ($app) {
                 // Setup vendor in table
                 $storename = $body['storename'];
                 $genre = $body['genre'];
-                $location = $body['location'];
+                $location = $body['address'];
                 $type = $body['type'];
                 ////////////////////////////////////////////////////////
                 $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
