@@ -26,4 +26,5 @@ export class User {
     favorites: number[];        // CONSUMER ONLY
     filters: Filter[];          // CONSUMER ONLY
     calendar: Date[];           // VENDOR ONLY
+    email: string;
 }

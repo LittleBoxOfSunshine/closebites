@@ -16,7 +16,7 @@ export class UserRepository {
 		this.options = new RequestOptions({ headers: headers });
 	}
 
-	public loadUser(jsonObj) {
+	public loadUser(jsonObj, email) {
 		this.user.name = jsonObj.name;
 		this.user.addr = jsonObj.address;
 		this.user.favorites = jsonObj.favorites;
@@ -24,6 +24,7 @@ export class UserRepository {
 		this.user.calendar = jsonObj.calendar;
 		this.user.accountType = jsonObj.accountType;
 		this.user.id = jsonObj.id;
+		this.user.email = email;
 		return this.user.accountType != undefined;
 	}
 
@@ -36,7 +37,7 @@ export class UserRepository {
 		return this.http
 			.post("/api/User/login", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => this.loadUser(x.json()))
+			.then(x => this.loadUser(x.json(), email))
 			.catch(x => false);
 	}
 
@@ -53,7 +54,7 @@ export class UserRepository {
 		return this.http
 			.post("/api/User/register", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => this.loadUser(x.json()))
+			.then(x => this.loadUser(x.json(), body["email"]))
 			.catch(x => x.message);
 	}
 

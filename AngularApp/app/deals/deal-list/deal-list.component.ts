@@ -96,4 +96,12 @@ export class DealListComponent {
 		console.log(this.foodAndDrinks);
 	}
 
+	getUserName(){
+		return this.userService.getUser().name;
+	}
+
+	getUserEmail(){
+		return this.userService.getUser().email;
+	}
+
 }
