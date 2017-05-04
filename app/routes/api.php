@@ -346,55 +346,20 @@ $app->group('/api', function() use ($app) {
             $accountType = $body['accountType'];
             // Hash and salt user password
             $options = [
-             'cost' => 11,
-             'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+             'cost' => 11
             ];
             $hash = password_hash($password, PASSWORD_BCRYPT, $options);
             $query = "INSERT INTO user (user_id, email, name, password, accountType)
                       VALUES (NULL, '$email', '$name', '$hash', '$accountType')";
             $db = getDB();
             $db->query($query);
-            // Password Verification
-            $getPassword = "SELECT password, accountType
-                            FROM user
-                            WHERE
-                              user.email = '$email'
-                           ";
-            $db = getDB();
-            $userResult = $db->query($getPassword);
-            $pass;
-            while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
-                $data[] = $row;
-                $pass = $row['accountType'];
-            }
-            // echo "\r\n";
-            // echo $password;
-            // echo "\r\n";
-            // echo "---------------------- \r\n";
-            // echo $data[0]['password'];
-            // echo "---------------------- \r\n";
-            if (password_verify($password, $hash)) {
-              // echo "SUCCESS";
-            } else {
-              // echo $password;
-                return false;
-            }
-//////////////////////////////////////////////////////////////////////
+
+
             // Return user information - after register
             if($body['accountType'] == 'consumer') {
-                // Retreive account info
-                $userInfoQuery = "SELECT user_id, name, accountType
-                                  FROM user
-                                  WHERE
-                                    email = '$email'
-                                  ";
-                $infoResult = $db->query($userInfoQuery);
-                while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
-                    $userData[] = $row;
-                }
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => $userData,
+                    'name' => $name,
                     'accountType' => 'consumer',
                     'favorites' => [],
                     'filters' => []
@@ -409,33 +374,20 @@ $app->group('/api', function() use ($app) {
                     $user_id = $row['user_id'];
                 }
                 // Setup vendor in table
-                $storename = $body['storename'];
-                $genre = $body['genre'];
+                $storename = $body['name'];
                 $location = $body['address'];
                 $type = $body['type'];
                 ////////////////////////////////////////////////////////
-                $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
-                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type')
+                $createVendor = "INSERT INTO vendor (user_id, name, location, type)
+                                 VALUES ('$user_id', '$storename', '$location', '$type')
                                 ";
                 $db->query($createVendor);
-                //Retreive vendor information
-                $vendorInfoQuery = "SELECT name, location
-                                    FROM vendor
-                                    WHERE user_id IN (
-                                      SELECT user_id
-                                      FROM user
-                                      WHERE email = '$email')
-                                   ";
-                $infoResult = $db->query($vendorInfoQuery);
-                while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
-                    $vendorName = $row['name'];
-                    $vendorAddress = $row['location'];
-                }
+
                 return $response->withJson([
-                    'id'=> 0,
-                    'name' => $vendorName,
+                    'id'=> $user_id,
+                    'name' => $name,
                     'accountType' => 'vendor',
-                    'address' => $vendorAddress,
+                    'address' => $body['address'],
                     'calendar' => []
                 ]);
             }
