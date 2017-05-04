@@ -232,7 +232,7 @@ $app->group('/api', function() use ($app) {
                            ";
             $db = getDB();
             $userResult = $db->query($getPassword);
-            $accountType;
+            $accountType = "";
             while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
                 $accountType = $row['accountType'];
@@ -280,10 +280,10 @@ $app->group('/api', function() use ($app) {
               }
               // Return vendor information
               return $response->withJson([
-                'id'=> 0,
-                'name' => $vendor,
+                'id'=> $_SESSION['user_id'],
+                'name' => $vendor['name'],
                 'accountType' => 'vendor',
-                'address' => $vendor,
+                'address' => $vendor['location'],
                 'calendar' => $deals
               ]);
             }
