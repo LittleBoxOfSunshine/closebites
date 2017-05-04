@@ -30,15 +30,17 @@
       </div>
     </li>
     <li>
-      <div *ngIf = "loggedIn" style="float:right; margin: 15px 15px 0px 10px;">
+      <!--*ngIf = "loggedIn"-->
+      <div  style="float:right; margin: 15px 15px 0px 10px;">
           <a routerLink="/mydeals" style="text-decoration: none; color: #2c2c2c; ">
             <span class="glyphicon glyphicon-tags icon-size" style="margin-right: 3px; font-size: 12px;  "></span> Favs
-          </a>
+          <!--</a>-->
       </div>
-      <div *ngIf = "loggedIn" style="float:right; margin: 15px 5px 0px 10px;">
+      <!--*ngIf = "loggedIn"-->
+      <div  style="float:right; margin: 15px 5px 0px 10px;">
           <a routerLink = "/mysearches" style="text-decoration: none; color: #2c2c2c;">
             <span class="glyphicon glyphicon-th icon-size" style="margin-right: 6px; font-size: 12px;  "></span>Filters
-          </a>
+          <!--</a>-->
       </div>
     </li>
 
@@ -110,7 +112,7 @@
 													</validation-messages>-->
 				</div>
 	</a>
-  <a href="#" style="padding-bottom:35px;">
+  <a style="padding-bottom:35px;">
 		<div class="slideThree" style="float: left; margin-top: 5px; ">
 			<input type="checkbox" [(ngModel)]="mexican" value="None" id="slideThree" name="mexican" />
 			<label for="slideThree"></label>
@@ -119,7 +121,7 @@
 			Mexican
 		</div>
 	</a>
-	<a href="#" style="padding-bottom:35px;">
+	<a style="padding-bottom:35px;">
 		<div class="slideThree" style="float: left; margin-top: 5px; ">
 			<input type="checkbox" [(ngModel)]="chinese" value="None" id="slideThreeC" name="chinese" />
 			<label for="slideThreeC"></label>
@@ -128,7 +130,7 @@
 			Chinese
 		</div>
 	</a>
-	<a href="#" style="padding-bottom:35px;">
+	<a style="padding-bottom:35px;">
 		<div class="slideThree" style="float: left; margin-top: 5px; ">
 			<input type="checkbox" [(ngModel)]="italian" value="None" id="slideThreeI" name="italian" />
 			<label for="slideThreeI"></label>
@@ -138,7 +140,7 @@
 		</div>
 	</a>
 
-	<a href="#">
+	<a>
 		<div id = "deal">
 			<strong><p style = "text-align:center">Deal Type</p></strong>
 			<div class="btn-group" data-toggle="buttons" >
@@ -148,7 +150,7 @@
 			</div>
 		</div>
 	</a>
-	<a href="#">
+	<a>
 		<button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
 		class="btn btn-block btn-default" (click)="updateSearch()">
 			Update</button>
@@ -201,8 +203,9 @@
             </div>
             <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
                 <p>{{deal.description}}
-                <span [style.opacity]="favoriteDeal ? 1 : .5"
+                <!--<span [style.opacity]="favoriteDeal ? 1 : .5"
 								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                -->
                 </p>
             </div>
 		</div>
