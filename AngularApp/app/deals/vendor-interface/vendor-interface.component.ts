@@ -112,7 +112,7 @@ export class VendorInterfaceComponent {
             this.deal.end = this.endDate;
             this.deal.normPrice = this.startPrice;
             this.deal.discountedPrice = this.endPrice;
-            this.dealsService.add(this.deal).then((x) => {
+            this.dealsService.add2(this.deal).then((x) => {
                 console.log(x);
             });
 

@@ -55,7 +55,7 @@ export class DealRepository {
 			.catch(x => x.message);
 	}*/
 	
-	add(deal: Deal){
+	add2(deal: Deal){
 		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
 	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice};
 		return this.http
