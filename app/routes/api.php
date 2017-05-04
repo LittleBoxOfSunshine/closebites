@@ -146,7 +146,7 @@ $app->group('/api', function() use ($app) {
            $result = $dbh->query($query);
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
            foreach($rows as $row){
-               if(isset($body['type']) && $row['type'] != $body['type'])
+               if(isset($body['type']) && $body['type'] != 'Food+Drinks' && $row['type'] != $body['type'])
                    continue;
                else if($body['isVendor'] && $_SESSION['user_id'] != $row['user_id'])
                    continue;
