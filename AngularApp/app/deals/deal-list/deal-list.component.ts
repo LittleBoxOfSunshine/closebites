@@ -69,9 +69,7 @@ export class DealListComponent {
 
 	identifyDeal(id: number){
 		this.dealsService.getDeal(id)
-			.then(x => function(x){
-				console.log(x);
-			})
+			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
 			/*.then(x => function(x) {
 				console.log(x);
