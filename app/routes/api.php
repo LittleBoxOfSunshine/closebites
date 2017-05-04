@@ -281,9 +281,9 @@ $app->group('/api', function() use ($app) {
               // Return vendor information
               return $response->withJson([
                 'id'=> $_SESSION['user_id'],
-                'name' => $vendor['name'],
+                'name' => $vendor[0]['name'],
                 'accountType' => 'vendor',
-                'address' => $vendor['location'],
+                'address' => $vendor[0]['location'],
                 'calendar' => $deals
               ]);
             }
