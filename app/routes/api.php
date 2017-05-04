@@ -148,7 +148,7 @@ $app->group('/api', function() use ($app) {
            var_dump($body['zip']);
            foreach($rows as $row){
                var_dump($row['address']);
-               var_dump(strpos($row['address'], ((string)$body['zip']));
+               var_dump(strpos($row['address'], ((string)$body['zip'])));
                if(isset($body['type']) && $body['type'] != 'Food+Drinks') {
                    if ($body['type'] == 'Food' && $row['type'] == 'Drinks')
                        continue;
