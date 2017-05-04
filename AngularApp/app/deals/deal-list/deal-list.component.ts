@@ -70,6 +70,7 @@ export class DealListComponent {
 	identifyDeal(id: number){
 		this.dealsService.getDeal(id)
 			.then(x => function(x) {
+				console.log(x);
 				this.deal = x;
 				
 				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
