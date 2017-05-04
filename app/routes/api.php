@@ -145,8 +145,6 @@ $app->group('/api', function() use ($app) {
            $query="select * from deal";
            $result = $dbh->query($query);
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
-           var_dump($body);
-           var_dump($rows);
            foreach($rows as $row){
                if(isset($body['type']) && $row['type'] != $body['type'])
                    continue;
@@ -155,7 +153,7 @@ $app->group('/api', function() use ($app) {
                $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
                $result = $dbh->query($cuisineQuery);
                $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
-               if(isset($body['cuisines']) && !in_array($cuisine, $body['cuisines']))
+               if(isset($body['cuisines']) && count($body['cuisines']) > 0 && !in_array($cuisine, $body['cuisines']))
                     continue;
                $data[] = [
                  "id" => $row['deal_id'],
