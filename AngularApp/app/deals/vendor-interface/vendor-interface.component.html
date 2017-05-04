@@ -79,7 +79,7 @@
                 <div class="deal">
                 <div (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal">{{deal.name}}</div>
                 <div style="height: 12px; border-style:solid;  ">{{deal.description}}</div>
-                        <img src="{{ deal.photoUrl }}">
+                        <img style="width:200;" src="{{ deal.photoUrl }}">
                 </div>
             </div>
             </div>
@@ -159,7 +159,7 @@
 		</div>
 		<div class="modal-body">
             <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
-                <img style="text-align:center" src="{{ deal.photoUrl }}">
+                <img style="text-align:center; width:200;" src="{{ deal.photoUrl }}">
             </div>
             <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
                 <p>{{deal.description}}
