@@ -68,8 +68,10 @@ export class DealListComponent {
 	}
 
 	identifyDeal(id: number){
-		console.log(this.dealsService.getDeal(id)
-			.then(x => function(x) {
+		this.dealsService.getDeal(id)
+			.then(x => console.log(x))
+			.catch(x => console.log(x.message));
+			/*.then(x => function(x) {
 				console.log(x);
 				console.log("test");
 				console.log(this);
@@ -79,7 +81,7 @@ export class DealListComponent {
 					this.favoriteDeal = true;
 				else 
 					this.favoriteDeal = false;
-			}));
+			});*/
 	}
 
 	logout(){
