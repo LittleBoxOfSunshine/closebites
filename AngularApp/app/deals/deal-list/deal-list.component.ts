@@ -37,27 +37,27 @@ export class DealListComponent {
 		dealsService.listAll().then(x => this.deals = x); 
 
 		var that = this;
-		// window.navigator.geolocation.getCurrentPosition(function(pos){
-    	// 	console.log(pos);
-		//   	that.http
-		// 	  .get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
-		// 	  .toPromise()
-		// 	  .then(function(res){
-		// 		res = res.json()['results'];
-		// 		console.log(res);
-		// 		var temp = res["0"].address_components;
-		// 		console.log(temp);
+		window.navigator.geolocation.getCurrentPosition(function(pos){
+    		console.log(pos);
+		  	that.http
+			  .get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
+			  .toPromise()
+			  .then(function(res){
+				res = res.json()['results'];
+				console.log(res);
+				var temp = res["0"].address_components;
+				console.log(temp);
 
-		// 		for(var i = 0; i < temp.length; i++) {
-		// 			console.log(temp[i]);
-		// 			var idx = temp[i]['types'].indexOf("postal_code")
-    	// 			if(idx != -1) {
-		// 				console.log(temp[i]['long_name']);
-		// 				that.zip = temp[i]['long_name'];
-		// 			}
-		// 		}
-  		// 	});
-		// });
+				for(var i = 0; i < temp.length; i++) {
+					console.log(temp[i]);
+					var idx = temp[i]['types'].indexOf("postal_code")
+    				if(idx != -1) {
+						console.log(temp[i]['long_name']);
+						that.zip = temp[i]['long_name'];
+					}
+				}
+  			});
+		});
 	}
 
 	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
@@ -96,11 +96,29 @@ export class DealListComponent {
 		console.log(this.mexican);
 		console.log(this.chinese);
 		console.log(this.italian);
-		console.log(this.korean);
-		console.log(this.murican);
 		console.log(this.food);
 		console.log(this.drinks);
 		console.log(this.foodAndDrinks);
+
+		var body = {"cuisines": [], "type": "Food+Drinks", "isVendor": false};
+
+		if(this.mexican)
+			body.cuisines.push('mexican');
+		if(this.chinese)
+			body.cuisines.push('chinese');
+		if(this.italian)
+			body.cuisines.push('italian');
+
+		var active;
+            if(this.food)
+                active = 'Food';
+            else if(this.drinks)
+                active = 'Drinks';
+            else if(this.foodAndDrinks)
+                active = 'Food+Drinks';
+            body.type = active;
+
+		this.dealsService.find(body).then(x => this.deals = x); 
 	}
 
 	getUserName(){

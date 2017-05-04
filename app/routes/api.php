@@ -138,6 +138,40 @@ $app->group('/api', function() use ($app) {
            return $response->withJson($data);
        });
 
+       $app->post('/find', function($request,$response,$args) {
+           $dbh = getDB();
+            $body = $request->getParsedBody();
+
+           $query="select * from deal";
+           $result = $dbh->query($query);
+           $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+           foreach($rows as $row){
+               if(isset($body['type']) && $row['type'] != $body['type'])
+                   continue;
+               else if($body['isVendor'] && $_SESSION['user_id'] != $row['user_id'])
+                   continue;
+               $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
+               $result = $dbh->query($cuisineQuery);
+               $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
+               if(isset($body['cuisines']) && !in_array($cuisine, $body['cuisines']))
+                    continue;
+               $data[] = [
+                 "id" => $row['deal_id'],
+                 "name" => $row['title'],
+                 "start" => $row['start_date'],
+                 "end" => $row['end_date'],
+                 "repeat" => $row['repeats'],
+                 "normPrice" => $row['norm_price'],
+                 "discountedPrice" => $row['discount_price'],
+                 "description" => $row['description'],
+                 "photoUrl" => $row['picture'],
+                 "type" => $cuisine,
+               ];
+           }
+           return json_encode($data);
+           //return "Welcome to Slim 3.0 based API";
+       });
+
        $app->get('/find', function($request,$response,$args) {
            $dbh = getDB();
 
@@ -150,16 +184,16 @@ $app->group('/api', function() use ($app) {
                $result = $dbh->query($cuisineQuery);
                $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
                $data[] = [
-                 "id" => $row['deal_id'],
-                 "name" => $row['title'],
-                 "start" => $row['start_date'],
-                 "end" => $row['end_date'],
-                 "repeat" => $row['repeats'],
-                 "normPrice" => $row['norm_price'],
-                 "discountedPrice" => $row['discount_price'],
-                 "description" => $row['description'],
-                 "photoUrl" => $row['picture'],
-                 "type" => $cuisine,
+                   "id" => $row['deal_id'],
+                   "name" => $row['title'],
+                   "start" => $row['start_date'],
+                   "end" => $row['end_date'],
+                   "repeat" => $row['repeats'],
+                   "normPrice" => $row['norm_price'],
+                   "discountedPrice" => $row['discount_price'],
+                   "description" => $row['description'],
+                   "photoUrl" => $row['picture'],
+                   "type" => $cuisine,
                ];
            }
            return json_encode($data);
