@@ -88,6 +88,48 @@ body {
 	font-weight: bold;
 }
 
+.slideThreeM:after {
+	content: 'OFF';
+	font: 12px/13px Arial, sans-serif;
+	color: #000;
+	position: absolute;
+	right: 10px;
+	z-index: 0;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.slideThreeM:before {
+	content: 'ON';
+	font: 10px/13px Arial, sans-serif;
+	color: #00bf00;
+	position: absolute;
+	left: 10px;
+	z-index: 0;
+	font-weight: bold;
+}
+
+.slideThreeI:after {
+	content: 'OFF';
+	font: 12px/13px Arial, sans-serif;
+	color: #000;
+	position: absolute;
+	right: 10px;
+	z-index: 0;
+	font-weight: bold;
+	text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+}
+
+.slideThreeI:before {
+	content: 'ON';
+	font: 10px/13px Arial, sans-serif;
+	color: #00bf00;
+	position: absolute;
+	left: 10px;
+	z-index: 0;
+	font-weight: bold;
+}
+
 .slideThree label {
 	display: block;
 	width: 34px;
