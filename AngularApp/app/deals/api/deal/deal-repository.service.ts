@@ -18,7 +18,7 @@ export class DealRepository {
 	
 	add2(deal: Deal) : Promise<Deal> {
 		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
-	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice};
+	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice,"photoUrl":deal.photoUrl};
 		return this.http
 			.post("/api/Vendor/create", JSON.stringify(body),this.options)
 			.toPromise()
