@@ -73,15 +73,15 @@
         </div>
         <p>Deal Type
             <button [ngClass] = "{'btn-info': food,'btn-primary':!food}"
-                (click)="updateDealMode('food')" type="button" class="btn btn-primary" 
+                (click)="updateMode('food')" type="button" class="btn btn-primary" 
                 style="width:30%;margin:10px">Food
             </button>
             <button [ngClass] = "{'btn-info':drinks,'btn-primary':!drinks}"
-                (click)="updateDealMode('drinks')" type="button" class="btn btn-primary" 
+                (click)="updateMode('drinks')" type="button" class="btn btn-primary" 
                 style="width:30%;margin:10px">Drinks
             </button>
             <button [ngClass] = "{'btn-info':foodAndDrinks,'btn-primary':!foodAndDrinks}"
-                (click)="updateDealMode('foodAndDrinks')" type="button" class="btn btn-primary" 
+                (click)="updateMode('foodAndDrinks')" type="button" class="btn btn-primary" 
                 style="width:30%;margin:10px">Both
             </button>
         </p>

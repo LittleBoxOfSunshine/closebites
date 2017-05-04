@@ -44,7 +44,7 @@ export class VendorInterfaceComponent {
 
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
-        this.food = this.drink = false;
+        this.food = this.drinks = this.foodAndDrinks = false;
         this.mode = 'month';
         this.days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
         this.times = ['7:00','8:00','9:00','10:00','11:00','Noon'];
@@ -84,7 +84,7 @@ export class VendorInterfaceComponent {
     }
 
     addDeal(){
-        if (!this.food && !this.drink){ //when neither 'food' nor 'drink' not selected
+        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' not selected
             this.typeNotChosen = true;
         } else {
             console.log('test');
@@ -130,7 +130,7 @@ export class VendorInterfaceComponent {
     }
 
     logout(){
-		this.food = this.drink = false;
+		this.food = this.drinks = this.foodAndDrinks = false;
 		this.deals = new Array<Deal>();
 		this.deal = new Deal;
         this.userService.logout();
