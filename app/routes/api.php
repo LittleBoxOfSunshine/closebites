@@ -242,6 +242,10 @@ $app->group('/api', function() use ($app) {
       });//end insert feedback route
    });//end Vendor group
    $app->group('/User', function() use ($app) {
+        $app->delete('/logout', function($request,$response,$args) {
+           session_destroy();
+            return $response;
+        });
         $app->post('/exists', function($request,$response,$args) {
           $body = $request->getParsedBody();
           $email = $body['email'];
