@@ -31,12 +31,12 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 
-	getDeal(id: number) : Promise<Deal> {
+	getDeal(id: number) {
 		let body = {"dealId": id};
 		return this.http
 			.post("/api/Deal/details", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => x.json() as Deal)
+			.then(x => console.log(x.json()))
 			.catch(x => false);
 	}
 
