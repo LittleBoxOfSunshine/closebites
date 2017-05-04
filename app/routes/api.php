@@ -154,6 +154,8 @@ $app->group('/api', function() use ($app) {
                }
                else if($body['isVendor'] && $_SESSION['user_id'] != $row['user_id'])
                    continue;
+               else if(isset($body['zip']) && $body['zip'] != -1 && strpos($row['location'], $body['zip']) !== false)
+                   continue;
                $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
                $result = $dbh->query($cuisineQuery);
                $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];

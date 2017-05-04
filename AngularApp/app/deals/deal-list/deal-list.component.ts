@@ -20,7 +20,7 @@ export class DealListComponent {
 	loggedIn:Boolean;
 	deals = new Array<Deal>(); //list of deals that show after searching
 	deal = new Deal; //used to bring up a specific deal in the modal
-	zip:number;
+	zip:string;
 	mexican:boolean;
 	chinese:boolean;
 	italian:boolean;
@@ -35,6 +35,7 @@ export class DealListComponent {
 		this.foodAndDrinks = true;
 		this.loggedIn = this.router.url == '/user';
 		dealsService.listAll().then(x => this.deals = x); 
+		this.zip = "";
 
 		var that = this;
 		window.navigator.geolocation.getCurrentPosition(function(pos){
@@ -89,10 +90,12 @@ export class DealListComponent {
 		this.foodAndDrinks = true;
 		this.deals = new Array<Deal>();
 		this.deal = new Deal;
+		this.zip = "";
 		this.userService.logout();
 	}
 
 	updateSearch(){
+		console.log(this.zip);
 		console.log(this.mexican);
 		console.log(this.chinese);
 		console.log(this.italian);
@@ -101,6 +104,11 @@ export class DealListComponent {
 		console.log(this.foodAndDrinks);
 
 		var body = {"cuisines": [], "type": "Food+Drinks", "isVendor": false};
+
+		if(this.zip != "")
+			body['zip'] = parseInt(this.zip);
+		else
+			body['zip'] = -1;
 
 		if(this.mexican)
 			body.cuisines.push('mexican');
