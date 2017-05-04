@@ -21,9 +21,13 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.dealsService = dealsService;
         this.userService = userService;
         this.deal = new deal_1.Deal;
+        this.startDate = new String;
+        this.endDate = new String;
+        this.startPrice = new Number;
+        this.endPrice = new Number;
         this.days2 = new Array();
         this.repeat = new String;
-        this.food = this.drink = false;
+        this.food = this.drinks = this.foodAndDrinks = false;
         this.mode = 'month';
         this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         this.times = ['7:00', '8:00', '9:00', '10:00', '11:00', 'Noon'];
@@ -49,26 +53,21 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         }
         console.log(this.repeat);
     }
-    updateMode(newMode) {
-        this.mode = newMode;
-    }
-    updateDealMode(dealType) {
-        //change food and drink boolean values on click
-        if (dealType == 'food') {
-            this.food = !this.food;
-        }
-        else {
-            this.drink = !this.drink;
-        }
+    updateMode(dealType) {
+        console.log(dealType);
+        this.food = dealType == 'food';
+        this.drinks = dealType == 'drinks';
+        this.foodAndDrinks = dealType == 'foodAndDrinks';
     }
     resetTypeNotChosen() {
         this.typeNotChosen = null;
     }
     addDeal() {
-        if (!this.food && !this.drink) {
+        if (!this.food && !this.drinks && !this.foodAndDrinks) {
             this.typeNotChosen = true;
         }
         else {
+            console.log('test');
             this.typeNotChosen = false;
             /*if (this.food && !this.drink)
                 this.deal.type1 = 'Food';
@@ -78,9 +77,8 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
                 this.deal.type1='Food';
                 this.deal.type2='Drink';
             }*/
-            //this.dealsService.add(this.deal);
             this.startDate = this.startDate.replace(/-/g, "/");
-            this.endDate = this.startDate.replace(/-/g, "/");
+            this.endDate = this.endDate.replace(/-/g, "/");
             this.startDate = this.startDate.concat(' ', this.startTime);
             this.endDate = this.endDate.concat(' ', this.endTime);
             this.deal.repeat = this.repeat;
@@ -88,15 +86,26 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             this.deal.end = this.endDate;
             this.deal.normPrice = this.startPrice;
             this.deal.discountedPrice = this.endPrice;
-            this.dealsService.add(this.deal);
+            var active;
+            if (this.food)
+                active = 'Food';
+            else if (this.drinks)
+                active = 'Drinks';
+            else if (this.foodAndDrinks)
+                active = 'Food+Drinks';
+            this.deal.dType = active;
+            this.dealsService.add2(this.deal).then((x) => {
+                console.log(x);
+            });
             //reset modal form values afterwards
             this.deal = new deal_1.Deal;
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
+            this.food = this.drinks = this.foodAndDrinks = false;
         }
     }
     logout() {
-        this.food = this.drink = false;
+        this.food = this.drinks = this.foodAndDrinks = false;
         this.deals = new Array();
         this.deal = new deal_1.Deal;
         this.userService.logout();
