@@ -108,13 +108,7 @@ $app->group('/api', function() use ($app) {
    $app->group('/Deal', function() use ($app) {
 
        $app->get('/find', function($request,$response,$args) {
-           //$connection = $this->get("db");
-           $dbhost="localhost";
-           $dbuser="root";
-           $dbpass="pass";
-           $dbname="closebites";
-           $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
-           $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+           $dbh = getDB();
 
            $query="select * from deal";
            $result = $dbh->query($query);
