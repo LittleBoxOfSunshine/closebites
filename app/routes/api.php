@@ -146,6 +146,7 @@ $app->group('/api', function() use ($app) {
            $result = $dbh->query($query);
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
            //var_dump($body['zip']);
+           $data = [];
            foreach($rows as $row){
                //var_dump($row['address']);
                //var_dump(strpos($row['address'], ((string)$body['zip'])));
@@ -159,6 +160,7 @@ $app->group('/api', function() use ($app) {
                    continue;
                if(isset($body['zip']) && $body['zip'] != -1 && strpos($row['address'], ((string)$body['zip'])) !== false)
                    continue;
+               var_dump($row['user_id']);
                $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
                $result = $dbh->query($cuisineQuery);
                $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
