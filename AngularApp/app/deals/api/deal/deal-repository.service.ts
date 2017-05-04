@@ -31,30 +31,18 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 
-	/*private _movies: Deal[];*/
-
-	private _apiUrl = 'api/deals';
-
 	listAll() : Promise<Deal[]>{
 		return this.http
-			.get('/api/temp')
+			.get('/api/Deal/find')
 			.toPromise()
 			.then(x => x.json() as Deal[])
 			.catch(x => console.log(x.message));
 	}
-	// listAll() {//: Promise<Deal[]>{
-	// 	console.log( this.http.get('52.36.27.212/temp')
-	// 		.map(res => res.json()));
-	// }
 
-	getById(id : number) : Promise<Deal>{
-		return this.http
-			.get(`${this._apiUrl}/${id}`)
-			.toPromise()
-			.then(x => x.json().data as Deal)
-			.catch(x => x.message);
+	find() : Promise<Deal[]>{
+
 	}
-	
+/*	
 	add(Deal: Deal) : Promise<Deal>{
 		return this.http
 			.post(this._apiUrl, Deal)
@@ -77,4 +65,5 @@ export class DealRepository {
 			.toPromise()
 			.catch(x => x.message);
 	}
+*/
 }
