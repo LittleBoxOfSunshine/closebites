@@ -67,6 +67,7 @@
 </div><!-- /.navbar-collapse -->
 </div><!-- /.container-fluid -->
 </nav>
+
 <!--contains plus glyphicon to add deal as well as list of deals-->
 <div class = "row">
         <div class = "col-sm-2" style="text-align:center">
@@ -76,14 +77,30 @@
         <div style="float:right; width: 70%">
             <div style = "width: 100%;" >
             <div *ngFor = "let deal of vendorDeals">
-                <div class="deal">
-                <div (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal">{{deal.name}}</div>
-                <div style="height: 12px; border-style:solid;  ">{{deal.description}}</div>
-                        <img style="width:200;" src="{{ deal.photoUrl }}">
+                <div class="card">
+                  <img class="card-img-top" src="{{ deal.photoUrl }}"  >
+                  <div class="card-block">
+                      <h4 class="card-title"> {{deal.name}}</h4>
+                      <p class="card-text">{{deal.description}}</p>
+                      <a href="#" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal" class="btn btn-primary">See More</a>
                 </div>
+              </div>
             </div>
             </div>
         </div>
+
+          <div *ngFor = "let deal of deals">
+        <div class="deal">
+              <div class="card">
+                  <img class="card-img-top" src="{{ deal.photoUrl }}"  >
+                  <div class="card-block">
+                      <h4 class="card-title"> {{deal.name}}</h4>
+                      <p class="card-text">{{deal.description}}</p>
+                      <a href="#" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal" class="btn btn-primary">See More</a>
+                  </div>
+              </div>
+          </div>
+    </div>
 </div>
 
 <!--modal to add deal-->
