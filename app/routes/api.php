@@ -145,6 +145,7 @@ $app->group('/api', function() use ($app) {
            $query="select * from deal";
            $result = $dbh->query($query);
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+           var_dump($body);
            var_dump($rows);
            foreach($rows as $row){
                if(isset($body['type']) && $row['type'] != $body['type'])
