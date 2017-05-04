@@ -22,6 +22,7 @@ export class SignUpComponent {
   error: boolean;
   passwordMatch:boolean;
   emailExists:boolean;
+  type:string;
 
   constructor(private router: Router, private route:ActivatedRoute,private userService:UserRepository){
       this.route.params.subscribe(params => {
@@ -45,8 +46,10 @@ export class SignUpComponent {
           this.emailExists=false;
           let body = { email: this.email, password: this.password, 
             name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' }
-          if(this.mode == 'vendor')
+          if(this.mode == 'vendor') {
             body['address'] = this.address;
+            body['type'] = this.type;
+          }
 
           this.userService.register(body).then((x)=>{
             console.log(x);

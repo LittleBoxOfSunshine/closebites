@@ -82,6 +82,15 @@
 																				required: 'Retyped password is required'}">
 																</validation-messages>
             </div>
+			<div class="field-wrap">
+				<span>Cuisine Type: </span>
+				<select name="cuisine" class="form-control" [(ngModel)]="type">
+					<option value="other" selected>Other</option>
+					<option value="mexican">Mexican</option>
+					<option value="chinese">Chinese</option>
+					<option value="italian" selected>Italian</option>
+				</select>	
+            </div>
 			<div *ngIf = "!passwordMatch" class="alert alert-danger">
 				Passwords don't match!
 			</div>
