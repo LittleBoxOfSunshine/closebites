@@ -18,7 +18,8 @@ a.hover:hover {
 }
 
 .card-img-top{
-  width:325px;
+  max-width:325px;
+  max-height: 230px;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
 }
