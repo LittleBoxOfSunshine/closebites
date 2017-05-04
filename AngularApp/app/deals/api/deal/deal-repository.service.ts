@@ -48,8 +48,7 @@ export class DealRepository {
 			.catch(x => console.log(x.message));
 	}
 
-	find() : Promise<Deal[]> {
-		let body = {};
+	find(body) : Promise<Deal[]> {
 		return this.http
 			.post('/api/Deal/find', JSON.stringify(body), this.options)
 			.toPromise()

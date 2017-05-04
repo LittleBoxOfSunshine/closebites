@@ -138,6 +138,49 @@ $app->group('/api', function() use ($app) {
            return $response->withJson($data);
        });
 
+       $app->post('/find', function($request,$response,$args) {
+           $dbh = getDB();
+            $body = $request->getParsedBody();
+
+           $query="select * from deal";
+           $result = $dbh->query($query);
+           $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+           //var_dump($body['zip']);
+           foreach($rows as $row){
+               //var_dump($row['address']);
+               //var_dump(strpos($row['address'], ((string)$body['zip'])));
+               if(isset($body['type']) && $body['type'] != 'Food+Drinks') {
+                   if ($body['type'] == 'Food' && $row['type'] == 'Drinks')
+                       continue;
+                   else if($body['type'] == 'Drinks' && $row['type'] == 'Food')
+                       continue;
+               }
+               else if($body['isVendor'] && $_SESSION['user_id'] != $row['user_id'])
+                   continue;
+               if(isset($body['zip']) && $body['zip'] != -1 && strpos($row['address'], ((string)$body['zip'])) !== false)
+                   continue;
+               $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
+               $result = $dbh->query($cuisineQuery);
+               $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
+               if(isset($body['cuisines']) && count($body['cuisines']) > 0 && !in_array($cuisine, $body['cuisines']))
+                    continue;
+               $data[] = [
+                 "id" => $row['deal_id'],
+                 "name" => $row['title'],
+                 "start" => $row['start_date'],
+                 "end" => $row['end_date'],
+                 "repeat" => $row['repeats'],
+                 "normPrice" => $row['norm_price'],
+                 "discountedPrice" => $row['discount_price'],
+                 "description" => $row['description'],
+                 "photoUrl" => $row['picture'],
+                 "type" => $cuisine,
+               ];
+           }
+           return json_encode($data);
+           //return "Welcome to Slim 3.0 based API";
+       });
+
        $app->get('/find', function($request,$response,$args) {
            $dbh = getDB();
 
@@ -150,16 +193,16 @@ $app->group('/api', function() use ($app) {
                $result = $dbh->query($cuisineQuery);
                $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
                $data[] = [
-                 "id" => $row['deal_id'],
-                 "name" => $row['title'],
-                 "start" => $row['start_date'],
-                 "end" => $row['end_date'],
-                 "repeat" => $row['repeats'],
-                 "normPrice" => $row['norm_price'],
-                 "discountedPrice" => $row['discount_price'],
-                 "description" => $row['description'],
-                 "photoUrl" => $row['picture'],
-                 "type" => $cuisine,
+                   "id" => $row['deal_id'],
+                   "name" => $row['title'],
+                   "start" => $row['start_date'],
+                   "end" => $row['end_date'],
+                   "repeat" => $row['repeats'],
+                   "normPrice" => $row['norm_price'],
+                   "discountedPrice" => $row['discount_price'],
+                   "description" => $row['description'],
+                   "photoUrl" => $row['picture'],
+                   "type" => $cuisine,
                ];
            }
            return json_encode($data);
@@ -202,6 +245,10 @@ $app->group('/api', function() use ($app) {
       });//end insert feedback route
    });//end Vendor group
    $app->group('/User', function() use ($app) {
+        $app->delete('/logout', function($request,$response,$args) {
+           session_destroy();
+            return $response;
+        });
         $app->post('/exists', function($request,$response,$args) {
           $body = $request->getParsedBody();
           $email = $body['email'];
@@ -232,7 +279,7 @@ $app->group('/api', function() use ($app) {
                            ";
             $db = getDB();
             $userResult = $db->query($getPassword);
-            $accountType;
+            $accountType = "";
             while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
                 $accountType = $row['accountType'];
@@ -280,10 +327,10 @@ $app->group('/api', function() use ($app) {
               }
               // Return vendor information
               return $response->withJson([
-                'id'=> 0,
-                'name' => $vendor,
+                'id'=> $_SESSION['user_id'],
+                'name' => $vendor[0]['name'],
                 'accountType' => 'vendor',
-                'address' => $vendor,
+                'address' => $vendor[0]['location'],
                 'calendar' => $deals
               ]);
             }
@@ -346,55 +393,20 @@ $app->group('/api', function() use ($app) {
             $accountType = $body['accountType'];
             // Hash and salt user password
             $options = [
-             'cost' => 11,
-             'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+             'cost' => 11
             ];
             $hash = password_hash($password, PASSWORD_BCRYPT, $options);
             $query = "INSERT INTO user (user_id, email, name, password, accountType)
                       VALUES (NULL, '$email', '$name', '$hash', '$accountType')";
             $db = getDB();
             $db->query($query);
-            // Password Verification
-            $getPassword = "SELECT password, accountType
-                            FROM user
-                            WHERE
-                              user.email = '$email'
-                           ";
-            $db = getDB();
-            $userResult = $db->query($getPassword);
-            $pass;
-            while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
-                $data[] = $row;
-                $pass = $row['accountType'];
-            }
-            // echo "\r\n";
-            // echo $password;
-            // echo "\r\n";
-            // echo "---------------------- \r\n";
-            // echo $data[0]['password'];
-            // echo "---------------------- \r\n";
-            if (password_verify($password, $hash)) {
-              // echo "SUCCESS";
-            } else {
-              // echo $password;
-                return false;
-            }
-//////////////////////////////////////////////////////////////////////
+
+
             // Return user information - after register
             if($body['accountType'] == 'consumer') {
-                // Retreive account info
-                $userInfoQuery = "SELECT user_id, name, accountType
-                                  FROM user
-                                  WHERE
-                                    email = '$email'
-                                  ";
-                $infoResult = $db->query($userInfoQuery);
-                while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
-                    $userData[] = $row;
-                }
                 return $response->withJson([
                     'id'=> 0,
-                    'name' => $userData,
+                    'name' => $name,
                     'accountType' => 'consumer',
                     'favorites' => [],
                     'filters' => []
@@ -409,33 +421,20 @@ $app->group('/api', function() use ($app) {
                     $user_id = $row['user_id'];
                 }
                 // Setup vendor in table
-                $storename = $body['storename'];
-                $genre = $body['genre'];
+                $storename = $body['name'];
                 $location = $body['address'];
                 $type = $body['type'];
                 ////////////////////////////////////////////////////////
-                $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
-                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type')
+                $createVendor = "INSERT INTO vendor (user_id, name, location, type)
+                                 VALUES ('$user_id', '$storename', '$location', '$type')
                                 ";
                 $db->query($createVendor);
-                //Retreive vendor information
-                $vendorInfoQuery = "SELECT name, location
-                                    FROM vendor
-                                    WHERE user_id IN (
-                                      SELECT user_id
-                                      FROM user
-                                      WHERE email = '$email')
-                                   ";
-                $infoResult = $db->query($vendorInfoQuery);
-                while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
-                    $vendorName = $row['name'];
-                    $vendorAddress = $row['location'];
-                }
+
                 return $response->withJson([
-                    'id'=> 0,
-                    'name' => $vendorName,
+                    'id'=> $user_id,
+                    'name' => $name,
                     'accountType' => 'vendor',
-                    'address' => $vendorAddress,
+                    'address' => $body['address'],
                     'calendar' => []
                 ]);
             }
