@@ -164,7 +164,7 @@ body {
 }
 
 .slideThree input[type=checkbox] {
-
+	visibility: hidden;
 }
 
 .slideThree input[type=checkbox]:checked + label {
