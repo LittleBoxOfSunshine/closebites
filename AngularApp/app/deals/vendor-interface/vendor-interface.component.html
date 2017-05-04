@@ -69,11 +69,13 @@
 </nav>
 
 <!--contains plus glyphicon to add deal as well as list of deals-->
-<div class = "row">
+
         <div class = "col-sm-2" style="text-align:center">
             <span class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px"
             (click)="resetTypeNotChosen()" data-toggle="modal" data-target="#myModal"></span>
         </div>
+        <div style="float:right; width: 70%">
+<div style = "width: 100%;" >
         <div style="float:right; width: 70%">
             <div style = "width: 100%;" >
             <div *ngFor = "let deal of vendorDeals">
@@ -88,8 +90,8 @@
             </div>
             </div>
         </div>
-</div>
-
+  </div>
+  </div>
 <!--modal to add deal-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog" style="width:400px">
