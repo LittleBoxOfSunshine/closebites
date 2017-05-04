@@ -36,10 +36,10 @@ export class DealListComponent {
 		this.loggedIn = this.router.url == '/user';
 		//dealsService.listAll()
 			//.then(x => this.deals = x);
-		dealsService.listAll().then(x => this.deals = x);
-		
-		//TESTING
-		this.deals[0].photoUrl = 'https://www.w3schools.com/tags/smiley.gif';
+		dealsService.listAll().then(x => function(x) { this.deals = x; 
+			//TESTING
+			this.deals[0].photoUrl = 'https://www.w3schools.com/tags/smiley.gif';
+		});
 
 		var that = this;
 		// window.navigator.geolocation.getCurrentPosition(function(pos){
