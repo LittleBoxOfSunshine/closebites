@@ -1,3 +1,14 @@
+.deal {
+    width: 40%;
+    height: 40%;
+    margin: 15px;
+    border-radius: 10px;
+    background-color: #fff;
+    display:block;
+    float: left;
+    text-align: center;
+    line-height: 180px;
+}
 .alert {
     margin-left: 15px;
     margin-right: 15px;
