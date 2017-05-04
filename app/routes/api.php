@@ -147,9 +147,9 @@ $app->group('/api', function() use ($app) {
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
            foreach($rows as $row){
                if(isset($body['type']) && $body['type'] != 'Food+Drinks') {
-                   if ($body['type'] == 'Food' && $row['type'] != 'Drinks')
+                   if ($body['type'] == 'Food' && $row['type'] == 'Drinks')
                        continue;
-                   else if($body['type'] == 'Drinks' && $row['type'] != 'Food')
+                   else if($body['type'] == 'Drinks' && $row['type'] == 'Food')
                        continue;
                }
                else if($body['isVendor'] && $_SESSION['user_id'] != $row['user_id'])
