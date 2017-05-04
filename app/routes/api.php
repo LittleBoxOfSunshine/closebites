@@ -43,6 +43,7 @@ $app->group('/api', function() use ($app) {
           $description = $body['description'];
           $norm_price = $body['norm_price'];
           $discount_price = $body['discount_price'];
+          $photoUrl = $body['photoUrl'];
 
           //get vendor_id
           $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
@@ -51,7 +52,7 @@ $app->group('/api', function() use ($app) {
           $vendor_id = $arr['vendor_id'];
 
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -61,6 +62,7 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('discount_price',$discount_price);
          $sql->bindParam('user_id',$user_id);
          $sql->bindParam('vendor_id',$vendor_id);
+         $sql->bindParam('picture',$photoUrl);
 
 
          if($vendor_id)	$sql->execute(); //run insert deal
