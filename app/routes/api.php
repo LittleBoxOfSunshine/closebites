@@ -4,8 +4,8 @@ if(!isset($_SESSION)) session_start();
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
-  $dbpass="Jaav13!@G"; // Jaav13!@G
-  $dbname="closebites2"; // closebites2
+  $dbpass="pass"; // Jaav13!@G
+  $dbname="closebites"; // closebites2
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
@@ -14,13 +14,11 @@ function getDB() {
 // Routes
 $app->get('/', function ($request, $response, $args) {
     // Sample log message
-
     // Render index view
     return "hello";
 });
 
 $app->group('/api', function() use ($app) {
-
     $app->get('/temp', function($request, $response, $args){
         return $response->withJson(            [
             ['id'=>1,'name'=>"McDonald's",'description'=>"Deal 1 text",'type'=>'food'],
@@ -44,7 +42,7 @@ $app->group('/api', function() use ($app) {
          $body = $request->getParsedBody();
 
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,category_id,type,vendor_id) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:category_id,:type,:vendor_id)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -52,9 +50,10 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('description',$description);
          $sql->bindParam('norm_price',$norm_price);
          $sql->bindParam('discount_price',$discount_price);
-         //$sql->bindParam('type',$type);
+         $sql->bindParam('type',$type);
          $sql->bindParam('user_id',$user_id);
-         //$sql->bindParam('category_id',$category_id);
+         $sql->bindParam('category_id',$category_id);
+         $sql->bindParam('vendor_id',$vendor_id);
 
          //set variables for insert deal query
          $user_id = $_SESSION['user_id'];
@@ -65,9 +64,19 @@ $app->group('/api', function() use ($app) {
          $description = $body['description'];
          $norm_price = $body['norm_price'];
          $discount_price = $body['discount_price'];
-         //$type = $body['type'];
-         //$category_id = $body['category_id'];
-         $sql->execute(); //run insert deal
+         $type = $body['type'];
+         $category_id = $body['category_id'];
+
+         //get vendor_id
+	 $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
+	 $result = $dbh->query($query);
+	 $arr = $result->fetch();
+	 $vendor_id = $arr['vendor_id'];
+
+         if($vendor_id)	$sql->execute(); //run insert deal
+         else echo "error: vendor id not found";
+
+	 //get deal_id of deal just created
          $deal_id = $dbh->lastInsertId();
 
          //return deal_id
@@ -110,6 +119,7 @@ $app->group('/api', function() use ($app) {
          $type = $body['type'];
          $category_id = $body['category_id'];
          $deal_id = $args['deal_id'];
+
          $sql->execute(); //run insert deal
 
       });//end vendor/create route
@@ -121,23 +131,23 @@ $app->group('/api', function() use ($app) {
 
       //get feedback route
       $app->get('/getFeedback/{deal_id}', function($request,$response,$args) {
+
          //pull out deal_id
          $deal_id = $args['deal_id'];
 
-      //run the connection to the database again
-      $dbh = getDB();
+         //run the connection to the database again
+         $dbh = getDB();
 
-      //parse request
-      $body = $request->getParsedBody();
-
-      //getFeedback query
-      $sql = $dbh->prepare("select comment from comment where comment.deal_id = '$deal_id'");
-      $sql->execute(); //run it
-      $results = $sql->fetchAll();
-      return json_encode($results);
-
+         //parse request
+         $body = $request->getParsedBody();
+  
+         //getFeedback query
+         $sql = $dbh->prepare("select comment from comment where comment.deal_id = '$deal_id'");
+         $sql->execute(); //run it
+         $results = $sql->fetchAll();
+         return json_encode($results);
       });//end getFeedback
-
+ 
       //post feedback route
       $app->post('/feedback/{deal_id}', function($request,$response,$args) {
 
@@ -149,7 +159,6 @@ $app->group('/api', function() use ($app) {
 
          //insert feedback query
          $sql = $dbh->prepare("insert into comment (user_id,deal_id,comment) values (:user_id,:deal_id,:comment)");
-
          $sql->bindParam('user_id',$user_id);
          $sql->bindParam('deal_id',$deal_id);
          $sql->bindParam('comment',$comment);
@@ -159,7 +168,6 @@ $app->group('/api', function() use ($app) {
          $comment = $body['comment'];
          $deal_id = $args['deal_id'];
          $arr = array($deal_id,$comment,$user_id);
-
          $sql->execute();
 
       });//end insert feedback route
@@ -167,15 +175,11 @@ $app->group('/api', function() use ($app) {
    });//end Vendor group
 
    $app->group('/User', function() use ($app) {
-
         $app->post('/exists', function($request,$response,$args) {
-
           $body = $request->getParsedBody();
           $email = $body['email'];
           // $accountType = $body['accountType'];
           // return $email;
-
-
           $query = "SELECT email FROM user WHERE user.email = '$email'";
           // return $query;
           $db = getDB();
@@ -191,45 +195,39 @@ $app->group('/api', function() use ($app) {
             return "false";
           }
         });
-
         $app->post('/login', function($request,$response,$args) {
-
             $body = $request->getParsedBody();
             $email = $body['email'];
             $password = $body['password'];
-
             // TEMP REMOVE THIS
             //$accountType = $body['accountType'];
-
             // Password Verification
-            $getPassword = "SELECT password, accountType
+            $getPassword = "SELECT user_id,password,accountType
                             FROM user
                             WHERE
                               user.email = '$email'
                            ";
-
             $db = getDB();
             $userResult = $db->query($getPassword);
             $accountType;
-
             while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
                 $accountType = $row['accountType'];
+                $_SESSION['user_id'] = $row['user_id'];
             }
+
             // echo "\r\n";
             // echo $password;
             // echo "\r\n";
             // echo "---------------------- \r\n";
             // echo $data[0]['password'];
             // echo "---------------------- \r\n";
-
             if (password_verify($password, $data[0]['password'])) {
               // echo $password;
             } else {
               // echo $password;
                 return false;
             }
-
             // Vendor Login - if password is correct
             if($accountType == 'vendor') {
               // Retreive vendor account information
@@ -246,7 +244,6 @@ $app->group('/api', function() use ($app) {
                   $vendor[] = $row;
               }
 
-
               // Get deals associated with vendor
               $getVendorDeals = "SELECT title, description, start_date, end_date, repeats
                                  FROM deal
@@ -260,8 +257,6 @@ $app->group('/api', function() use ($app) {
               while($row = $vendorDeals->fetch(PDO::FETCH_ASSOC)){
                   $deals[] = $row;
               }
-
-
               // Return vendor information
               return $response->withJson([
                 'id'=> 0,
@@ -280,6 +275,8 @@ $app->group('/api', function() use ($app) {
                             email = '$email'
                          ";
               $infoResult = $db->query($getInfo);
+	      $result = $infoResult->fetch();
+	      $user_name = $result['name'];
 
               // Get user account favorites
               $getFavorites = "SELECT favorite_id
@@ -295,7 +292,6 @@ $app->group('/api', function() use ($app) {
               while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
                   $favData[] = $row['favorite_id'];
               }
-
               // GET Filters associated with the consumer
               $getFilters = "SELECT type, cuisine
                              FROM filter
@@ -310,19 +306,17 @@ $app->group('/api', function() use ($app) {
               while($row = $filterResult->fetch(PDO::FETCH_ASSOC)){
                   $filterData[] = $row;
               }
-
-
               // Return information regarding user
               return $response->withJson([
                   'id'=> 0,
-                  'name' => $email,
+                  'name' => $user_name,
+		  'email' => $email,
                   'accountType' => 'consumer',
                   'favorites' => $favData,
                   'filters' => $filterData
               ]);
             }
         });
-
         $app->post('/register', function($request,$response,$args) {
             // Retreive registration information from json
             $body = $request->getParsedBody();
@@ -330,7 +324,6 @@ $app->group('/api', function() use ($app) {
             $name = $body['name'];
             $password = $body['password'];
             $accountType = $body['accountType'];
-
             // Hash and salt user password
             $options = [
              'cost' => 11,
@@ -341,18 +334,15 @@ $app->group('/api', function() use ($app) {
                       VALUES (NULL, '$email', '$name', '$hash', '$accountType')";
             $db = getDB();
             $db->query($query);
-
             // Password Verification
             $getPassword = "SELECT password, accountType
                             FROM user
                             WHERE
                               user.email = '$email'
                            ";
-
             $db = getDB();
             $userResult = $db->query($getPassword);
             $pass;
-
             while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
                 $data[] = $row;
                 $pass = $row['accountType'];
@@ -363,14 +353,12 @@ $app->group('/api', function() use ($app) {
             // echo "---------------------- \r\n";
             // echo $data[0]['password'];
             // echo "---------------------- \r\n";
-
             if (password_verify($password, $hash)) {
               // echo "SUCCESS";
             } else {
               // echo $password;
                 return false;
             }
-
 //////////////////////////////////////////////////////////////////////
             // Return user information - after register
             if($body['accountType'] == 'consumer') {
@@ -380,12 +368,10 @@ $app->group('/api', function() use ($app) {
                                   WHERE
                                     email = '$email'
                                   ";
-
                 $infoResult = $db->query($userInfoQuery);
                 while($row = $infoResult->fetch(PDO::FETCH_ASSOC)){
                     $userData[] = $row;
                 }
-
                 return $response->withJson([
                     'id'=> 0,
                     'name' => $userData,
@@ -394,30 +380,24 @@ $app->group('/api', function() use ($app) {
                     'filters' => []
                 ]);
             }
-
             //Return vendor information -- after register
             else if($body['accountType'] == 'vendor') {
                 //Get user_id to create vendor
-
                 $user_id_query = "SELECT user_id FROM user WHERE email = '$email'";
                 $getUserId = $db->query($user_id_query);
                 while($row = $getUserId->fetch(PDO::FETCH_ASSOC)){
                     $user_id = $row['user_id'];
                 }
-
-
                 // Setup vendor in table
                 $storename = $body['storename'];
                 $genre = $body['genre'];
                 $location = $body['location'];
                 $type = $body['type'];
-
                 ////////////////////////////////////////////////////////
                 $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
                                  VALUES ('$user_id', '$storename', '$genre', '$location', '$type')
                                 ";
                 $db->query($createVendor);
-
                 //Retreive vendor information
                 $vendorInfoQuery = "SELECT name, location
                                     FROM vendor
@@ -431,7 +411,6 @@ $app->group('/api', function() use ($app) {
                     $vendorName = $row['name'];
                     $vendorAddress = $row['location'];
                 }
-
                 return $response->withJson([
                     'id'=> 0,
                     'name' => $vendorName,
@@ -444,7 +423,6 @@ $app->group('/api', function() use ($app) {
                 return $response->withStatus(422);
             }
         });
-
         $app->get('/favorite', function($request,$response,$args) {
           $dbhost="localhost";
           $dbuser="root";
@@ -452,20 +430,16 @@ $app->group('/api', function() use ($app) {
           $dbname="closebites";
           $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
           $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
           $query="select * from deal";
           $result = $dbh->query($query);
-
           while($row = $result->fetch(PDO::FETCH_ASSOC)){
               $data[] = $row;
           }
           return json_encode($data);
         });
-
         $app->post('/unfavorite', function($request,$response,$args) {
             return "POST /unfavorite";
         });
-
         $app->get('/saveFilter', function($request,$response,$args) {
             return $response->withJson([
                 'id'=> 0,
@@ -491,13 +465,9 @@ $app->group('/api', function() use ($app) {
             ]);
             // return "GET /saveFilter";
         });
-
     });
-
 });
-
 $app->post('/login', function($request,$response,$args) {
-
     $body = $request->getParsedBody();
     $email = $body['email'];
     $password = $body['password'];
@@ -507,20 +477,16 @@ $app->post('/login', function($request,$response,$args) {
       return "400";
     }
     $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
-
     $db = getDB();
     $result = $db->query($query);
     // $row = $result->fetch(PDO::FETCH_ASSOC)
-
     if($result) {
       return "200";
     } else {
       return "400";
     }
-
     return $body['email'];
 });
-
 $app->get('/find', function($request,$response,$args) {
     //$connection = $this->get("db");
     $dbhost="localhost";
@@ -529,15 +495,12 @@ $app->get('/find', function($request,$response,$args) {
     $dbname="closebites";
     $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
     $query="select * from deal";
     $result = $dbh->query($query);
-
     while($row = $result->fetch(PDO::FETCH_ASSOC)){
         $data[] = $row;
     }
     return json_encode($data);
-
     //return "Welcome to Slim 3.0 based API";
 });
 
