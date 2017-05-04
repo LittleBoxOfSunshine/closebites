@@ -149,6 +149,8 @@ export class VendorInterfaceComponent {
             this.startDate = this.endDate = this.endTime = this.startTime = '';
             this.food = this.drinks = this.foodAndDrinks = false;
             
+            var body = {"isVendor":true};
+            this.dealsService.find(body).then(x => this.vendorDeals = x);
         }
     }
 
