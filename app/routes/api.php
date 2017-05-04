@@ -145,7 +145,9 @@ $app->group('/api', function() use ($app) {
            $query="select * from deal";
            $result = $dbh->query($query);
            $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+           var_dump($body['zip']);
            foreach($rows as $row){
+               var_dump($row['location']);
                var_dump(strpos($row['location'], $body['zip']));
                if(isset($body['type']) && $body['type'] != 'Food+Drinks') {
                    if ($body['type'] == 'Food' && $row['type'] == 'Drinks')
