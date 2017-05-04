@@ -105,7 +105,19 @@ $app->group('/api', function() use ($app) {
    });//end Vendor group
    //deal group
    $app->group('/Deal', function() use ($app) {
-      //get feedback route
+
+       $app->get('/find', function($request,$response,$args) {
+           $dbh = getDB();
+           $query="select * from deal";
+           $result = $dbh->query($query);
+           while($row = $result->fetch(PDO::FETCH_ASSOC)){
+               $data[] = $row;
+           }
+           return json_encode($data);
+           //return "Welcome to Slim 3.0 based API";
+       });
+
+       //get feedback route
       $app->get('/getFeedback/{deal_id}', function($request,$response,$args) {
          //pull out deal_id
          $deal_id = $args['deal_id'];
@@ -430,39 +442,4 @@ $app->group('/api', function() use ($app) {
         });
     });
 });
-$app->post('/login', function($request,$response,$args) {
-    $body = $request->getParsedBody();
-    $email = $body['email'];
-    $password = $body['password'];
-    if($body['email'] == 'matt') {
-      return "200";
-    } else {
-      return "400";
-    }
-    $query = "SELECT email FROM user WHERE user.email = '$email' AND user.password = '$password'";
-    $db = getDB();
-    $result = $db->query($query);
-    // $row = $result->fetch(PDO::FETCH_ASSOC)
-    if($result) {
-      return "200";
-    } else {
-      return "400";
-    }
-    return $body['email'];
-});
-$app->get('/find', function($request,$response,$args) {
-    //$connection = $this->get("db");
-    $dbhost="localhost";
-    $dbuser="root";
-    $dbpass="pass";
-    $dbname="closebites";
-    $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query="select * from deal";
-    $result = $dbh->query($query);
-    while($row = $result->fetch(PDO::FETCH_ASSOC)){
-        $data[] = $row;
-    }
-    return json_encode($data);
-    //return "Welcome to Slim 3.0 based API";
-});
+
