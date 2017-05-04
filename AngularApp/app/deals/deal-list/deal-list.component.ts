@@ -34,8 +34,7 @@ export class DealListComponent {
 		this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
 		this.foodAndDrinks = true;
 		this.loggedIn = this.router.url == '/user';
-		//dealsService.listAll()
-			//.then(x => this.deals = x);
+		dealsService.listAll().then(x => console.log(x));
 		dealsService.listAll().then(x => this.deals = x); 
 
 		var that = this;
