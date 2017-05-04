@@ -162,15 +162,15 @@ $app->group('/api', function() use ($app) {
           // return $query;
           $db = getDB();
           $result = $db->query($query);
-          $emailExists;
+          $emailExists = "";
           while($row = $result->fetch(PDO::FETCH_ASSOC)){
               $emailExists = $row['email'];
           }
-          if($emailExists) {
-            return "true";
+          if($emailExists != "") {
+            return true;
           }
           else {
-            return "false";
+            return false;
           }
         });
         $app->post('/login', function($request,$response,$args) {
@@ -442,4 +442,3 @@ $app->group('/api', function() use ($app) {
         });
     });
 });
-
