@@ -36,7 +36,7 @@ export class DealRepository {
 		return this.http
 			.post("/api/Deal/details", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => console.log(x.json()))
+			.then(x => x.json())
 			.catch(x => false);
 	}
 

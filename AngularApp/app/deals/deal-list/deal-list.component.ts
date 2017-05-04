@@ -68,7 +68,7 @@ export class DealListComponent {
 	}
 
 	identifyDeal(id: number){
-		this.dealsService.getDeal(id)
+		console.log(this.dealsService.getDeal(id)
 			.then(x => function(x) {
 				console.log(x);
 				console.log("test");
@@ -79,7 +79,7 @@ export class DealListComponent {
 					this.favoriteDeal = true;
 				else 
 					this.favoriteDeal = false;
-			});
+			}));
 	}
 
 	logout(){
