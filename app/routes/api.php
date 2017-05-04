@@ -114,7 +114,7 @@ $app->group('/api', function() use ($app) {
        $app->post('/details', function($request, $response, $args){
            $dbh = getDB();
            $body = $request->getParsedBody();
-           $query = "select title as name, description, address, type as dType, user_id FROM deal where deal_id=:deal_id ";
+           $query = "select title as name, picture, description, address, type as dType, user_id FROM deal where deal_id=:deal_id ";
            $stmt = $dbh->prepare($query);
            $stmt->bindParam('deal_id',$body['dealId']);
            $stmt->execute();
@@ -129,7 +129,8 @@ $app->group('/api', function() use ($app) {
                "description" => $row['description'],
                "address" => $row['address'],
                "dType" => $row['dType'],
-               "type" => $cuisine
+               "type" => $cuisine,
+               "photoUrl" => $row['picture']
            ];
 
            return $response->withJson($data);
