@@ -167,6 +167,6 @@ body {
 
 }
 
-.slideThree input[type=checkbox]:checked + label {
+.slideThree input[type=checkbox]:checked  {
 	left: 43px;
 }
