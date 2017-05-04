@@ -167,10 +167,10 @@ $app->group('/api', function() use ($app) {
               $emailExists = $row['email'];
           }
           if($emailExists != "") {
-            return "true";
+            return true;
           }
           else {
-            return "false";
+            return false;
           }
         });
         $app->post('/login', function($request,$response,$args) {
