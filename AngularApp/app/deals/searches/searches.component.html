@@ -1,21 +1,92 @@
-<!--top row containing buttons and closebites logo-->
-<div class = "row">
-	<h1><a routerLink="/user">CloseBites</a>
-		<div style = "float:right">
-            <a routerLink="/user">
-			    <span class="glyphicon glyphicon-home" title="Home"></span>
-            </a>
-            <a routerLink="/mydeals">
-			    <span class="glyphicon glyphicon-heart" title="View favorited deals"></span>
-            </a>
-            <a routerLink = "/mysearches">
-			    <span class="glyphicon glyphicon-floppy-disk" title="View saved searches"></span>
-            </a>
-			<a routerLink = "/">
-			<button type="button" class="btn btn-danger">Log Out</button></a>
-		</div>
-	</h1>
+<!--navbar-->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header" >
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a src="images/cb_logo.png"></a>
+  <a class="navbar-brand" href="#">
+    CloseBites
+  </a>
 </div>
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="#">Deals <span class="sr-only">(current)</span></a></li>
+  </ul>
+
+  <ul class="nav navbar-nav navbar-right">
+    <li>
+      <div style="float:right; margin: 15px 15px 0px 10px;">
+          <a routerLink="/user" style="text-decoration: none; color: #2c2c2c; ">
+			    <span class="glyphicon glyphicon-home" title="Home" style="margin-right: 3px; font-size: 12px;  "></span>
+            </a>
+      </div>
+      <div style="float:right; margin: 15px 15px 0px 10px;">
+          <a routerLink="/mydeals" style="text-decoration: none; color: #2c2c2c; ">
+			    <span class="glyphicon glyphicon-heart" title="View favorited deals" style="margin-right: 3px; font-size: 12px;  "></span>
+            </a>
+      </div>
+      <div style="float:right; margin: 15px 15px 0px 10px;">
+          <a routerLink="/mysearches" style="text-decoration: none; color: #2c2c2c; ">
+			    <span class="glyphicon glyphicon-floppy-disk" title="View saved searches" style="margin-right: 3px; font-size: 12px;  "></span>
+            </a>
+      </div>
+    </li>
+
+    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <strong>User</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login" style="width: 305px; padding: 10px; padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p class="text-left"><strong>{{ getUserName() }}</strong></p>
+                                        <p class="text-left small">{{ getUserEmail() }}</p>
+                                        <p class="text-left">
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session" style="padding: 10px; padding-bottom: 0px; padding-top: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        
+                                          <div *ngIf = "loggedIn" style="float:right">
+                                            <a routerLink = "/">
+                                            <button type="button" class="btn btn-danger"
+                                            (click)="logout()">Log Out</button></a>
+                                          </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+  </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
 <!--div shows favorited deals or saved searches-->
 <div class = "row">
 	<div class = "col-sm-12" style = "height:500px">

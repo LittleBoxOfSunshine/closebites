@@ -1,62 +1,89 @@
-<div class = "row">
-	<h1><a routerLink = "/vendor">CloseBites</a>
-		<div style = "float:right">
-			<a routerLink = "/">
-			<button type="button" class="btn btn-danger"
-            (click)="logout">Log Out</button></a>
-		</div>
-	</h1>
+<!--navbar-->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header" >
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a src="images/cb_logo.png"></a>
+  <a class="navbar-brand" href="#">
+    CloseBites
+  </a>
 </div>
-<!--contains calendar and plus glyphicon to add deal-->
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+  <ul class="nav navbar-nav navbar-right">
+
+    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <strong>Vendor</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login" style="width: 305px; padding: 10px; padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p class="text-left"><strong>{{ getUserName() }}</strong></p>
+                                        <p class="text-left small">{{ getUserEmail() }}</p>
+                                        <p class="text-left">
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session" style="padding: 10px; padding-bottom: 0px; padding-top: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        
+                                          <div style="float:right">
+                                            <a routerLink = "/">
+                                            <button type="button" class="btn btn-danger"
+                                            (click)="logout()">Log Out</button></a>
+                                          </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+  </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+<!--contains plus glyphicon to add deal as well as list of deals-->
 <div class = "row">
         <div class = "col-sm-2" style="text-align:center">
             <span class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px"
             (click)="resetTypeNotChosen()" data-toggle="modal" data-target="#myModal"></span>
         </div>
-        <div class = "container-fluid" style = "margin-top:20px;margin-left:200px">
-            <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'month','btn-primary':mode != 'month'}"
-			type="button"
-			(click) = "updateMode('month')">Month</button>
-            <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'week','btn-primary':mode != 'week'}"
-			type="button"
-			(click) = "updateMode('week')">Week</button>
-            <button class = "btn btn-lg" [ngClass] = "{'btn-info':mode == 'day','btn-primary':mode != 'day'}"
-			type="button"
-			(click) = "updateMode('day')">Day</button>
-            <table *ngIf = "mode=='month'"class="table table-bordered" style="margin-top:20px">
-                <thead>
-                <tr>
-                    <th *ngFor = "let day of days">
-                        {{day}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor = "let value of [1,2,3,4,5,6]">
-                        <td *ngFor = "let value of [1,2,3,4,5,6,7]"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div *ngIf = "mode=='week'" class="media">
-                <div *ngFor = "let day of days">
-                    <div class="media-left" style="border-style:ridge;height:68px;width:20%;max-width:20%;text-align:center">
-                        <h4>{{day}}</h4>
-                    </div>
-                    <div class="media-body" style="border-style:ridge;height:68px">
-
-                    </div>
+        <div style="float:right; width: 70%">
+            <div style = "width: 100%;" >
+            <div *ngFor = "let deal of vendorDeals">
+                <div class="deal">
+                <div (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal">{{deal.name}}</div>
+                <div style="height: 12px; border-style:solid;  ">{{deal.description}}</div>
+                        <img src="{{ deal.photoUrl }}">
                 </div>
             </div>
-            <div *ngIf = "mode=='day'" class="media">
-                <div *ngFor = "let time of times">
-                    <div class="media-left" style="border-style:ridge;height:80px;width:20%;max-width:20%;text-align:center">
-                        <h4>{{time}}</h4>
-                    </div>
-                    <div class="media-body" style="border-style:ridge;height:80px">
-                    <hr><hr>  
-                    </div>
-                </div>
             </div>
-        </div>        
+        </div>
 </div>
 
 <!--modal to add deal-->
@@ -119,5 +146,33 @@
             You have successfully created a new deal.
         </div>
       
+    </div>
+  </div>
+
+  <!--modal for when clicking on a deal-->
+  <div class="modal fade" id="dealModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">{{deal.name}}</h4>
+		</div>
+		<div class="modal-body">
+            <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
+                <img style="text-align:center" src="{{ deal.photoUrl }}">
+            </div>
+            <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
+                <p>{{deal.description}}
+                <span [style.opacity]="favoriteDeal ? 1 : .5"
+								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                </p>
+            </div>
+		</div>
+        <div class="modal-footer" style="text-align:left">
+            <p>Deal Location: {{deal.address}}</p>
+            <p>Cuisine: <i>{{deal.type}}</i> </p>
+            <p>Deal Type: {{deal.dType}}</p>
+        </div>
+      </div>
     </div>
   </div>
