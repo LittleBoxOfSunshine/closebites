@@ -35,8 +35,11 @@ let SearchesComponent = class SearchesComponent {
     updateBoxMode() {
         this.dealOrSearch = this.dealOrSearch == 'search' ? 'deal' : 'search';
     }
-    getDeal(index) {
-        this.deal = this.favorite_deals[index];
+    getDeal(identification) {
+        for (let deal of this.favorite_deals) {
+            if (deal.id == identification)
+                this.deal = deal;
+        }
     }
     updateDeal() {
     }

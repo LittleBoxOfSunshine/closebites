@@ -15,20 +15,27 @@ export class DealRepository {
 		headers.append('Content-Type', 'application/json');
 		this.options = new RequestOptions({ headers: headers });
 	}
+	
+	add2(deal: Deal) : Promise<Deal> {
+		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
+	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice};
+		return this.http
+			.post("/api/Vendor/create", JSON.stringify(body),this.options)
+			.toPromise()
+			.then(x => function(x){
+				deal.id = x.json()['dealId'];
+				return deal;
+			})
+			.catch(x => x.message);
+	}
 
 	getDeal(id: number) {
-		// let body = {"email": email, "password": password};
-		// this.http
-		// 	.post("User/login", JSON.stringify(body), this.options)
-		// 	.toPromise()
-		// 	.then(x => this.loadUser(x.json().data))
-		// 	.catch(x => false);
-
-		return this.http
-			.get("api/deal")
+		let body = {"dealId": id};
+		this.http
+			.post("/api/Deal/details", JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => x.json().data)
-			.catch(x => x.message);
+			.then(x => x.json() as Deal)
+			.catch(x => false);
 	}
 
 	listAll() : Promise<Deal[]>{
@@ -39,31 +46,12 @@ export class DealRepository {
 			.catch(x => console.log(x.message));
 	}
 
-	find() : Promise<Deal[]>{
-
-	}
-/*	
-	add(Deal: Deal) : Promise<Deal>{
+	find() : Promise<Deal[]> {
+		let body = {};
 		return this.http
-			.post(this._apiUrl, Deal)
+			.post('/api/Deal/find', JSON.stringify(body), this.options)
 			.toPromise()
-			.then(x => x.json().data as Deal)
-			.catch(x => x.message);
+			.then(x => x.json() as Deal[])
+			.catch(x => console.log(x.message));
 	}
-	
-	update(Deal: Deal) : Promise<Deal>{
-		return this.http
-			.put(`${this._apiUrl}/${Deal.id}`, Deal)
-			.toPromise()
-			.then(() => Deal)
-			.catch(x => x.message);
-	}
-
-	delete(Deal: Deal) : Promise<void>{
-		return this.http
-			.delete(`${this._apiUrl}/${Deal.id}`)
-			.toPromise()
-			.catch(x => x.message);
-	}
-*/
 }

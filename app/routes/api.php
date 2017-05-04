@@ -1,11 +1,10 @@
 <?php
-// session_start();
 
 function getDB() {
   $dbhost="localhost";
   $dbuser="root";
   $dbpass="Jaav13!@G"; // Jaav13!@G
-  $dbname="closebites"; // closebites1
+  $dbname="closebites2"; // closebites2
   $dbh = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   return $dbh;
@@ -32,32 +31,163 @@ $app->group('/api', function() use ($app) {
         ]);
     });
 
-    $app->group('/User', function() use ($app) {
+   $app->group('/Vendor', function() use ($app) {
+
+      // vendor/create route
+      $app->post('/create', function($request,$response) {
+
+         //run the connection to the database again
+         $dbh = getDB();
+
+         //parse request
+         $body = $request->getParsedBody();
+
+         //insert deal query
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price)");
+         $sql->bindParam('title',$title);
+         $sql->bindParam('start_date',$start_date);
+         $sql->bindParam('end_date',$end_date);
+         $sql->bindParam('repeats',$repeats);
+         $sql->bindParam('description',$description);
+         $sql->bindParam('norm_price',$norm_price);
+         $sql->bindParam('discount_price',$discount_price);
+         //$sql->bindParam('type',$type);
+         $sql->bindParam('user_id',$user_id);
+         //$sql->bindParam('category_id',$category_id);
+
+         //set variables for insert deal query
+         $user_id = $_SESSION['user_id'];
+         $title = $body['title'];
+         $start_date = $body['start_date'];
+         $end_date = $body['end_date'];
+         $repeats = $body['repeats'];
+         $description = $body['description'];
+         $norm_price = $body['norm_price'];
+         $discount_price = $body['discount_price'];
+         //$type = $body['type'];
+         //$category_id = $body['category_id'];
+         $sql->execute(); //run insert deal
+         $deal_id = $dbh->lastInsertId();
+
+         //return deal_id
+         return $deal_id;
+
+      });//end vendor/create route
+
+      // vendor/update route
+      $app->post('/update/{deal_id}', function($request,$response,$args) {
+
+         //run the connection to the database again
+         $dbh = getDB();
+
+         //parse request
+         $body = $request->getParsedBody();
+
+         //update deal query
+         $sql = $dbh->prepare("update deal set user_id=:user_id,category_id=:category_id,title=:title,start_date=:start_date,end_date=:end_date,repeats=:repeats,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type where :deal_id=deal.deal_id");
+         $sql->bindParam('title',$title);
+         $sql->bindParam('start_date',$start_date);
+         $sql->bindParam('end_date',$end_date);
+         $sql->bindParam('repeats',$repeats);
+         $sql->bindParam('description',$description);
+         $sql->bindParam('norm_price',$norm_price);
+         $sql->bindParam('discount_price',$discount_price);
+         $sql->bindParam('type',$type);
+         $sql->bindParam('user_id',$user_id);
+         $sql->bindParam('category_id',$category_id);
+         $sql->bindParam('deal_id',$deal_id);
+
+         //set variables for update deal query
+         $user_id = $_SESSION['user_id'];
+         $title = $body['title'];
+         $start_date = $body['start_date'];
+         $end_date = $body['end_date'];
+         $repeats = $body['repeats'];
+         $description = $body['description'];
+         $norm_price = $body['norm_price'];
+         $discount_price = $body['discount_price'];
+         $type = $body['type'];
+         $category_id = $body['category_id'];
+         $deal_id = $args['deal_id'];
+         $sql->execute(); //run insert deal
+
+      });//end vendor/create route
+
+   });//end Vendor group
+
+   //deal group
+   $app->group('/Deal', function() use ($app) {
+
+      //get feedback route
+      $app->get('/getFeedback/{deal_id}', function($request,$response,$args) {
+         //pull out deal_id
+         $deal_id = $args['deal_id'];
+
+      //run the connection to the database again
+      $dbh = getDB();
+
+      //parse request
+      $body = $request->getParsedBody();
+
+      //getFeedback query
+      $sql = $dbh->prepare("select comment from comment where comment.deal_id = '$deal_id'");
+      $sql->execute(); //run it
+      $results = $sql->fetchAll();
+      return json_encode($results);
+
+      });//end getFeedback
+
+      //post feedback route
+      $app->post('/feedback/{deal_id}', function($request,$response,$args) {
+
+         //run the connection to the database again
+         $dbh = getDB();
+
+         //parse request
+         $body = $request->getParsedBody();
+
+         //insert feedback query
+         $sql = $dbh->prepare("insert into comment (user_id,deal_id,comment) values (:user_id,:deal_id,:comment)");
+
+         $sql->bindParam('user_id',$user_id);
+         $sql->bindParam('deal_id',$deal_id);
+         $sql->bindParam('comment',$comment);
+
+         //set variables for insert feedback query
+         $user_id = $_SESSION['user_id'];
+         $comment = $body['comment'];
+         $deal_id = $args['deal_id'];
+         $arr = array($deal_id,$comment,$user_id);
+
+         $sql->execute();
+
+      });//end insert feedback route
+
+   });//end Vendor group
+
+   $app->group('/User', function() use ($app) {
 
         $app->post('/exists', function($request,$response,$args) {
 
           $body = $request->getParsedBody();
           $email = $body['email'];
-          $accountType = $body['accountType'];
+          // $accountType = $body['accountType'];
+          // return $email;
 
-          if($accountType == 'consumer') {
-            $query = "SELECT email, name FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
-            $db = getDB();
-            $result = $db->query($query);
-            while($row = $result->fetch(PDO::FETCH_ASSOC)){
-                $data[] = $row;
-            }
 
-            return true;
+          $query = "SELECT email FROM user WHERE user.email = '$email'";
+          // return $query;
+          $db = getDB();
+          $result = $db->query($query);
+          $emailExists;
+          while($row = $result->fetch(PDO::FETCH_ASSOC)){
+              $emailExists = $row['email'];
+          }
+          if($emailExists) {
+            return "true";
           }
           else {
-            $query = "SELECT email FROM user WHERE user.email = '$email' AND user.accountType = '$accountType'";
-            $db = getDB();
-            $result = $db->query($query);
-            while($row = $result->fetch(PDO::FETCH_ASSOC)){
-                $data[] = $row;
-            }
-            return true;
+            return "false";
           }
         });
 
@@ -66,6 +196,7 @@ $app->group('/api', function() use ($app) {
             $body = $request->getParsedBody();
             $email = $body['email'];
             $password = $body['password'];
+
             // TEMP REMOVE THIS
             //$accountType = $body['accountType'];
 
@@ -84,15 +215,17 @@ $app->group('/api', function() use ($app) {
                 $data[] = $row;
                 $accountType = $row['accountType'];
             }
+            // echo "\r\n";
+            // echo $password;
+            // echo "\r\n";
+            // echo "---------------------- \r\n";
+            // echo $data[0]['password'];
+            // echo "---------------------- \r\n";
 
-            $passwordDB = json_encode($data[0]['password']);
-            $hash = str_replace('"', "", $passwordDB);
-            $passwordClean = stripslashes($hash);
-
-            if (password_verify($password, $passwordClean)) {
-
+            if (password_verify($password, $data[0]['password'])) {
+              // echo $password;
             } else {
-
+              // echo $password;
                 return false;
             }
 
@@ -122,6 +255,7 @@ $app->group('/api', function() use ($app) {
                                     WHERE email = '$email')
                                 ";
               $vendorDeals = $db->query($getVendorDeals);
+              $deals = [];
               while($row = $vendorDeals->fetch(PDO::FETCH_ASSOC)){
                   $deals[] = $row;
               }
@@ -156,6 +290,7 @@ $app->group('/api', function() use ($app) {
                                   )
                               ";
               $favResult = $db->query($getFavorites);
+              $favData = [];
               while($row = $favResult->fetch(PDO::FETCH_ASSOC)){
                   $favData[] = $row['favorite_id'];
               }
@@ -170,6 +305,7 @@ $app->group('/api', function() use ($app) {
                              )
                             ";
               $filterResult = $db->query($getFilters);
+              $filterData = [];
               while($row = $filterResult->fetch(PDO::FETCH_ASSOC)){
                   $filterData[] = $row;
               }
@@ -205,7 +341,36 @@ $app->group('/api', function() use ($app) {
             $db = getDB();
             $db->query($query);
 
+            // Password Verification
+            $getPassword = "SELECT password, accountType
+                            FROM user
+                            WHERE
+                              user.email = '$email'
+                           ";
 
+            $db = getDB();
+            $userResult = $db->query($getPassword);
+            $pass;
+
+            while($row = $userResult->fetch(PDO::FETCH_ASSOC)){
+                $data[] = $row;
+                $pass = $row['accountType'];
+            }
+            // echo "\r\n";
+            // echo $password;
+            // echo "\r\n";
+            // echo "---------------------- \r\n";
+            // echo $data[0]['password'];
+            // echo "---------------------- \r\n";
+
+            if (password_verify($password, $hash)) {
+              // echo "SUCCESS";
+            } else {
+              // echo $password;
+                return false;
+            }
+
+//////////////////////////////////////////////////////////////////////
             // Return user information - after register
             if($body['accountType'] == 'consumer') {
                 // Retreive account info
@@ -245,10 +410,10 @@ $app->group('/api', function() use ($app) {
                 $genre = $body['genre'];
                 $location = $body['location'];
                 $type = $body['type'];
-                $phone = $body['phone'];
+
                 ////////////////////////////////////////////////////////
-                $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type, phone)
-                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type', $phone)
+                $createVendor = "INSERT INTO vendor (user_id, name, genre, location, type)
+                                 VALUES ('$user_id', '$storename', '$genre', '$location', '$type')
                                 ";
                 $db->query($createVendor);
 
@@ -374,3 +539,4 @@ $app->get('/find', function($request,$response,$args) {
 
     //return "Welcome to Slim 3.0 based API";
 });
+
