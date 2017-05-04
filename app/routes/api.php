@@ -115,10 +115,10 @@ $app->group('/api', function() use ($app) {
            $dbh = getDB();
            $body = $request->getParsedBody();
            $query = "select title as name, description, address, type as dType, user_id FROM deal where deal_id=:deal_id ";
-           $sql = $dbh->prepare($query);
-           $sql->bindParam('deal_id',$body['dealId']);
-           $result = $sql->execute();
-           $row = $result->fetch(PDO::FETCH_ASSOC);
+           $stmt = $dbh->prepare($query);
+           $stmt->bindParam('deal_id',$body['dealId']);
+           $stmt->execute();
+           $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
            $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
            $result = $dbh->query($cuisineQuery);
