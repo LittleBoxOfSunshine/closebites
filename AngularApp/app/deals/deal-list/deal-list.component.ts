@@ -71,6 +71,8 @@ export class DealListComponent {
 		this.dealsService.getDeal(id)
 			.then(x => function(x) {
 				console.log(x);
+				console.log("test");
+				console.log(this);
 				this.deal = x;
 				
 				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
