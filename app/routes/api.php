@@ -44,6 +44,7 @@ $app->group('/api', function() use ($app) {
           $norm_price = $body['norm_price'];
           $discount_price = $body['discount_price'];
           $photoUrl = $body['photoUrl'];
+          $type = $body['dType'];
 
           //get vendor_id
           $query = "select vendor_id from vendor where vendor.user_id = '$user_id'";
@@ -52,7 +53,7 @@ $app->group('/api', function() use ($app) {
           $vendor_id = $arr['vendor_id'];
 
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture,type) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture,:type)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -63,6 +64,7 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('user_id',$user_id);
          $sql->bindParam('vendor_id',$vendor_id);
          $sql->bindParam('picture',$photoUrl);
+         $sql->bindParam('type',$type);
 
 
          if($vendor_id)	$sql->execute(); //run insert deal
@@ -108,6 +110,30 @@ $app->group('/api', function() use ($app) {
    });//end Vendor group
    //deal group
    $app->group('/Deal', function() use ($app) {
+
+       $app->post('/details', function($request, $response, $args){
+           $dbh = getDB();
+           $body = $request->getParsedBody();
+           $query = "select title as name, description, address, type as dType, user_id FROM deal where deal_id=:deal_id ";
+           $sql = $dbh->prepare($query);
+           $sql->bindParam('deal_id',$body['dealId']);
+           $result = $sql->execute();
+           $row = $result->fetch(PDO::FETCH_ASSOC);
+
+           $cuisineQuery = "SELECT `type` FROM vendor WHERE user_id=".$row['user_id'];
+           $result = $dbh->query($cuisineQuery);
+           $cuisine = $result->fetch(PDO::FETCH_ASSOC)['type'];
+
+           $data = [
+               "name" => $row['name'],
+               "description" => $row['description'],
+               "address" => $row['address'],
+               "dType" => $row['dType'],
+               "type" => $cuisine
+           ];
+
+           return $response->withJson($data);
+       });
 
        $app->get('/find', function($request,$response,$args) {
            $dbh = getDB();

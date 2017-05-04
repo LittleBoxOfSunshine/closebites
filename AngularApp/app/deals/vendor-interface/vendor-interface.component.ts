@@ -114,7 +114,7 @@ export class VendorInterfaceComponent {
                 active = 'drinks';
             else if(this.foodAndDrinks)
                 active = 'foodAndDrinks';
-            this.deal.type = active;
+            this.deal.dType = active;
             
             this.dealsService.add2(this.deal).then((x) => {
                 console.log(x);

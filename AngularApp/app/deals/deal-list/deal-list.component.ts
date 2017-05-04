@@ -68,11 +68,15 @@ export class DealListComponent {
 	}
 
 	identifyDeal(id: number){
-		this.dealsService.getById(id)
-			.then(x => this.deal = x);
-		if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
-			this.favoriteDeal = true;
-		else this.favoriteDeal = false;
+		this.dealsService.getDeal(id)
+			.then(x => function(x) {
+				this.deal = x;
+				
+				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+					this.favoriteDeal = true;
+				else 
+					this.favoriteDeal = false;
+			});
 	}
 
 	logout(){

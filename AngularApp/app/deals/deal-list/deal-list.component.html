@@ -187,7 +187,7 @@
 		</div>
 		<div class="modal-body">
             <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
-                <h2 style="text-align:center">PICTURE</h2>
+                <img style="text-align:center" src="{{ deal.photoUrl }}">
             </div>
             <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
                 <p>{{deal.description}}
@@ -198,8 +198,8 @@
 		</div>
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: {{deal.address}}</p>
-            <p>Cuisine: <i>Cuisine tags</i> </p>
-            <p>Deal Type: {{deal.type1}}<span *ngIf="deal.type2"> and </span>{{deal.type2}}</p>
+            <p>Cuisine: {{deal.type}}</i> </p>
+            <p>Deal Type: {{deal.dType}}</p>
         </div>
       </div>
     </div>
