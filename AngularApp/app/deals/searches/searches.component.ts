@@ -60,4 +60,17 @@ export class SearchesComponent {
     getFilter(id: number) {
 
     }
+
+    getUserName(){
+		return this.userRepository.getUser().name;
+	}
+
+	getUserEmail(){
+		return this.userRepository.getUser().email;
+	}
+
+    logout(){
+		this.deal = new Deal;
+		this.userRepository.logout();
+	}
 }

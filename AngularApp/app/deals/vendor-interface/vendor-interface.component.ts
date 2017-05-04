@@ -41,6 +41,7 @@ export class VendorInterfaceComponent {
     sun: boolean;
     days2 = new Array<boolean>();
     repeat = new String;
+    vendorDeals:Deal[];
 
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
@@ -57,7 +58,26 @@ export class VendorInterfaceComponent {
                 this.repeat = this.repeat.concat("1");
             else this.repeat = this.repeat.concat("0");
         }
+        var body = {"isVendor":true};
+        dealsService.find(body).then(x => this.vendorDeals = x);
     }
+
+    identifyDeal(id: number){
+		this.dealsService.getDeal(id)
+			.then(x => this.deal = x)
+			.catch(x => console.log(x.message));
+			/*.then(x => function(x) {
+				console.log(x);
+				console.log("test");
+				console.log(this);
+				this.deal = x;
+				
+				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+					this.favoriteDeal = true;
+				else 
+					this.favoriteDeal = false;
+			});*/
+	}
 
     clickDay(index:number){
         this.days2[index] = !this.days2[index];
@@ -120,6 +140,9 @@ export class VendorInterfaceComponent {
                 console.log(x);
             });
 
+            var body = {"isVendor":true};
+            this.dealsService.find(body).then(x => this.vendorDeals = x);
+
             //reset modal form values afterwards
             this.deal = new Deal;
             this.startPrice = this.endPrice = 0;
@@ -134,5 +157,13 @@ export class VendorInterfaceComponent {
 		this.deals = new Array<Deal>();
 		this.deal = new Deal;
         this.userService.logout();
+	}
+
+    getUserName(){
+		return this.userService.getUser().name;
+	}
+
+	getUserEmail(){
+		return this.userService.getUser().email;
 	}
 }
