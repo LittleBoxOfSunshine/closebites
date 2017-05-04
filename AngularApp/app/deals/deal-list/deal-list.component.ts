@@ -36,13 +36,9 @@ export class DealListComponent {
 		this.loggedIn = this.router.url == '/user';
 		//dealsService.listAll()
 			//.then(x => this.deals = x);
-			var that = this;
-		dealsService.listAll().then(x => function(x) { that.deals = x; 
-			//TESTING
-			that.deals[0].photoUrl = 'https://www.w3schools.com/tags/smiley.gif';
-		});
+		dealsService.listAll().then(x => this.deals = x); 
 
-		// var that = this;
+		var that = this;
 		// window.navigator.geolocation.getCurrentPosition(function(pos){
     	// 	console.log(pos);
 		//   	that.http
