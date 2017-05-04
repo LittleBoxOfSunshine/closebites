@@ -6,9 +6,9 @@ a.hover:hover {
     text-decoration: underline;
 }
 .deal {
-    width: 40%;
-    height: 40%;
-    margin: 15px;
+    width: 325;
+    height: 365;
+    margin: 30px;
     border-radius: 10px;
     background-color: #fff;
     display:block;
@@ -16,6 +16,20 @@ a.hover:hover {
     text-align: center;
     line-height: 180px;
 }
+
+.card-img-top{
+  width:325px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.card-text{
+  max-height: 10px;
+}
+.card-title{
+  max-height: 10px;
+}
+
 #deal > div > label.btn.btn-primary {
     height:50px;
     width: 110px;
@@ -24,7 +38,6 @@ a.hover:hover {
 
 .vertical-menu {
     width: 300px;
-    border-radius: 10px;
     position: fixed;
 
 }
@@ -44,6 +57,10 @@ a.hover:hover {
 .vertical-menu a.active {
     background-color: #4CAF50; /* Add a green color to the "active/current" link */
     color: white;
+}
+
+.modal-img{
+    border-radius: 10px;
 }
 
 body {
