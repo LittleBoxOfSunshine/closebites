@@ -21,7 +21,7 @@ let DealListComponent = class DealListComponent {
         this.dealsService = dealsService;
         this.userService = userService;
         this.http = http;
-        this.deals = new Array(); //list of deals that shows after searching
+        this.deals = new Array(); //list of deals that show after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
         this.repeatDays = new Array();
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
@@ -62,14 +62,17 @@ let DealListComponent = class DealListComponent {
         this.dealsService.getDeal(id)
             .then(x => this.deal = x)
             .catch(x => console.log(x.message));
-        this.repeatDays = [];
-        let days = [' Sundays', ' Mondays', ' Tuesdays', ' Wednesdays', ' Thursdays', ' Fridays', ' Saturdays'];
-        if (this.deal.repeat.length) {
-            for (var i = 0; i < this.deal.repeat.length; i++) {
-                if (this.deal.repeat[i] == '1')
-                    this.repeatDays.push(days[i]);
-            }
-        }
+        /*.then(x => function(x) {
+            console.log(x);
+            console.log("test");
+            console.log(this);
+            this.deal = x;
+            
+            if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+                this.favoriteDeal = true;
+            else
+                this.favoriteDeal = false;
+        });*/
     }
     logout() {
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
@@ -80,6 +83,13 @@ let DealListComponent = class DealListComponent {
         this.userService.logout();
     }
     updateSearch() {
+        console.log(this.zip);
+        console.log(this.mexican);
+        console.log(this.chinese);
+        console.log(this.italian);
+        console.log(this.food);
+        console.log(this.drinks);
+        console.log(this.foodAndDrinks);
         var body = { "cuisines": [], "type": "Food+Drinks", "isVendor": false };
         if (this.zip != "")
             body['zip'] = parseInt(this.zip);

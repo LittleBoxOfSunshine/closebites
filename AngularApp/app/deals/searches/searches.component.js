@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const router_1 = require("@angular/router");
 const deal_repository_service_1 = require("../api/deal/deal-repository.service");
-const deal_1 = require("../api/deal/deal");
 const user_repository_service_1 = require("../api/user/user-repository.service");
 let SearchesComponent = class SearchesComponent {
     constructor(router, route, userRepository, dealRepository) {
@@ -45,16 +44,6 @@ let SearchesComponent = class SearchesComponent {
     updateDeal() {
     }
     getFilter(id) {
-    }
-    getUserName() {
-        return this.userRepository.getUser().name;
-    }
-    getUserEmail() {
-        return this.userRepository.getUser().email;
-    }
-    logout() {
-        this.deal = new deal_1.Deal;
-        this.userRepository.logout();
     }
 };
 SearchesComponent = __decorate([

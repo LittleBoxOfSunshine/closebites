@@ -18,7 +18,7 @@ export class DealListComponent {
 	food:Boolean;
 	drinks:Boolean;
 	loggedIn:Boolean;
-	deals = new Array<Deal>(); //list of deals that shows after searching
+	deals = new Array<Deal>(); //list of deals that show after searching
 	deal = new Deal; //used to bring up a specific deal in the modal
 	zip:string;
 	mexican:boolean;
@@ -63,27 +63,30 @@ export class DealListComponent {
 		});
 	}
 
-	updateMode(dealType:string){ // this mode refers to food,drinks or both when searching for deals
+	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
 		console.log(dealType);
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
 	}
 
-	identifyDeal(id: number){ //for when clicking on deal in the list
+	identifyDeal(id: number){
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
-		this.repeatDays = [];
-		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
 
-		if (this.deal.repeat.length){
-			for (var i = 0; i < this.deal.repeat.length; i++){
-				if (this.deal.repeat[i] == '1')
-					this.repeatDays.push(days[i]);
-			}
-		}
-		
+			/*.then(x => function(x) {
+				console.log(x);
+				console.log("test");
+				console.log(this);
+				this.deal = x;
+				
+				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+					this.favoriteDeal = true;
+				else 
+					this.favoriteDeal = false;
+			});*/
+
 	}
 
 	logout(){
@@ -96,6 +99,14 @@ export class DealListComponent {
 	}
 
 	updateSearch(){
+		console.log(this.zip);
+		console.log(this.mexican);
+		console.log(this.chinese);
+		console.log(this.italian);
+		console.log(this.food);
+		console.log(this.drinks);
+		console.log(this.foodAndDrinks);
+
 		var body = {"cuisines": [], "type": "Food+Drinks", "isVendor": false};
 
 		if(this.zip != "")

@@ -1,5 +1,5 @@
 {
-  "name": "Project",
+  "name": "Homework",
   "scripts": {
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "lite": "lite-server",
