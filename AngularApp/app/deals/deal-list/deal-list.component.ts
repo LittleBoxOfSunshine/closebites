@@ -41,21 +41,21 @@ export class DealListComponent {
 
 		var that = this;
 		window.navigator.geolocation.getCurrentPosition(function(pos){
-    		console.log(pos);
+    		//console.log(pos);
 		  	that.http
 			  .get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
 			  .toPromise()
 			  .then(function(res){
 				res = res.json()['results'];
-				console.log(res);
+				//console.log(res);
 				var temp = res["0"].address_components;
-				console.log(temp);
+				//console.log(temp);
 
 				for(var i = 0; i < temp.length; i++) {
-					console.log(temp[i]);
+					//console.log(temp[i]);
 					var idx = temp[i]['types'].indexOf("postal_code")
     				if(idx != -1) {
-						console.log(temp[i]['long_name']);
+						//console.log(temp[i]['long_name']);
 						that.zip = temp[i]['long_name'];
 					}
 				}
@@ -64,7 +64,6 @@ export class DealListComponent {
 	}
 
 	updateMode(dealType:string){ // this mode refers to food, drink or food+drinks
-		console.log(dealType);
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
@@ -109,13 +108,6 @@ export class DealListComponent {
 	}
 
 	updateSearch(){
-		console.log(this.zip);
-		console.log(this.mexican);
-		console.log(this.chinese);
-		console.log(this.italian);
-		console.log(this.food);
-		console.log(this.drinks);
-		console.log(this.foodAndDrinks);
 
 		var body = {"cuisines": [], "type": "Food+Drinks", "isVendor": false};
 

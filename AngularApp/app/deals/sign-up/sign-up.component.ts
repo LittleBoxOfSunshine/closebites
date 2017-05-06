@@ -52,7 +52,6 @@ export class SignUpComponent {
           }
 
           this.userService.register(body).then((x)=>{
-            console.log(x);
             if(x) {
               if (this.mode == 'vendor')
                 this.router.navigate(['/vendor']);
