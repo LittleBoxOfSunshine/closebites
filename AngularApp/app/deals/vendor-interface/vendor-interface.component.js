@@ -41,6 +41,24 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             else
                 this.repeat = this.repeat.concat("0");
         }
+        var body = { "isVendor": true };
+        dealsService.find(body).then(x => this.vendorDeals = x);
+    }
+    identifyDeal(id) {
+        this.dealsService.getDeal(id)
+            .then(x => this.deal = x)
+            .catch(x => console.log(x.message));
+        /*.then(x => function(x) {
+            console.log(x);
+            console.log("test");
+            console.log(this);
+            this.deal = x;
+            
+            if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
+                this.favoriteDeal = true;
+            else
+                this.favoriteDeal = false;
+        });*/
     }
     clickDay(index) {
         this.days2[index] = !this.days2[index];
@@ -97,11 +115,15 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             this.dealsService.add2(this.deal).then((x) => {
                 console.log(x);
             });
+            var body = { "isVendor": true };
+            this.dealsService.find(body).then(x => this.vendorDeals = x);
             //reset modal form values afterwards
             this.deal = new deal_1.Deal;
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
             this.food = this.drinks = this.foodAndDrinks = false;
+            var body = { "isVendor": true };
+            this.dealsService.find(body).then(x => this.vendorDeals = x);
         }
     }
     logout() {
@@ -109,6 +131,12 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.deals = new Array();
         this.deal = new deal_1.Deal;
         this.userService.logout();
+    }
+    getUserName() {
+        return this.userService.getUser().name;
+    }
+    getUserEmail() {
+        return this.userService.getUser().email;
     }
 };
 VendorInterfaceComponent = __decorate([
