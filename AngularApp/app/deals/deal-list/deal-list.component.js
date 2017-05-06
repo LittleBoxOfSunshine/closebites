@@ -21,7 +21,7 @@ let DealListComponent = class DealListComponent {
         this.dealsService = dealsService;
         this.userService = userService;
         this.http = http;
-        this.deals = new Array(); //list of deals that show after searching
+        this.deals = new Array(); //list of deals that shows after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
         this.repeatDays = new Array();
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
