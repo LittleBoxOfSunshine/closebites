@@ -67,8 +67,10 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             else
                 this.repeat = this.repeat.concat("0");
         }
+        console.log(this.repeat);
     }
     updateMode(dealType) {
+        console.log(dealType);
         this.food = dealType == 'food';
         this.drinks = dealType == 'drinks';
         this.foodAndDrinks = dealType == 'foodAndDrinks';
@@ -82,6 +84,7 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             this.typeNotChosen = true;
         }
         else {
+            console.log('test');
             this.typeNotChosen = false;
             /*if (this.food && !this.drink)
                 this.deal.type1 = 'Food';
