@@ -34,12 +34,12 @@ export class SignUpComponent {
   }
 
   go (){
-      /*if (this.password != this.password2 || this.userService.exists(this.email)){
+      if (this.password != this.password2){
           this.passwordMatch = (this.password == this.password2); //passwords don't match
-          console.log(this.userService.exists(this.email));
-          if (this.userService.exists(this.email))  //email address already exists
-              this.emailExists = true;
-          else this.emailExists = false;
+         // console.log(this.userService.exists(this.email));
+          //if (this.userService.exists(this.email))  //email address already exists
+            //  this.emailExists = true;
+          //else this.emailExists = false;
       } else { //top two conditions don't apply*/
 
           this.passwordMatch=true;
@@ -63,7 +63,7 @@ export class SignUpComponent {
               this.error = true;
             }
           });
-      //}
+      }
   }
 
 }

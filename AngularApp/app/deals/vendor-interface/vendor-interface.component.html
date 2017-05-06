@@ -85,7 +85,7 @@
                   <div class="card-block">
                       <h4 class="card-title"> {{deal.name}}</h4>
                       <p class="card-text">{{deal.description}}</p>
-                      <a href="#" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal" class="btn btn-primary">See More</a>
+                      <a href="#" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal2" class="btn btn-primary">See More</a>
                 </div>
                 </div>
               </div>
@@ -100,65 +100,66 @@
     
       <div class="modal-content" style="text-align:center">
         <h1>Create Deal</h1>
-        <div class="form-group">
-            <input type="text" class="form-control" id="title" name="title" placeholder="Deal Title" [(ngModel)]="deal.name">
-        </div>
-        <div class="form-group">
-            <textarea class="form-control" rows="5" id="description" placeholder="Deal Description" [(ngModel)]="deal.description"></textarea>
-        </div>
-        <p>Deal Type
+            <div class="form-group">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Deal Title" [(ngModel)]="deal.name">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" id="description" placeholder="Deal Description" [(ngModel)]="deal.description"></textarea>
+            </div>
+            <p><strong>Deal Type</strong></p>
             <button [ngClass] = "{'btn-info': food,'btn-primary':!food}"
                 (click)="updateMode('food')" type="button" class="btn btn-primary" 
-                style="width:30%;margin:10px">Food
+                style="width:25%;margin:10px;margin-top:0px">Food
             </button>
             <button [ngClass] = "{'btn-info':drinks,'btn-primary':!drinks}"
                 (click)="updateMode('drinks')" type="button" class="btn btn-primary" 
-                style="width:30%;margin:10px">Drinks
+                style="width:25%;margin:10px;margin-top:0px">Drinks
             </button>
             <button [ngClass] = "{'btn-info':foodAndDrinks,'btn-primary':!foodAndDrinks}"
                 (click)="updateMode('foodAndDrinks')" type="button" class="btn btn-primary" 
-                style="width:30%;margin:10px">Both
+                style="width:25%;margin:10px;margin-top:0px">Both
             </button>
-        </p>
-        
-        <form style="display:inline-block">
-            <span>From</span>
-            <input type="date" name ="start" [(ngModel)]="startDate">
-            <input type="time" name="start" [(ngModel)]="startTime">
-        </form>
-        <form style="display:inline-block">
-            <span>To  </span>
-            <input type="date" name="end" [(ngModel)]="endDate">
-            <input type="time" name="end" [(ngModel)]="endTime">
-        </form>
-        <form style="display:inline-block">
-            Start Price
-            <input type="number" min="0.01" step="0.01" max="2500" value="0.00" name="price" [(ngModel)]="startPrice" />
-            Discounted
-            <input type="number" min="0.01" step="0.01" max="2500" value="0.00" name="otherPrice" [(ngModel)]="endPrice"/>
-        </form>
-        <p> Choose the days on which this deal will repeat. </p>
-        <form style="display:inline-block" *ngFor = "let day of days;let i = index">
-            <div class="checkbox">
-                <label><input type="checkbox" name="day" (click)="clickDay(i)">{{day}}</label>
+            <div style="margin-top:10px">
+                <label for="startD">From</label>
+                <div id="startD">
+                    <input type="date" name ="start" [(ngModel)]="startDate">
+                    <input type="time" name="start" [(ngModel)]="startTime">
+                </div>
+            </div>    
+            <div style="margin:20px">
+                <label for="endD">To  </label>
+                <div id="endD">
+                    <input type="date" name="end" [(ngModel)]="endDate">
+                    <input type="time" name="end" [(ngModel)]="endTime">
+                </div>
             </div>
-        </form>
-        <div class="form-group">
-            <input type="text" class="form-control" id="photoURL" name="photoURL" placeholder="Photo URL" [(ngModel)]="deal.photoUrl">
-        </div>
-        <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  
-        <div *ngIf = 'typeNotChosen'class="alert alert-danger">
-            You must select a deal type.
-        </div>
-        <div *ngIf = 'typeNotChosen==false'class="alert alert-success">
-            You have successfully created a new deal.
-        </div>
-      
+            <strong>Start Price</strong>
+            <input style="margin-right:30px" type="number" min="0.01" step="0.01" max="2500" value="0.00" name="price" [(ngModel)]="startPrice" />
+            <strong>Discounted</strong>
+            <input type="number" min="0.01" step="0.01" max="2500" value="0.00" name="otherPrice" [(ngModel)]="endPrice"/>
+
+            <p style="margin-top:30px"><strong>Choose the days on which this deal will repeat.</strong></p>
+            <form style="display:inline-block;margin-top:2px" *ngFor = "let day of days;let i = index">
+                <div class="checkbox">
+                    <label style="margin-right:10px"><input type="checkbox" name="day" (click)="clickDay(i)">{{day}}</label>
+                </div>
+            </form>
+            <div class="form-group">
+                <input type="text" class="form-control" id="photoURL" name="photoURL" placeholder="Photo URL" [(ngModel)]="deal.photoUrl">
+            </div>
+            <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  
+            <div *ngIf = 'typeNotChosen'class="alert alert-danger">
+                You must select a deal type.
+            </div>
+            <div *ngIf = 'typeNotChosen==false'class="alert alert-success">
+                You have successfully created a new deal.
+            </div>
     </div>
-  </div>
+</div>
+</div>
 
   <!--modal for when clicking on a deal-->
-  <div class="modal fade" id="dealModal" role="dialog">
+  <div class="modal fade" id="dealModal2" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content" style="text-align:center">
         <div class="modal-header">
@@ -178,7 +179,7 @@
 		</div>
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: {{deal.address}}</p>
-            <p>Cuisine: <i>{{deal.type}}</i> </p>
+            <p>Cuisine: {{deal.type}} </p>
             <p>Deal Type: {{deal.dType}}</p>
         </div>
       </div>

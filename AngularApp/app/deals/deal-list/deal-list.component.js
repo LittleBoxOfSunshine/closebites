@@ -73,14 +73,15 @@ let DealListComponent = class DealListComponent {
             else
                 this.favoriteDeal = false;
         });*/
-        this.repeatDays = [];
-        let days = [' Sundays', ' Mondays', ' Tuesdays', ' Wednesdays', ' Thursdays', ' Fridays', ' Saturdays'];
-        if (this.deal.repeat.length) {
-            for (var i = 0; i < this.deal.repeat.length; i++) {
+        /*this.repeatDays = [];
+        let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
+
+        if (this.deal.repeat.length){
+            for (var i = 0; i < this.deal.repeat.length; i++){
                 if (this.deal.repeat[i] == '1')
                     this.repeatDays.push(days[i]);
             }
-        }
+        }*/
     }
     logout() {
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;

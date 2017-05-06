@@ -86,7 +86,7 @@ export class DealListComponent {
 				else 
 					this.favoriteDeal = false;
 			});*/
-		this.repeatDays = [];
+		/*this.repeatDays = [];
 		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
 
 		if (this.deal.repeat.length){
@@ -94,7 +94,7 @@ export class DealListComponent {
 				if (this.deal.repeat[i] == '1')
 					this.repeatDays.push(days[i]);
 			}
-		}
+		}*/
 		
 
 	}
