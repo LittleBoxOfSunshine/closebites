@@ -29,8 +29,7 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.repeat = new String;
         this.food = this.drinks = this.foodAndDrinks = false;
         this.mode = 'month';
-        this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        this.times = ['7:00', '8:00', '9:00', '10:00', '11:00', 'Noon'];
+        this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         dealsService.listAll()
             .then(x => this.deals = x);
         this.mon = this.tue = this.wed = this.thur = this.fri = this.sat = this.sun = false;
@@ -78,6 +77,7 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.foodAndDrinks = dealType == 'foodAndDrinks';
     }
     resetTypeNotChosen() {
+        this.deal = new deal_1.Deal;
         this.typeNotChosen = null;
     }
     addDeal() {

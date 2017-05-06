@@ -47,8 +47,7 @@ export class VendorInterfaceComponent {
             private userService:UserRepository){
         this.food = this.drinks = this.foodAndDrinks = false;
         this.mode = 'month';
-        this.days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        this.times = ['7:00','8:00','9:00','10:00','11:00','Noon'];
+        this.days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
         dealsService.listAll()
 			.then(x => this.deals = x);
         this.mon = this.tue = this.wed = this.thur = this.fri = this.sat = this.sun = false;
@@ -100,6 +99,7 @@ export class VendorInterfaceComponent {
 	}
 
     resetTypeNotChosen(){
+        this.deal = new Deal;
         this.typeNotChosen = null;
     }
 
