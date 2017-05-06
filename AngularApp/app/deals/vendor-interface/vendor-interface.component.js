@@ -28,7 +28,6 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.days2 = new Array();
         this.repeat = new String;
         this.food = this.drinks = this.foodAndDrinks = false;
-        this.mode = 'month';
         this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         dealsService.listAll()
             .then(x => this.deals = x);

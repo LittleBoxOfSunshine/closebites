@@ -17,13 +17,10 @@ import { User, Date } from '../api/user/user';
 export class VendorInterfaceComponent { 
     deal = new Deal;
     deals:Deal[];
-    mode:string; //month,week,day
     food:boolean;
     drinks:boolean;
     foodAndDrinks:boolean;
-    dealMode:string;//food or drink for deals
     days:string[];
-    times:string[];
     dealTypes:string[];
     typeNotChosen:boolean;
     startDate = new String;
@@ -46,7 +43,6 @@ export class VendorInterfaceComponent {
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
         this.food = this.drinks = this.foodAndDrinks = false;
-        this.mode = 'month';
         this.days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
         dealsService.listAll()
 			.then(x => this.deals = x);
@@ -91,7 +87,7 @@ export class VendorInterfaceComponent {
 
     }
 
-	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
+	updateMode(dealType:string){ // this mode refers to food,drink or food+drinks
 		console.log(dealType);
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
@@ -104,7 +100,7 @@ export class VendorInterfaceComponent {
     }
 
     addDeal(){
-        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' not selected
+        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when no type selected
             this.typeNotChosen = true;
         } else {
             console.log('test');
