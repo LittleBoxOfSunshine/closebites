@@ -23,11 +23,13 @@ let DealListComponent = class DealListComponent {
         this.http = http;
         this.deals = new Array(); //list of deals that shows after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
+        this.repeatDays = new Array();
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
         this.foodAndDrinks = true;
         this.loggedIn = this.router.url == '/user';
         dealsService.listAll().then(x => this.deals = x);
         this.zip = "";
+        this.repeatDays = [''];
         var that = this;
         window.navigator.geolocation.getCurrentPosition(function (pos) {
             console.log(pos);
@@ -60,6 +62,12 @@ let DealListComponent = class DealListComponent {
         this.dealsService.getDeal(id)
             .then(x => this.deal = x)
             .catch(x => console.log(x.message));
+        this.repeatDays = [];
+        let days = [' Sundays', ' Mondays', ' Tuesdays', ' Wednesdays', ' Thursdays', ' Fridays', ' Saturdays'];
+        for (var i = 0; i < this.deal.repeat.length; i++) {
+            if (this.deal.repeat[i] == '1')
+                this.repeatDays.push(days[i]);
+        }
     }
     logout() {
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;

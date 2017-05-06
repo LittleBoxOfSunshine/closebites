@@ -220,8 +220,10 @@
 		    </div>
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: {{deal.address}}</p>
-            <p>Cuisine: <i>{{deal.type}}</i> </p>
+            <p>Cuisine: {{deal.type}} </p>
             <p>Deal Type: {{deal.dType}}</p>
+            <p>From ${{deal.normPrice}} to ${{deal.discountedPrice}}</p>
+            <p>Available from {{deal.start}} to {{deal.end}} on <span *ngFor = "let repeatDay of repeatDays">{{repeatDay}}</span></p>
         </div>
       </div>
     </div>

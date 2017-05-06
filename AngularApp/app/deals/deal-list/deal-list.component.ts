@@ -27,6 +27,7 @@ export class DealListComponent {
 	korean:boolean;
 	murican:boolean;
 	foodAndDrinks:boolean;
+	repeatDays = new Array<string>();
 	favoriteDeal:boolean;
 
 	constructor(private router:Router,private dealsService:DealRepository,private userService:UserRepository,
@@ -36,6 +37,7 @@ export class DealListComponent {
 		this.loggedIn = this.router.url == '/user';
 		dealsService.listAll().then(x => this.deals = x); 
 		this.zip = "";
+		this.repeatDays = [''];
 
 		var that = this;
 		window.navigator.geolocation.getCurrentPosition(function(pos){
@@ -72,6 +74,13 @@ export class DealListComponent {
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
+		this.repeatDays = [];
+		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
+		for (var i = 0; i < this.deal.repeat.length; i++){
+			if (this.deal.repeat[i] == '1')
+				this.repeatDays.push(days[i]);
+		}
+		
 	}
 
 	logout(){
