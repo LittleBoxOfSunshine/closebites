@@ -21,33 +21,34 @@ let DealListComponent = class DealListComponent {
         this.dealsService = dealsService;
         this.userService = userService;
         this.http = http;
-        this.deals = new Array(); //list of deals that show after searching
+        this.deals = new Array(); //list of deals that shows after searching
         this.deal = new deal_1.Deal; //used to bring up a specific deal in the modal
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
         this.foodAndDrinks = true;
         this.loggedIn = this.router.url == '/user';
         dealsService.listAll().then(x => this.deals = x);
+        this.zip = "";
         var that = this;
-        // window.navigator.geolocation.getCurrentPosition(function(pos){
-        // 	console.log(pos);
-        //   	that.http
-        // 	  .get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+pos.coords.latitude+','+pos.coords.longitude+'&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
-        // 	  .toPromise()
-        // 	  .then(function(res){
-        // 		res = res.json()['results'];
-        // 		console.log(res);
-        // 		var temp = res["0"].address_components;
-        // 		console.log(temp);
-        // 		for(var i = 0; i < temp.length; i++) {
-        // 			console.log(temp[i]);
-        // 			var idx = temp[i]['types'].indexOf("postal_code")
-        // 			if(idx != -1) {
-        // 				console.log(temp[i]['long_name']);
-        // 				that.zip = temp[i]['long_name'];
-        // 			}
-        // 		}
-        // 	});
-        // });
+        window.navigator.geolocation.getCurrentPosition(function (pos) {
+            console.log(pos);
+            that.http
+                .get('http://maps.googleapis.com/maps/api/geocode/json?latlng=' + pos.coords.latitude + ',' + pos.coords.longitude + '&sensor=true&key=AIzaSyAMApUB2WTGZ_BQPtvCV9VJEr4z4buMs90')
+                .toPromise()
+                .then(function (res) {
+                res = res.json()['results'];
+                console.log(res);
+                var temp = res["0"].address_components;
+                console.log(temp);
+                for (var i = 0; i < temp.length; i++) {
+                    console.log(temp[i]);
+                    var idx = temp[i]['types'].indexOf("postal_code");
+                    if (idx != -1) {
+                        console.log(temp[i]['long_name']);
+                        that.zip = temp[i]['long_name'];
+                    }
+                }
+            });
+        });
     }
     updateMode(dealType) {
         console.log(dealType);
@@ -59,34 +60,36 @@ let DealListComponent = class DealListComponent {
         this.dealsService.getDeal(id)
             .then(x => this.deal = x)
             .catch(x => console.log(x.message));
-        /*.then(x => function(x) {
-            console.log(x);
-            console.log("test");
-            console.log(this);
-            this.deal = x;
-            
-            if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
-                this.favoriteDeal = true;
-            else
-                this.favoriteDeal = false;
-        });*/
     }
     logout() {
         this.food = this.drinks = this.chinese = this.mexican = this.korean = this.italian = this.murican = false;
         this.foodAndDrinks = true;
         this.deals = new Array();
         this.deal = new deal_1.Deal;
+        this.zip = "";
         this.userService.logout();
     }
     updateSearch() {
-        console.log(this.mexican);
-        console.log(this.chinese);
-        console.log(this.italian);
-        console.log(this.korean);
-        console.log(this.murican);
-        console.log(this.food);
-        console.log(this.drinks);
-        console.log(this.foodAndDrinks);
+        var body = { "cuisines": [], "type": "Food+Drinks", "isVendor": false };
+        if (this.zip != "")
+            body['zip'] = parseInt(this.zip);
+        else
+            body['zip'] = -1;
+        if (this.mexican)
+            body.cuisines.push('mexican');
+        if (this.chinese)
+            body.cuisines.push('chinese');
+        if (this.italian)
+            body.cuisines.push('italian');
+        var active;
+        if (this.food)
+            active = 'Food';
+        else if (this.drinks)
+            active = 'Drinks';
+        else if (this.foodAndDrinks)
+            active = 'Food+Drinks';
+        body.type = active;
+        this.dealsService.find(body).then(x => this.deals = x);
     }
     getUserName() {
         return this.userService.getUser().name;

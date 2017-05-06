@@ -17,21 +17,25 @@ import { User, Date } from '../api/user/user';
 export class VendorInterfaceComponent { 
     deal = new Deal;
     deals:Deal[];
-    mode:string; //month,week,day
+    //food,drinks,foodAndDrinks deal types chosen by vendor
     food:boolean;
     drinks:boolean;
     foodAndDrinks:boolean;
-    dealMode:string;//food or drink for deals
+
     days:string[];
     times:string[];
     dealTypes:string[];
     typeNotChosen:boolean;
+
     startDate = new String;
     startTime: string;
     endDate = new String;
     endTime:string;
+    
     startPrice = new Number;
     endPrice = new Number;
+
+    //days on which deal repeats
     mon:boolean;
     tue:boolean;
     wed:boolean;
@@ -46,12 +50,10 @@ export class VendorInterfaceComponent {
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
         this.food = this.drinks = this.foodAndDrinks = false;
-        this.mode = 'month';
-        this.days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        this.times = ['7:00','8:00','9:00','10:00','11:00','Noon'];
         dealsService.listAll()
 			.then(x => this.deals = x);
         this.mon = this.tue = this.wed = this.thur = this.fri = this.sat = this.sun = false;
+        this.days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
         this.days2.push(this.sun,this.mon,this.tue,this.wed,this.thur,this.fri,this.sat);
         for (let day of this.days2){
             if (day)
@@ -66,20 +68,9 @@ export class VendorInterfaceComponent {
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
-			/*.then(x => function(x) {
-				console.log(x);
-				console.log("test");
-				console.log(this);
-				this.deal = x;
-				
-				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
-					this.favoriteDeal = true;
-				else 
-					this.favoriteDeal = false;
-			});*/
 	}
 
-    clickDay(index:number){
+    clickDay(index:number){ //repeat pattern = '1' for does repeat on a certain day or '0' for not repeating
         this.days2[index] = !this.days2[index];
 
         this.repeat = '';
@@ -92,7 +83,7 @@ export class VendorInterfaceComponent {
 
     }
 
-	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
+	updateMode(dealType:string){ // this mode refers to food, drink, or food+drinks
 		console.log(dealType);
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
@@ -104,19 +95,11 @@ export class VendorInterfaceComponent {
     }
 
     addDeal(){
-        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' not selected
+        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when no deal type selected
             this.typeNotChosen = true;
         } else {
-            console.log('test');
             this.typeNotChosen = false;
-            /*if (this.food && !this.drink) 
-                this.deal.type1 = 'Food';
-            else if (this.drink && !this.food)
-                this.deal.type1 = 'Drink';
-            else if (this.food && this.drink){
-                this.deal.type1='Food';
-                this.deal.type2='Drink';
-            }*/
+            
             this.startDate = this.startDate.replace(/-/g,"/");
             this.endDate = this.endDate.replace(/-/g,"/");
             this.startDate = this.startDate.concat(' ',this.startTime);

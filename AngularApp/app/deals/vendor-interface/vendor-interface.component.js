@@ -28,12 +28,10 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.days2 = new Array();
         this.repeat = new String;
         this.food = this.drinks = this.foodAndDrinks = false;
-        this.mode = 'month';
-        this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        this.times = ['7:00', '8:00', '9:00', '10:00', '11:00', 'Noon'];
         dealsService.listAll()
             .then(x => this.deals = x);
         this.mon = this.tue = this.wed = this.thur = this.fri = this.sat = this.sun = false;
+        this.days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
         this.days2.push(this.sun, this.mon, this.tue, this.wed, this.thur, this.fri, this.sat);
         for (let day of this.days2) {
             if (day)
@@ -41,6 +39,13 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             else
                 this.repeat = this.repeat.concat("0");
         }
+        var body = { "isVendor": true };
+        dealsService.find(body).then(x => this.vendorDeals = x);
+    }
+    identifyDeal(id) {
+        this.dealsService.getDeal(id)
+            .then(x => this.deal = x)
+            .catch(x => console.log(x.message));
     }
     clickDay(index) {
         this.days2[index] = !this.days2[index];
@@ -67,16 +72,7 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             this.typeNotChosen = true;
         }
         else {
-            console.log('test');
             this.typeNotChosen = false;
-            /*if (this.food && !this.drink)
-                this.deal.type1 = 'Food';
-            else if (this.drink && !this.food)
-                this.deal.type1 = 'Drink';
-            else if (this.food && this.drink){
-                this.deal.type1='Food';
-                this.deal.type2='Drink';
-            }*/
             this.startDate = this.startDate.replace(/-/g, "/");
             this.endDate = this.endDate.replace(/-/g, "/");
             this.startDate = this.startDate.concat(' ', this.startTime);
@@ -97,11 +93,15 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
             this.dealsService.add2(this.deal).then((x) => {
                 console.log(x);
             });
+            var body = { "isVendor": true };
+            this.dealsService.find(body).then(x => this.vendorDeals = x);
             //reset modal form values afterwards
             this.deal = new deal_1.Deal;
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
             this.food = this.drinks = this.foodAndDrinks = false;
+            var body = { "isVendor": true };
+            this.dealsService.find(body).then(x => this.vendorDeals = x);
         }
     }
     logout() {
@@ -109,6 +109,12 @@ let VendorInterfaceComponent = class VendorInterfaceComponent {
         this.deals = new Array();
         this.deal = new deal_1.Deal;
         this.userService.logout();
+    }
+    getUserName() {
+        return this.userService.getUser().name;
+    }
+    getUserEmail() {
+        return this.userService.getUser().email;
     }
 };
 VendorInterfaceComponent = __decorate([

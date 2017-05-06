@@ -17,8 +17,8 @@ import { User, Filter, FilterItem } from '../api/user/user';
 export class SearchesComponent { 
     foodOrDrink:string;
     dealOrSearch:string;
-    favorite_deals: Deal[];
-    filters: Filter[];
+    favorite_deals: Deal[]; //page of favorited deals
+    filters: Filter[]; //page of filters
     dealIds = new Array<number>();
     deal: Deal;//current favorited deal
 

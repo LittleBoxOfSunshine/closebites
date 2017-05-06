@@ -24,34 +24,35 @@ let SignUpComponent = class SignUpComponent {
         this.emailExists = false;
     }
     go() {
-        /*if (this.password != this.password2 || this.userService.exists(this.email)){
+        if (this.password != this.password2) {
             this.passwordMatch = (this.password == this.password2); //passwords don't match
-            console.log(this.userService.exists(this.email));
-            if (this.userService.exists(this.email))  //email address already exists
-                this.emailExists = true;
-            else this.emailExists = false;
-        } else { //top two conditions don't apply*/
-        this.passwordMatch = true;
-        this.emailExists = false;
-        let body = { email: this.email, password: this.password,
-            name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' };
-        if (this.mode == 'vendor') {
-            body['address'] = this.address;
-            body['type'] = this.type;
+            //console.log(this.userService.exists(this.email));
+            //if (this.userService.exists(this.email))  //email address already exists
+            //   this.emailExists = true;
+            //else this.emailExists = false;
         }
-        this.userService.register(body).then((x) => {
-            console.log(x);
-            if (x) {
-                if (this.mode == 'vendor')
-                    this.router.navigate(['/vendor']);
-                else
-                    this.router.navigate(['/user']);
+        else {
+            this.passwordMatch = true;
+            this.emailExists = false;
+            let body = { email: this.email, password: this.password,
+                name: this.name, accountType: this.mode == 'vendor' ? 'vendor' : 'consumer' };
+            if (this.mode == 'vendor') {
+                body['address'] = this.address;
+                body['type'] = this.type;
             }
-            else {
-                this.error = true;
-            }
-        });
-        //}
+            this.userService.register(body).then((x) => {
+                console.log(x);
+                if (x) {
+                    if (this.mode == 'vendor')
+                        this.router.navigate(['/vendor']);
+                    else
+                        this.router.navigate(['/user']);
+                }
+                else {
+                    this.error = true;
+                }
+            });
+        }
     }
 };
 SignUpComponent = __decorate([

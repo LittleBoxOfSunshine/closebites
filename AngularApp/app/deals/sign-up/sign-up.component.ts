@@ -34,14 +34,13 @@ export class SignUpComponent {
   }
 
   go (){
-      /*if (this.password != this.password2 || this.userService.exists(this.email)){
+      if (this.password != this.password2){
           this.passwordMatch = (this.password == this.password2); //passwords don't match
-          console.log(this.userService.exists(this.email));
-          if (this.userService.exists(this.email))  //email address already exists
-              this.emailExists = true;
-          else this.emailExists = false;
-      } else { //top two conditions don't apply*/
-
+          //console.log(this.userService.exists(this.email));
+          //if (this.userService.exists(this.email))  //email address already exists
+           //   this.emailExists = true;
+          //else this.emailExists = false;
+      } else { //top two conditions don't apply
           this.passwordMatch=true;
           this.emailExists=false;
           let body = { email: this.email, password: this.password, 
@@ -51,7 +50,7 @@ export class SignUpComponent {
             body['type'] = this.type;
           }
 
-          this.userService.register(body).then((x)=>{
+          this.userService.register(body).then((x)=>{ //sign up user and redirect to appropriate page
             console.log(x);
             if(x) {
               if (this.mode == 'vendor')
@@ -63,7 +62,7 @@ export class SignUpComponent {
               this.error = true;
             }
           });
-      //}
+      }
   }
 
 }
