@@ -64,7 +64,7 @@ let DealListComponent = class DealListComponent {
             .catch(x => console.log(x.message));
         this.repeatDays = [];
         let days = [' Sundays', ' Mondays', ' Tuesdays', ' Wednesdays', ' Thursdays', ' Fridays', ' Saturdays'];
-        if (this.deal.repeat.length) {
+        if (this.deal.repeat != undefined) {
             for (var i = 0; i < this.deal.repeat.length; i++) {
                 if (this.deal.repeat[i] == '1')
                     this.repeatDays.push(days[i]);
