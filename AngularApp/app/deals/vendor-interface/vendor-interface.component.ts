@@ -83,10 +83,12 @@ export class VendorInterfaceComponent {
                 this.repeat = this.repeat.concat("1");
             else this.repeat = this.repeat.concat("0");
         }
+        console.log(this.repeat);
 
     }
 
 	updateMode(dealType:string){ // this mode refers to food,drink or food+drinks
+		console.log(dealType);
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
@@ -101,6 +103,7 @@ export class VendorInterfaceComponent {
         if (!this.food && !this.drinks && !this.foodAndDrinks){ //when no type selected
             this.typeNotChosen = true;
         } else {
+            console.log('test');
             this.typeNotChosen = false;
             /*if (this.food && !this.drink) 
                 this.deal.type1 = 'Food';
