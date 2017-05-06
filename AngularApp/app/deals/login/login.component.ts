@@ -21,7 +21,7 @@ export class LoginComponent {
       this.error = false;
   }
 
-  submit() { //login and route to appropriate page
+  submit() {
     this.userService.login(this.email, this.password).then((x)=>{
       if(x) {
         if (this.userService.getUser().accountType == 'vendor')
