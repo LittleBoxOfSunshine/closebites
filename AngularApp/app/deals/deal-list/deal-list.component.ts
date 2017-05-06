@@ -77,7 +77,7 @@ export class DealListComponent {
 		this.repeatDays = [];
 		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
 
-		if (!this.deal.repeat.length){
+		if (this.deal.repeat.length){
 			for (var i = 0; i < this.deal.repeat.length; i++){
 				if (this.deal.repeat[i] == '1')
 					this.repeatDays.push(days[i]);
