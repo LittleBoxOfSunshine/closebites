@@ -158,25 +158,22 @@
 </div>
 </div>
 
-  <!--modal for when clicking on a deal-->
-  <div class="modal fade" id="dealModal2" role="dialog">
+<!--modal for when clicking on deal-->
+<div class="modal fade" id="dealModal2" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content" style="text-align:center">
-        <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h4 class="modal-title">{{deal.name}}</h4>
-		</div>
-		<div class="modal-body">
-            <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
-                <img style="text-align:center; width:200;" src="{{ deal.photoUrl }}">
-            </div>
-            <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
+        <div class="modal-header" style="text-align: center; ">
+			      <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      <h4 class="modal-title">{{deal.name}}</h4>
+		    </div>
+		    <div class="modal-body">
+          <img width=400 class="modal-img" src="{{ deal.photoUrl }}">
                 <p>{{deal.description}}
                 <!--<span [style.opacity]="favoriteDeal ? 1 : .5"
 								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
-                </p>-->
-            </div>
-		</div>
+                -->
+                </p>
+		    </div>
         <div class="modal-footer" style="text-align:left">
             <p>Deal Location: {{deal.address}}</p>
             <p>Cuisine: {{deal.type}} </p>

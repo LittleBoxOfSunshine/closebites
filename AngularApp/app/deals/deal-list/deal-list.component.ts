@@ -18,7 +18,7 @@ export class DealListComponent {
 	food:Boolean;
 	drinks:Boolean;
 	loggedIn:Boolean;
-	deals = new Array<Deal>(); //list of deals that show after searching
+	deals = new Array<Deal>(); //list of deals that shows after searching
 	deal = new Deal; //used to bring up a specific deal in the modal
 	zip:string;
 	mexican:boolean;
@@ -63,8 +63,7 @@ export class DealListComponent {
 		});
 	}
 
-	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
-		console.log(dealType);
+	updateMode(dealType:string){ // this mode refers to food or drink 
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
 		this.foodAndDrinks = dealType == 'foodAndDrinks';

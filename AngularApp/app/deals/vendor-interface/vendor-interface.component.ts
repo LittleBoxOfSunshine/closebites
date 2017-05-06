@@ -91,8 +91,7 @@ export class VendorInterfaceComponent {
 
     }
 
-	updateMode(dealType:string){ // this mode refers to food or drink for when searching for deals
-		console.log(dealType);
+	updateMode(dealType:string){ // this mode refers to food or drink
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
