@@ -116,7 +116,7 @@ $app->group('/api', function() use ($app) {
        $app->post('/details', function($request, $response, $args){
            $dbh = getDB();
            $body = $request->getParsedBody();
-           $query = "select repeats, title as name, norm_price as normPrice, discount_price as discountedPrice, start_date as start, end_date as end,
+           $query = "select repeat_days, title as name, norm_price as normPrice, discount_price as discountedPrice, start_date as start, end_date as end,
            picture, description, address, type as dType, user_id FROM deal where deal_id=:deal_id ";
            $stmt = $dbh->prepare($query);
            $stmt->bindParam('deal_id',$body['dealId']);
@@ -138,7 +138,7 @@ $app->group('/api', function() use ($app) {
                "discountedPrice" => $row['discountedPrice'],
                "start" => $row['start'],
                "end" => $row['end'],
-               "repeat" => $row['repeats']
+               "repeat" => $row['repeat_days']
            ];
 
            return $response->withJson($data);

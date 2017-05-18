@@ -17,7 +17,7 @@ export class DealRepository {
 	}
 	
 	add2(deal: Deal) : Promise<Deal> {
-		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeats":deal.repeat,
+		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeat_days":deal.repeat,
 	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice,"photoUrl":deal.photoUrl,
 	"dType": deal.dType};
 		console.log(body);
