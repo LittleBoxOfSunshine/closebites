@@ -144,6 +144,22 @@ $app->group('/api', function() use ($app) {
            return $response->withJson($data);
        });
 
+       $app->post('/details2', function($request, $response, $args){
+           $dbh = getDB();
+           $body = $request->getParsedBody();
+           $query = "select repeats FROM deal where deal_id=:deal_id ";
+           $stmt = $dbh->prepare($query);
+           $stmt->bindParam('deal_id',$body['dealId']);
+           $stmt->execute();
+           $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+           $data = [
+               "repeat" => $row['repeats']
+           ];
+
+           return $response->withJson($data);
+       });
+
        $app->post('/find', function($request,$response,$args) {
            $dbh = getDB();
             $body = $request->getParsedBody();

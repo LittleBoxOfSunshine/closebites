@@ -29,6 +29,7 @@ export class DealListComponent {
 	foodAndDrinks:boolean;
 	repeatDays = new Array<string>();
 	favoriteDeal:boolean;
+	repeat:number;
 
 	constructor(private router:Router,private dealsService:DealRepository,private userService:UserRepository,
 			private http: Http){
@@ -69,12 +70,15 @@ export class DealListComponent {
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
 	}
 
-	identifyRepeatDays(){
+	identifyRepeatDays(id: number){
+		this.dealsService.getRepeat(id)
+			.then(x => this.repeat = x)
+			.catch(x => console.log(x.message));
 		this.repeatDays = [];
 		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
-		console.log(this.deal.repeat);
-		if (this.deal.repeat){
-			for (var i = 0; i < String(this.deal.repeat).length; i++){
+		console.log(this.repeat);
+		if (this.repeat){
+			for (var i = 0; i < String(this.repeat).length; i++){
 				if (this.deal.repeat[i] == '1')
 					this.repeatDays.push(days[i]);
 			}
@@ -96,7 +100,7 @@ export class DealListComponent {
 				else 
 					this.favoriteDeal = false;
 			});*/
-		this.identifyRepeatDays();
+		this.identifyRepeatDays(id);
 		
 
 	}
