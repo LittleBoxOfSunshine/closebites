@@ -137,8 +137,7 @@ $app->group('/api', function() use ($app) {
                "normPrice" => $row['normPrice'],
                "discountedPrice" => $row['discountedPrice'],
                "start" => $row['start'],
-               "end" => $row['end'],
-               "repeat" => $row['repeat']
+               "end" => $row['end']
            ];
 
            return $response->withJson($data);
