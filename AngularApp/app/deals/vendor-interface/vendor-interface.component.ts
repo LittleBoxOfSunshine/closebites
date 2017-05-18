@@ -111,10 +111,11 @@ export class VendorInterfaceComponent {
             this.typeNotChosen = true;
         } else {
             for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
-                if (this.repeat[i] == '1')
+                if (this.repeat[i] == '1'){
                     console.log('this.repeat');
                     this.repeating = this.repeating.concat(this.days3[i]);
                     console.log(this.repeating);
+                }
             }
             this.typeNotChosen = false;
             /*if (this.food && !this.drink) 
