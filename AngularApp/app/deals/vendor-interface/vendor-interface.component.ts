@@ -120,7 +120,7 @@ export class VendorInterfaceComponent {
             this.endDate = this.endDate.replace(/-/g,"/");
             this.startDate = this.startDate.concat(' ',this.startTime);
             this.endDate = this.endDate.concat(' ',this.endTime);
-            this.deal.repeat = this.repeat;
+            this.deal.repeat = +this.repeat;
             this.deal.start = this.startDate;
             this.deal.end = this.endDate;
             this.deal.normPrice = this.startPrice;
