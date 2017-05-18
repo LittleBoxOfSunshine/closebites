@@ -23,6 +23,7 @@ export class VendorInterfaceComponent {
     foodAndDrinks:boolean;
     dealMode:string;//food or drink for deals
     days:string[];
+    days3:string[];
     times:string[];
     dealTypes:string[];
     typeNotChosen:boolean;
@@ -42,12 +43,15 @@ export class VendorInterfaceComponent {
     days2 = new Array<boolean>();
     repeat = new String;
     vendorDeals:Deal[];
+    repeating:string;
 
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
         this.food = this.drinks = this.foodAndDrinks = false;
+        this.repeating = '';
         this.mode = 'month';
         this.days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
+        this.days3 = ['Sundays ', 'Mondays ','Tuesdays ','Wednesdays ','Thursdays ','Fridays ','Saturdays '];
         dealsService.listAll()
 			.then(x => this.deals = x);
         this.mon = this.tue = this.wed = this.thur = this.fri = this.sat = this.sun = false;
@@ -106,7 +110,10 @@ export class VendorInterfaceComponent {
         if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' not selected
             this.typeNotChosen = true;
         } else {
-            console.log('test');
+            for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
+                if (this.repeat[i] == '1')
+                    this.repeating = this.repeating.concat(this.days3[i]);
+            }
             this.typeNotChosen = false;
             /*if (this.food && !this.drink) 
                 this.deal.type1 = 'Food';
@@ -120,7 +127,7 @@ export class VendorInterfaceComponent {
             this.endDate = this.endDate.replace(/-/g,"/");
             this.startDate = this.startDate.concat(' ',this.startTime);
             this.endDate = this.endDate.concat(' ',this.endTime);
-            this.deal.repeat = this.repeat;
+            this.deal.repeat = this.repeating;
             this.deal.start = this.startDate;
             this.deal.end = this.endDate;
             this.deal.normPrice = this.startPrice;
