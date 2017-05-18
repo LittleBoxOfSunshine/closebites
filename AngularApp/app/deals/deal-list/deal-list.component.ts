@@ -69,6 +69,17 @@ export class DealListComponent {
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
 	}
 
+	identifyRepeatDays(){
+		this.repeatDays = [];
+		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
+		console.log(this.deal.repeat);
+		if (this.deal.repeat){
+			for (var i = 0; i < String(this.deal.repeat).length; i++){
+				if (this.deal.repeat[i] == '1')
+					this.repeatDays.push(days[i]);
+			}
+		}
+	}
 	identifyDeal(id: number){
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
@@ -85,15 +96,7 @@ export class DealListComponent {
 				else 
 					this.favoriteDeal = false;
 			});*/
-		this.repeatDays = [];
-		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
-		console.log(this.deal.repeat);
-		if (this.deal.repeat){
-			for (var i = 0; i < String(this.deal.repeat).length; i++){
-				if (this.deal.repeat[i] == '1')
-					this.repeatDays.push(days[i]);
-			}
-		}
+		this.identifyRepeatDays();
 		
 
 	}
