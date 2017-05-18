@@ -79,10 +79,6 @@
         <div style="float:right; width: 70%">
             
             <div style = "width: 100%;" >
-            <div class = "row">
-                <!--well to appear when there are no deals-->
-                <div *ngIf = "!vendorDeals.length" class = "well well-sm">You have not created any deals.</div>	
-            </div>
             <div *ngFor = "let deal of vendorDeals">
                 <div class="deal">
                 <div class="card">
