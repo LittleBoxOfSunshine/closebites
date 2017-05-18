@@ -39,12 +39,12 @@ $app->group('/api', function() use ($app) {
           $title = $body['title'];
           $start_date = $body['start_date'];
           $end_date = $body['end_date'];
-          $repeats = $body['repeats'];
           $description = $body['description'];
           $norm_price = $body['norm_price'];
           $discount_price = $body['discount_price'];
           $photoUrl = $body['photoUrl'];
           $type = $body['dType'];
+          $repeat_days = $body['repeat_days'];
 
           //get vendor_id
           $query = "select vendor_id, location from vendor where vendor.user_id = '$user_id'";
@@ -54,11 +54,10 @@ $app->group('/api', function() use ($app) {
           $address = $arr['location'];
 
          //insert deal query
-         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,repeats,description,norm_price,discount_price,vendor_id,picture,type,address) values (:user_id,:title,:start_date,:end_date,:repeats,:description,:norm_price,:discount_price,:vendor_id,:picture,:type,:address)");
+         $sql = $dbh->prepare("insert into deal (user_id,title,start_date,end_date,description,norm_price,discount_price,vendor_id,picture,type,address,repeat_days) values (:user_id,:title,:start_date,:end_date,:description,:norm_price,:discount_price,:vendor_id,:picture,:type,:address,:repeat_days)");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
-         $sql->bindParam('repeats',$repeats);
          $sql->bindParam('description',$description);
          $sql->bindParam('norm_price',$norm_price);
          $sql->bindParam('discount_price',$discount_price);
@@ -67,6 +66,7 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('picture',$photoUrl);
          $sql->bindParam('type',$type);
          $sql->bindParam('address',$address);
+         $sql->bindParam('repeat_days',$repeat_days);
 
 
          if($vendor_id)	$sql->execute(); //run insert deal
