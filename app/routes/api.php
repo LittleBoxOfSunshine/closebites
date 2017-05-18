@@ -83,11 +83,11 @@ $app->group('/api', function() use ($app) {
          //parse request
          $body = $request->getParsedBody();
          //update deal query
-         $sql = $dbh->prepare("update deal set user_id=:user_id,category_id=:category_id,title=:title,start_date=:start_date,end_date=:end_date,repeats=:repeats,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type where :deal_id=deal.deal_id");
+         $sql = $dbh->prepare("update deal set user_id=:user_id,category_id=:category_id,title=:title,start_date=:start_date,end_date=:end_date,repeat_days=:repeat_days,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type where :deal_id=deal.deal_id");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
-         $sql->bindParam('repeats',$repeats);
+         $sql->bindParam('repeat_days',$repeat_days);
          $sql->bindParam('description',$description);
          $sql->bindParam('norm_price',$norm_price);
          $sql->bindParam('discount_price',$discount_price);
@@ -100,7 +100,7 @@ $app->group('/api', function() use ($app) {
          $title = $body['title'];
          $start_date = $body['start_date'];
          $end_date = $body['end_date'];
-         $repeats = $body['repeats'];
+         $repeat_days = $body['repeat_days'];
          $description = $body['description'];
          $norm_price = $body['norm_price'];
          $discount_price = $body['discount_price'];
@@ -321,7 +321,7 @@ $app->group('/api', function() use ($app) {
                   $vendor[] = $row;
               }
               // Get deals associated with vendor
-              $getVendorDeals = "SELECT title, description, start_date, end_date, repeats
+              $getVendorDeals = "SELECT title, description, start_date, end_date, repeat_days
                                  FROM deal
                                  WHERE user_id IN
                                    (SELECT user_id
