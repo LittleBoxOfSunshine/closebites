@@ -8,6 +8,7 @@
     float: left;
     text-align: center;
     line-height: 180px;
+	overflow:hidden;
 }
 .alert {
     margin-left: 15px;

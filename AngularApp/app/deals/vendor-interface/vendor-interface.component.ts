@@ -91,7 +91,6 @@ export class VendorInterfaceComponent {
                 this.repeat = this.repeat.concat("1");
             else this.repeat = this.repeat.concat("0");
         }
-        console.log(this.repeat);
 
     }
 
@@ -107,14 +106,12 @@ export class VendorInterfaceComponent {
     }
 
     addDeal(){
-        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' not selected
+        if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' selected
             this.typeNotChosen = true;
         } else {
             for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
                 if (this.repeat[i] == '1'){
-                    console.log('this.repeat');
                     this.repeating = this.repeating.concat(this.days3[i]);
-                    console.log(this.repeating);
                 }
             }
             this.typeNotChosen = false;
@@ -146,7 +143,7 @@ export class VendorInterfaceComponent {
             this.deal.dType = active;
             
             this.dealsService.add2(this.deal).then((x) => {
-                console.log(x);
+                //console.log(x);
             });
 
             var body = {"isVendor":true};
