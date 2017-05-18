@@ -71,12 +71,16 @@
 <!--contains plus glyphicon to add deal as well as list of deals-->
 
         <div class = "col-sm-2" style="text-align:center">
-            <span class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px"
+            <span href="javascript:void(0)" class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px" title="New Deal"
             (click)="resetTypeNotChosen()" data-toggle="modal" data-target="#myModal"></span>
         </div>
         <div style="float:right; width: 70%">
 <div style = "width: 100%;" >
         <div style="float:right; width: 70%">
+            <div class = "row">
+                <!--well to appear when there are no deals-->
+                <div *ngIf = "!vendorDeals.length" class = "well well-sm">You have not created any deals.</div>	
+            </div>
             <div style = "width: 100%;" >
             <div *ngFor = "let deal of vendorDeals">
                 <div class="deal">
