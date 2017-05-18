@@ -73,6 +73,7 @@ export class DealListComponent {
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
+		console.log(this.deal.normPrice);
 
 			/*.then(x => function(x) {
 				console.log(x);
