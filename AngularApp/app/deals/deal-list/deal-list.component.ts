@@ -87,7 +87,7 @@ export class DealListComponent {
 			});*/
 		this.repeatDays = [];
 		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
-
+		console.log(this.deal.repeat);
 		if (this.deal.repeat){
 			for (var i = 0; i < String(this.deal.repeat).length; i++){
 				if (this.deal.repeat[i] == '1')
