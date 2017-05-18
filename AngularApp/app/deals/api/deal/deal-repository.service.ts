@@ -40,15 +40,6 @@ export class DealRepository {
 			.catch(x => false);
 	}
 
-	getRepeat(id: number) {
-		let body = {"dealId": id};
-		return this.http
-			.post("/api/Deal/details2", JSON.stringify(body), this.options)
-			.toPromise()
-			.then(x => x.json())
-			.catch(x => false);
-	}
-
 	listAll() : Promise<Deal[]>{
 		return this.http
 			.get('/api/Deal/find')

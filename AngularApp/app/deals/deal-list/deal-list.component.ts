@@ -29,7 +29,6 @@ export class DealListComponent {
 	foodAndDrinks:boolean;
 	repeatDays = new Array<string>();
 	favoriteDeal:boolean;
-	repeat:number;
 
 	constructor(private router:Router,private dealsService:DealRepository,private userService:UserRepository,
 			private http: Http){
@@ -38,7 +37,7 @@ export class DealListComponent {
 		this.loggedIn = this.router.url == '/user';
 		dealsService.listAll().then(x => this.deals = x); 
 		this.zip = "";
-		this.repeatDays = [''];
+		this.repeatDays = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
 
 		var that = this;
 		window.navigator.geolocation.getCurrentPosition(function(pos){
@@ -70,20 +69,17 @@ export class DealListComponent {
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
 	}
 
-	identifyRepeatDays(id: number){
-		this.dealsService.getRepeat(id)
-			.then(x => this.repeat = x)
-			.catch(x => console.log(x.message));
+	/*identifyRepeatDays(){
 		this.repeatDays = [];
 		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
-		console.log(this.repeat);
-		if (this.repeat){
-			for (var i = 0; i < String(this.repeat).length; i++){
+		console.log(this.deal.repeat);
+		if (this.deal.repeat){
+			for (var i = 0; i < String(this.deal.repeat).length; i++){
 				if (this.deal.repeat[i] == '1')
 					this.repeatDays.push(days[i]);
 			}
 		}
-	}
+	}*/
 	identifyDeal(id: number){
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
@@ -100,7 +96,7 @@ export class DealListComponent {
 				else 
 					this.favoriteDeal = false;
 			});*/
-		this.identifyRepeatDays(id);
+		//this.identifyRepeatDays();
 		
 
 	}
@@ -115,13 +111,6 @@ export class DealListComponent {
 	}
 
 	updateSearch(){
-		console.log(this.zip);
-		console.log(this.mexican);
-		console.log(this.chinese);
-		console.log(this.italian);
-		console.log(this.food);
-		console.log(this.drinks);
-		console.log(this.foodAndDrinks);
 
 		var body = {"cuisines": [], "type": "Food+Drinks", "isVendor": false};
 
