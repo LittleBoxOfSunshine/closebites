@@ -79,8 +79,11 @@
         <div style="float:right; width: 70%">
             
             <div style = "width: 100%;" >
-            <div *ngFor = "let deal of vendorDeals">
-                <div class="deal">
+            <div class="media" *ngFor = "let deal of vendorDeals">
+                <a href="javascript:void(0);">
+                    <span class="media-left glyphicon glyphicon-pencil" title="Edit deal" style="font-size:170%;margin:5px;top:-5px"></span>
+                </a>
+                <div class="deal media-body">
                 <div class="card">
                   <img class="card-img-top" src="{{ deal.photoUrl }}"  >
                   <div class="card-block">
