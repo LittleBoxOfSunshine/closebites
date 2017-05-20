@@ -139,25 +139,23 @@ export class VendorInterfaceComponent {
             if (this.createOrEdit == 'create'){
                 this.dealsService.add2(this.deal).then((x) => {
                     //console.log(x);
+                    //reset modal form values afterwards
+                    this.deal = new Deal;
+                    this.startPrice = this.endPrice = 0;
+                    this.startDate = this.endDate = this.endTime = this.startTime = '';
+                    this.food = this.drinks = this.foodAndDrinks = false;
+                    this.repeating = '';
                 });
             } else {
+                console.log(this.deal.id);
                 this.dealsService.update(this.deal).then((x) => {
-                    //console.log(x);
+                    console.log(x);
                 });
             }
 
             var body = {"isVendor":true};
             this.dealsService.find(body).then(x => this.vendorDeals = x);
 
-            //reset modal form values afterwards
-            this.deal = new Deal;
-            this.startPrice = this.endPrice = 0;
-            this.startDate = this.endDate = this.endTime = this.startTime = '';
-            this.food = this.drinks = this.foodAndDrinks = false;
-            this.repeating = '';
-            
-            var body = {"isVendor":true};
-            this.dealsService.find(body).then(x => this.vendorDeals = x);
         }
     }
 
