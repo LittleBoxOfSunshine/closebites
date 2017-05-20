@@ -133,15 +133,15 @@
             <div style="margin-top:10px">
                 <label for="startD">From</label>
                 <div id="startD">
-                    <input type="date" name ="start">
-                    <input type="time" name="start">
+                    <input type="date" name ="start" [(ngModel)]="startDate">
+                    <input type="time" name="start" [(ngModel)]="startTime">
                 </div>
             </div>    
             <div style="margin:20px">
                 <label for="endD">To  </label>
                 <div id="endD">
-                    <input type="date" name="end">
-                    <input type="time" name="end">
+                    <input type="date" name="end" [(ngModel)]="endDate">
+                    <input type="time" name="end" [(ngModel)]="endTime">
                 </div>
             </div>
             <strong>Start Price</strong>
