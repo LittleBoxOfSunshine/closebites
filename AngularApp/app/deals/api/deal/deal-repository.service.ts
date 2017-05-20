@@ -16,6 +16,14 @@ export class DealRepository {
 		this.options = new RequestOptions({ headers: headers });
 	}
 	
+	deleteDeal(id: number) {
+		let body = {"dealId": id};
+		return this.http
+			.delete("/api/Vendor/delete", JSON.stringify(body), this.options)
+			.toPromise()
+			.catch(x => x.message);
+	}
+
 	add2(deal: Deal) : Promise<Deal> {
 		let body = {"user_id": deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeat_days":deal.repeat,
 	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice,"photoUrl":deal.photoUrl,

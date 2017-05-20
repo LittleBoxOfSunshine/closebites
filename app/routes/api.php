@@ -104,9 +104,21 @@ $app->group('/api', function() use ($app) {
          $discount_price = $body['discount_price'];
          $type = $body['dType'];
          $photoUrl = $body['photoUrl'];
-        // $deal_id = $args['deal_id'];
-         $sql->execute(); //run insert deal
+        
+         $sql->execute(); //run update deal
       });//end vendor/update route
+
+      $app->delete('/delete', function($request,$response,$args) {
+         //run the connection to the database again
+         $dbh = getDB();
+         //parse request
+         $body = $request->getParsedBody();
+         //update deal query
+         $sql = $dbh->prepare("delete from deal where deal_id=:deal_id");
+         $sql->bindParam('deal_id',$body['dealId']);
+         
+         $sql->execute(); //run delete deal
+      });//end vendor/delete route
    });//end Vendor group
    //deal group
    $app->group('/Deal', function() use ($app) {

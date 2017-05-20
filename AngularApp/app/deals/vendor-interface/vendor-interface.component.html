@@ -96,7 +96,7 @@
                     (click)="updateDeal(deal.id)" data-toggle="modal" data-target="#myModal"></span>
                 </a>
                 <a href="javascript:void(0);">
-                    <span class="glyphicon glyphicon-trash" title="Remove deal" style="font-size:170%;margin:-20px;top:60px;color:crimson;float:right;margin-left:10px"></span>
+                    <span (click)="deleteDeal(deal.id)" class="glyphicon glyphicon-trash" title="Remove deal" style="font-size:170%;margin:-20px;top:60px;color:crimson;float:right;margin-left:10px"></span>
                 </a>
                 </div> 
             </div>
