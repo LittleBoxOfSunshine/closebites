@@ -115,7 +115,7 @@ export class VendorInterfaceComponent {
             this.typeNotChosen = true; 
         } else {
             for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
-                if (this.repeat[i] == '1'){
+                if (this.repeat[i] == '1')
                     this.repeating = this.repeating.concat(this.days3[i],'/');
             }
             this.typeNotChosen = false;
