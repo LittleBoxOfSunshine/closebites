@@ -72,6 +72,7 @@ export class VendorInterfaceComponent {
 			.catch(x => console.log(x.message));
         this.createOrEdit = "edit";
         this.typeNotChosen = null;
+        this.food = this.drinks = this.foodAndDrinks = false;
     }
 
     identifyDeal(id: number){
@@ -102,11 +103,13 @@ export class VendorInterfaceComponent {
         this.deal = new Deal;
         this.createOrEdit = 'create';
         this.typeNotChosen = null;
+        this.food = this.drinks = this.foodAndDrinks = false;
     }
 
     addDeal(){
         if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' selected
             this.typeNotChosen = true; 
+        } else {
             for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
                 if (this.repeat[i] == '1' && i < (this.repeat.length - 1)){
                     this.repeating = this.repeating.concat(this.days3[i],',',' ');
