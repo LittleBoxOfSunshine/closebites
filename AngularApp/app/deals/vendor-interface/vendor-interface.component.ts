@@ -31,6 +31,8 @@ export class VendorInterfaceComponent {
     startTime: string;
     endDate:string;
     endTime:string;
+    start:string;
+    end:string;
     startPrice = new Number;
     endPrice = new Number;
     mon:boolean;
@@ -119,13 +121,13 @@ export class VendorInterfaceComponent {
                     this.repeating = this.repeating.concat(this.days3[i]);
             }
             this.typeNotChosen = false;
-            this.startDate = this.startDate.replace(/-/g,"/");
-            this.endDate = this.endDate.replace(/-/g,"/");
-            this.startDate = this.startDate.concat(' ',this.startTime);
-            this.endDate = this.endDate.concat(' ',this.endTime);
+            //this.startDate = this.startDate.replace(/-/g,"/");
+            //this.endDate = this.endDate.replace(/-/g,"/");
+            this.start = this.startDate.concat(' ',this.startTime);
+            this.end = this.endDate.concat(' ',this.endTime);
             this.deal.repeat = this.repeating;
-            this.deal.start = this.startDate;
-            this.deal.end = this.endDate;
+            this.deal.start = this.start;
+            this.deal.end = this.end;
 
             var active;
             if(this.food)
