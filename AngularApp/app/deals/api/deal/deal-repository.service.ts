@@ -30,6 +30,20 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 
+	update(deal: Deal) : Promise<Deal> {
+		let body = {"dealId":deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeat_days":deal.repeat,
+	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice,"photoUrl":deal.photoUrl,
+	"dType": deal.dType};
+		return this.http
+			.post("/api/Vendor/update", JSON.stringify(body),this.options)
+			.toPromise()
+			.then(x => function(x){
+				deal.id = x.json()['dealId'];
+				return deal;
+			})
+			.catch(x => x.message);
+	}
+
 	getDeal(id: number) {
 		let body = {"dealId": id};
 		return this.http

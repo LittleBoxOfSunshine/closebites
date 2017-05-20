@@ -77,13 +77,13 @@ $app->group('/api', function() use ($app) {
          return $response->withJson(["dealID" => $deal_id]);
       });//end vendor/create route
       // vendor/update route
-      $app->post('/update/{deal_id}', function($request,$response,$args) {
+      $app->post('/update', function($request,$response,$args) {
          //run the connection to the database again
          $dbh = getDB();
          //parse request
          $body = $request->getParsedBody();
          //update deal query
-         $sql = $dbh->prepare("update deal set user_id=:user_id,category_id=:category_id,title=:title,start_date=:start_date,end_date=:end_date,repeat_days=:repeat_days,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type where :deal_id=deal.deal_id");
+         $sql = $dbh->prepare("update deal set title=:title,start_date=:start_date,end_date=:end_date,repeat_days=:repeat_days,description=:description,norm_price=:norm_price,discount_price=:discount_price,type=:type,picture=:photoUrl where deal_id=:deal_id");
          $sql->bindParam('title',$title);
          $sql->bindParam('start_date',$start_date);
          $sql->bindParam('end_date',$end_date);
@@ -92,11 +92,9 @@ $app->group('/api', function() use ($app) {
          $sql->bindParam('norm_price',$norm_price);
          $sql->bindParam('discount_price',$discount_price);
          $sql->bindParam('type',$type);
-         $sql->bindParam('user_id',$user_id);
-         $sql->bindParam('category_id',$category_id);
-         $sql->bindParam('deal_id',$deal_id);
+         $sql->bindParam('deal_id',$body['dealId']);
+         $sql->bindParam('photoUrl',$photoUrl);
          //set variables for update deal query
-         $user_id = $_SESSION['user_id'];
          $title = $body['title'];
          $start_date = $body['start_date'];
          $end_date = $body['end_date'];
@@ -104,11 +102,11 @@ $app->group('/api', function() use ($app) {
          $description = $body['description'];
          $norm_price = $body['norm_price'];
          $discount_price = $body['discount_price'];
-         $type = $body['type'];
-         $category_id = $body['category_id'];
-         $deal_id = $args['deal_id'];
+         $type = $body['dType'];
+         $photoUrl = $body['photoUrl'];
+        // $deal_id = $args['deal_id'];
          $sql->execute(); //run insert deal
-      });//end vendor/create route
+      });//end vendor/update route
    });//end Vendor group
    //deal group
    $app->group('/Deal', function() use ($app) {

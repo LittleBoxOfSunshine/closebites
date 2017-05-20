@@ -44,6 +44,7 @@ export class VendorInterfaceComponent {
     repeat = new String;
     vendorDeals:Deal[];
     repeating:string;
+    createOrEdit:string;
 
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
@@ -51,7 +52,7 @@ export class VendorInterfaceComponent {
         this.repeating = '';
         this.mode = 'month';
         this.days = ['Sun','Mon','Tue','Wed','Thur','Fri','Sat'];
-        this.days3 = ['Sundays ', 'Mondays ','Tuesdays ','Wednesdays ','Thursdays ','Fridays ','Saturdays '];
+        this.days3 = ['Sundays', 'Mondays','Tuesdays','Wednesdays','Thursdays','Fridays','Saturdays'];
         dealsService.listAll()
 			.then(x => this.deals = x);
         this.mon = this.tue = this.wed = this.thur = this.fri = this.sat = this.sun = false;
@@ -65,21 +66,18 @@ export class VendorInterfaceComponent {
         dealsService.find(body).then(x => this.vendorDeals = x);
     }
 
+    updateDeal(id:number){ //identify deal for when updating it
+        this.dealsService.getDeal(id)
+			.then(x => this.deal = x)
+			.catch(x => console.log(x.message));
+        this.createOrEdit = "edit";
+        this.typeNotChosen = null;
+    }
+
     identifyDeal(id: number){
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
-			/*.then(x => function(x) {
-				console.log(x);
-				console.log("test");
-				console.log(this);
-				this.deal = x;
-				
-				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
-					this.favoriteDeal = true;
-				else 
-					this.favoriteDeal = false;
-			});*/
 	}
 
     clickDay(index:number){
@@ -102,27 +100,20 @@ export class VendorInterfaceComponent {
 
     resetTypeNotChosen(){
         this.deal = new Deal;
+        this.createOrEdit = 'create';
         this.typeNotChosen = null;
     }
 
     addDeal(){
         if (!this.food && !this.drinks && !this.foodAndDrinks){ //when neither 'food' nor 'drink' selected
-            this.typeNotChosen = true;
-        } else {
+            this.typeNotChosen = true; 
             for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
-                if (this.repeat[i] == '1'){
+                if (this.repeat[i] == '1' && i < (this.repeat.length - 1)){
+                    this.repeating = this.repeating.concat(this.days3[i],',',' ');
+                } else if (this.repeat[i] == '1' && i == (this.repeat.length - 1))
                     this.repeating = this.repeating.concat(this.days3[i]);
-                }
             }
             this.typeNotChosen = false;
-            /*if (this.food && !this.drink) 
-                this.deal.type1 = 'Food';
-            else if (this.drink && !this.food)
-                this.deal.type1 = 'Drink';
-            else if (this.food && this.drink){
-                this.deal.type1='Food';
-                this.deal.type2='Drink';
-            }*/
             this.startDate = this.startDate.replace(/-/g,"/");
             this.endDate = this.endDate.replace(/-/g,"/");
             this.startDate = this.startDate.concat(' ',this.startTime);
@@ -142,9 +133,15 @@ export class VendorInterfaceComponent {
                 active = 'Food+Drinks';
             this.deal.dType = active;
             
-            this.dealsService.add2(this.deal).then((x) => {
-                //console.log(x);
-            });
+            if (this.createOrEdit == 'create'){
+                this.dealsService.add2(this.deal).then((x) => {
+                    //console.log(x);
+                });
+            } else {
+                this.dealsService.update(this.deal).then((x) => {
+                    //console.log(x);
+                });
+            }
 
             var body = {"isVendor":true};
             this.dealsService.find(body).then(x => this.vendorDeals = x);
@@ -154,6 +151,7 @@ export class VendorInterfaceComponent {
             this.startPrice = this.endPrice = 0;
             this.startDate = this.endDate = this.endTime = this.startTime = '';
             this.food = this.drinks = this.foodAndDrinks = false;
+            this.repeating = '';
             
             var body = {"isVendor":true};
             this.dealsService.find(body).then(x => this.vendorDeals = x);
@@ -163,6 +161,7 @@ export class VendorInterfaceComponent {
     logout(){
 		this.food = this.drinks = this.foodAndDrinks = false;
 		this.deals = new Array<Deal>();
+        this.vendorDeals = new Array<Deal>();
 		this.deal = new Deal;
         this.userService.logout();
 	}
