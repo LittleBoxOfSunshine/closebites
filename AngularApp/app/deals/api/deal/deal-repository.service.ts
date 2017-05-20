@@ -16,10 +16,16 @@ export class DealRepository {
 		this.options = new RequestOptions({ headers: headers });
 	}
 	
-	deleteDeal(id: number) {
-		let body = {"dealId": id};
+	deleteDeal(id: number) : Promise<void> {
+		let body = JSON.stringify({"dealId": id});
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		let options = new RequestOptions({
+			headers: headers,
+			body : body
+		});
 		return this.http
-			.delete("/api/Vendor/delete", JSON.stringify(body), this.options)
+			.delete("/api/Vendor/delete", options)
 			.toPromise()
 			.catch(x => x.message);
 	}
