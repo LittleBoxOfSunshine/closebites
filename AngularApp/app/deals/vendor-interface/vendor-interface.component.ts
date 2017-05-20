@@ -27,9 +27,9 @@ export class VendorInterfaceComponent {
     times:string[];
     dealTypes:string[];
     typeNotChosen:boolean;
-    startDate = new String;
+    startDate:string;
     startTime: string;
-    endDate = new String;
+    endDate:string;
     endTime:string;
     startPrice = new Number;
     endPrice = new Number;
@@ -147,9 +147,9 @@ export class VendorInterfaceComponent {
                     this.repeating = '';
                 });
             } else {
-                console.log(this.editId);
                 this.dealsService.update(this.deal,this.editId).then((x) => {
-                    console.log(x);
+                    this.repeating = '';
+                    //console.log(x);
                 });
             }
 
