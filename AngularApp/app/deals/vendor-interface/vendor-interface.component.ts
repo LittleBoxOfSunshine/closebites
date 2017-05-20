@@ -76,6 +76,7 @@ export class VendorInterfaceComponent {
     }
 
     identifyDeal(id: number){
+        console.log(id);
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
@@ -124,8 +125,6 @@ export class VendorInterfaceComponent {
             this.deal.repeat = this.repeating;
             this.deal.start = this.startDate;
             this.deal.end = this.endDate;
-            this.deal.normPrice = this.startPrice;
-            this.deal.discountedPrice = this.endPrice;
 
             var active;
             if(this.food)
