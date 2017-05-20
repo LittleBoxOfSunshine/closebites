@@ -76,6 +76,7 @@ $app->group('/api', function() use ($app) {
          //return deal_id
          return $response->withJson(["dealID" => $deal_id]);
       });//end vendor/create route
+      
       // vendor/update route
       $app->post('/update', function($request,$response,$args) {
          //run the connection to the database again
@@ -113,7 +114,7 @@ $app->group('/api', function() use ($app) {
          $dbh = getDB();
          //parse request
          $body = $request->getParsedBody();
-         //update deal query
+         //delete deal query
          $sql = $dbh->prepare("delete from deal where deal_id=:deal_id");
          $sql->bindParam('deal_id',$body['dealId']);
          

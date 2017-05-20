@@ -129,8 +129,6 @@ export class VendorInterfaceComponent {
                     this.repeating = this.repeating.concat(this.days3[i],'/');
             }
             this.typeNotChosen = false;
-            //this.startDate = this.startDate.replace(/-/g,"/");
-            //this.endDate = this.endDate.replace(/-/g,"/");
             this.start = this.startDate.concat(' ',this.startTime);
             this.end = this.endDate.concat(' ',this.endTime);
             this.deal.repeat = this.repeating;
@@ -148,7 +146,6 @@ export class VendorInterfaceComponent {
             
             if (this.createOrEdit == 'create'){
                 this.dealsService.add2(this.deal).then((x) => {
-                    //console.log(x);
                     //reset modal form values afterwards
                     this.deal = new Deal;
                     this.startPrice = this.endPrice = 0;
@@ -159,7 +156,6 @@ export class VendorInterfaceComponent {
             } else {
                 this.dealsService.update(this.deal,this.editId).then((x) => {
                     this.repeating = '';
-                    //console.log(x);
                 });
             }
 

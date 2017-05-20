@@ -52,12 +52,7 @@ export class SignUpComponent {
           }
 
           this.userService.register(body).then((x)=>{
-            //console.log(x);
             if(x) {
-              /*if (this.mode == 'vendor')
-                this.router.navigate(['/vendor']);
-              else 
-                this.router.navigate(['/user']);*/
                 this.router.navigateByUrl('/')
                     .then( () => alert('Your account has been created. Please log back in to continue.'));
             }

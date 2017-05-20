@@ -63,42 +63,16 @@ export class DealListComponent {
 		});
 	}
 
-	updateMode(dealType:string){ // this mode refers to food or drink 
+	updateMode(dealType:string){ // this mode refers to food or drink or foodAndDrinks
 		this.food = dealType == 'food';
 		this.drinks = dealType == 'drinks';
 		this.foodAndDrinks = dealType == 'foodAndDrinks';
 	}
 
-	/*identifyRepeatDays(){
-		this.repeatDays = [];
-		let days:string[] = [' Sundays',' Mondays',' Tuesdays',' Wednesdays',' Thursdays',' Fridays',' Saturdays'];
-		console.log(this.deal.repeat);
-		if (this.deal.repeat){
-			for (var i = 0; i < String(this.deal.repeat).length; i++){
-				if (this.deal.repeat[i] == '1')
-					this.repeatDays.push(days[i]);
-			}
-		}
-	}*/
 	identifyDeal(id: number){
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
-
-			/*.then(x => function(x) {
-				console.log(x);
-				console.log("test");
-				console.log(this);
-				this.deal = x;
-				
-				if (this.userService.getUser().favorites.indexOf(this.deal.id) != -1)
-					this.favoriteDeal = true;
-				else 
-					this.favoriteDeal = false;
-			});*/
-		//this.identifyRepeatDays();
-		
-
 	}
 
 	logout(){
@@ -111,7 +85,6 @@ export class DealListComponent {
 	}
 
 	updateSearch(){
-
 		var body = {"cuisines": [], "type": "Food+Drinks", "isVendor": false};
 
 		if(this.zip != "")
