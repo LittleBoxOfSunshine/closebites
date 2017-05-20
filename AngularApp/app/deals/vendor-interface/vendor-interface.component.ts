@@ -45,6 +45,7 @@ export class VendorInterfaceComponent {
     vendorDeals:Deal[];
     repeating:string;
     createOrEdit:string;
+    editId:number;
 
     constructor(private router: Router, private route:ActivatedRoute, private dealsService:DealRepository,
             private userService:UserRepository){
@@ -70,13 +71,13 @@ export class VendorInterfaceComponent {
         this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
+        this.editId = id;
         this.createOrEdit = "edit";
         this.typeNotChosen = null;
         this.food = this.drinks = this.foodAndDrinks = false;
     }
 
     identifyDeal(id: number){
-        console.log(id);
 		this.dealsService.getDeal(id)
 			.then(x => this.deal = x)
 			.catch(x => console.log(x.message));
@@ -146,8 +147,8 @@ export class VendorInterfaceComponent {
                     this.repeating = '';
                 });
             } else {
-                console.log(this.deal.id);
-                this.dealsService.update(this.deal).then((x) => {
+                console.log(this.editId);
+                this.dealsService.update(this.deal,this.editId).then((x) => {
                     console.log(x);
                 });
             }

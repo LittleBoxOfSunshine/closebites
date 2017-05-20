@@ -30,8 +30,8 @@ export class DealRepository {
 			.catch(x => x.message);
 	}
 
-	update(deal: Deal) : Promise<Deal> {
-		let body = {"dealId":deal.id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeat_days":deal.repeat,
+	update(deal: Deal,id: number) : Promise<Deal> {
+		let body = {"dealId":id,"title":deal.name,"start_date":deal.start,"end_date":deal.end,"repeat_days":deal.repeat,
 	"description":deal.description,"norm_price":deal.normPrice,"discount_price":deal.discountedPrice,"photoUrl":deal.photoUrl,
 	"dType": deal.dType};
 		return this.http
