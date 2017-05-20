@@ -71,12 +71,10 @@ export class VendorInterfaceComponent {
 
     deleteDeal(id:number){
         this.dealsService.deleteDeal(id)
-			.then(() => {
-                alert('Deal has been deleted.');
-                var body = {"isVendor":true};
-                this.dealsService.find(body).then(x => this.vendorDeals = x);
-            })
-			.catch(x => console.log(x.message));
+                .then( () => alert('Deal has been deleted.'));
+            
+        var body = {"isVendor":true};
+        this.dealsService.find(body).then(x => this.vendorDeals = x);
     }
 
     updateDeal(id:number){ //identify deal for when updating it
