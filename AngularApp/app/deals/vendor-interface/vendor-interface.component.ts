@@ -115,10 +115,8 @@ export class VendorInterfaceComponent {
             this.typeNotChosen = true; 
         } else {
             for (var i = 0; i < this.repeat.length; i++){ //repeating days based on bits of repeat
-                if (this.repeat[i] == '1' && i < (this.repeat.length - 1)){
-                    this.repeating = this.repeating.concat(this.days3[i],',',' ');
-                } else if (this.repeat[i] == '1' && i == (this.repeat.length - 1))
-                    this.repeating = this.repeating.concat(this.days3[i]);
+                if (this.repeat[i] == '1'){
+                    this.repeating = this.repeating.concat(this.days3[i],'/');
             }
             this.typeNotChosen = false;
             //this.startDate = this.startDate.replace(/-/g,"/");
