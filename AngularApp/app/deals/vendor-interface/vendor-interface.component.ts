@@ -77,6 +77,7 @@ export class VendorInterfaceComponent {
         this.createOrEdit = "edit";
         this.typeNotChosen = null;
         this.food = this.drinks = this.foodAndDrinks = false;
+        this.startDate = this.endDate = this.startTime = this.endTime = '';
     }
 
     identifyDeal(id: number){
@@ -108,6 +109,7 @@ export class VendorInterfaceComponent {
         this.createOrEdit = 'create';
         this.typeNotChosen = null;
         this.food = this.drinks = this.foodAndDrinks = false;
+        this.startDate = this.endDate = this.startTime = this.endTime = '';
     }
 
     addDeal(){
