@@ -1,0 +1,104 @@
+<div class = "row">
+	<a routerLink = "/">
+		<h1>CloseBites</h1>
+	</a>
+</div>
+<!--shown on signup/home => choose either consumer or vendor-->
+<div *ngIf = "mode == 'home'" class = "row" style = "height:800px">
+	<div class = "container-fluid" style = "margin:200px">
+		<a [routerLink] = "'/signup/' + 'user'">
+		<button type="button" class="btn btn-primary btn-lg signup">I want to <u>find</u> deals</button></a>
+		<a [routerLink] = "'/signup/' + 'vendor'">
+		<button type="button" class="btn btn-success btn-lg signup">I want to <u>offer</u> deals</button></a>
+		<p style = "margin-top:50px; text-align:center">
+			Already a member? <a routerLink = "/login"><u>Log in here</u></a>
+		</p>
+	</div>	
+</div>
+<div class="form" *ngIf = "mode != 'home'">
+	<h1 id="closebites"> Sign Up </h1>
+	<div id="login">
+		<!--signup page form fields depend on either consumer or vendor mode-->
+		<form name="signupForm" #signupForm="ngForm" class="container" novalidate>
+			<div class="top-row"></div>
+			<div *ngIf = "mode == 'vendor'" class="field-wrap">
+							<input type="text" id="comp_name" name="compName" class="form-control" [(ngModel)]="name"
+									#comp_name="ngModel" required autocomplete="off" placeholder="Company Name *" required />
+													<validation-messages
+															[model]="comp_name"
+															[messages]="{
+																	required: 'Name is required'}">
+													</validation-messages>
+            </div>
+			<div *ngIf = "mode == 'vendor'" class="field-wrap">
+							<input type="text" id="comp_addr" name="compAddr" class="form-control" [(ngModel)]="address"
+									#comp_addr="ngModel" required autocomplete="off" placeholder="Company Address *" required />
+													<validation-messages
+															[model]="comp_addr"
+															[messages]="{
+																	required: 'Address is required'}">
+													</validation-messages>
+            </div>
+			<div *ngIf = "mode == 'user'" class="field-wrap">
+							<input type="text" id="user_name" name="name" class="form-control" [(ngModel)]="name"
+									#user_name="ngModel" required autocomplete="off" placeholder="Name *" required />
+													<validation-messages
+															[model]="user_name"
+															[messages]="{
+																	required: 'Name is required'}">
+													</validation-messages>
+            </div>
+			<div class="field-wrap">
+							<input id="user_email" required autocomplete="off" placeholder="Email Address *" 
+								name="email" class="form-control" [(ngModel)]="email"
+												#user_email="ngModel" required email />
+													<validation-messages
+															[model]="user_email"
+															[messages]="{
+																	required: 'Email is required',
+																	email: 'Email is not valid'}">
+													</validation-messages>
+            </div>
+			<div class="field-wrap">
+							<input type="password" required autocomplete="off" placeholder="Set A Password *" 
+							id="user_pwd" name="password" class="form-control" [(ngModel)]="password"
+										#user_pwd="ngModel" required 
+										pattern="((?=.*\d)(?=.*[!@#$%^*]).{6,20})"/>
+													<validation-messages
+															[model]="user_pwd"
+															[messages]="{
+																	required: 'Password is required',
+																	pattern: 'Password must be between 6-20 characters long 
+																	and contain at least 1 digit and at least 1 special character.'}">
+													</validation-messages>
+            </div>
+			<div class="field-wrap">
+							<input type="password" required autocomplete="off" placeholder=" Retype Password *" 
+								id="pwd_two" name="password2" class="form-control" [(ngModel)]="password2"
+											#pwd_two="ngModel" required />
+																<validation-messages
+																		[model]="pwd_two"
+																		[messages]="{
+																				required: 'Retyped password is required'}">
+																</validation-messages>
+            </div>
+			<div class="field-wrap" *ngIf = "mode == 'vendor'">
+				<label for="sel1" style="color:black">Select cuisine type:</label>
+				<select id="sel1" name="cuisine" class="form-control" [(ngModel)]="type" style="width:500px" required>
+					<option value="mexican">Mexican</option>
+					<option value="chinese">Chinese</option>
+					<option value="italian">Italian</option>
+					<option value="other">Other</option>
+				</select>	
+            </div>
+			<div *ngIf = "!passwordMatch" class="alert alert-danger">
+				Passwords don't match!
+			</div>
+			<div *ngIf = "emailExists" class="alert alert-danger">
+				This email address is taken!
+			</div>
+			<button [disabled]="signupForm.invalid" style="width:500px" type="button" class="button button-block" (click) = "go()">Get Started</button>
+		</form>
+	</div>
+</div>
+

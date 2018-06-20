@@ -1,0 +1,169 @@
+<!--navbar-->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header" >
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a src="images/cb_logo.png"></a>
+  <a class="navbar-brand" href="#">
+    CloseBites
+  </a>
+</div>
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul class="nav navbar-nav">
+    <li class="active"><a href="#">Deals <span class="sr-only">(current)</span></a></li>
+  </ul>
+
+  <ul class="nav navbar-nav navbar-right">
+    <li>
+      <div style="float:right; margin: 15px 15px 0px 10px;">
+          <a routerLink="/user" style="text-decoration: none; color: #2c2c2c; ">
+			    <span class="glyphicon glyphicon-home" title="Home" style="margin-right: 3px; font-size: 12px;  "></span>
+            </a>
+      </div>
+      <div style="float:right; margin: 15px 15px 0px 10px;">
+          <a routerLink="/mydeals" style="text-decoration: none; color: #2c2c2c; ">
+			    <span class="glyphicon glyphicon-heart" title="View favorited deals" style="margin-right: 3px; font-size: 12px;  "></span>
+            </a>
+      </div>
+      <div style="float:right; margin: 15px 15px 0px 10px;">
+          <a routerLink="/mysearches" style="text-decoration: none; color: #2c2c2c; ">
+			    <span class="glyphicon glyphicon-floppy-disk" title="View saved searches" style="margin-right: 3px; font-size: 12px;  "></span>
+            </a>
+      </div>
+    </li>
+
+    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <strong>User</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login" style="width: 305px; padding: 10px; padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p class="text-left"><strong>{{ getUserName() }}</strong></p>
+                                        <p class="text-left small">{{ getUserEmail() }}</p>
+                                        <p class="text-left">
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session" style="padding: 10px; padding-bottom: 0px; padding-top: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        
+                                          <div *ngIf = "loggedIn" style="float:right">
+                                            <a routerLink = "/">
+                                            <button type="button" class="btn btn-danger"
+                                            (click)="logout()">Log Out</button></a>
+                                          </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+  </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+<!--div shows favorited deals or saved searches-->
+<div class = "row">
+	<div class = "col-sm-12" style = "height:500px">
+        <div *ngIf = "dealOrSearch=='search'">
+		    <div  *ngFor = "let value of [1,2,3,4,5,6]">
+			    <div class = "search" data-toggle="modal" 
+                data-target="#searchModal">Search Title</div>
+		    </div>
+        </div>
+        <div *ngIf = "dealOrSearch=='deal'">
+            <div *ngFor = "let value of favorite_deals">
+                <div class = "search" data-toggle="modal" data-target="#dealModal" (click)="getDeal(value.id)">{{deal.name}}</div>
+		    </div>
+        </div>
+	</div>
+</div>
+
+<!--modal for when clicking on saved searches-->
+<div class="modal fade" id="searchModal" role="dialog">
+    <div class="modal-dialog" style="width:400px">  
+      <div class="modal-content" >
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">Search Title</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+                <label for="zip">Zip Code</label>
+                <input type="text" class="form-control" id="zip" name="zip" >
+            </div>
+            <div class="form-group">
+                <label for="cuisine">Cuisine</label>
+                <input type="text" class="form-control" id="cuisine" name="cuisine">
+            </div>
+            <div id = "deal">
+                <strong><p style = "text-align:center">Deal Type</p></strong>
+                <button class = "btn" [ngClass] = "{'btn-info':foodOrDrink == 'food','btn-primary':mode != 'food'}"
+                type="button"
+                (click) = "updateMode('food')">Food</button>
+                <button class = "btn" [ngClass] = "{'btn-info':foodOrDrink=='drink','btn-primary':mode!='drink'}"
+                type="button"
+                (click) = "updateMode('drink')">Drink</button>
+            </div>
+            <button type="button" style ="background-color:black;color:white;height:50px;margin-top:15px"
+            class="btn btn-default" data-dismiss="modal">
+                Update</button>
+            <button type="button" style ="background-color:white;color:black;height:50px;margin-top:15px"
+            class="btn btn-default" data-dismiss="modal">
+                Delete</button>
+		</div>	
+      </div>  
+    </div>
+  </div>
+
+<!--modal for when clicking on favorited deals-->
+  <div class="modal fade" id="dealModal" role="dialog">
+    <div class="modal-dialog">  
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<h4 class="modal-title">{{deal.name}}</h4>
+		</div>
+		<div class="modal-body">
+            <div class = "container-fluid" style="border-bottom-style:solid;border-top-style:solid;height:200px">
+                <h2 style="text-align:center">PICTURE</h2>
+            </div> 
+            <div class = "container-fluid" style="border-bottom-style:solid;height:60px">
+                <p>Deal Description
+                <span class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                </p>             
+            </div> 
+		</div>	
+        <div class="modal-footer" style="text-align:left">
+            <p>Deal Location: {{deal.address}}</p>
+            <p>Cuisine: <i>Cuisine tags</i> </p>
+            <p>Deal Type:</p>
+        </div>
+      </div>  
+    </div>
+  </div>

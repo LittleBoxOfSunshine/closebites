@@ -1,0 +1,9 @@
+/vendor/
+.idea/
+composer.lock
+.vagrant/
+AngularApp/typings/
+AngularApp/node_modules/
+.DS_Store
+AngularApp/app/**/*.js
+AngularApp/app/**/*.map

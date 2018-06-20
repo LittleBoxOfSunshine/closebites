@@ -1,0 +1,200 @@
+<!--navbar-->
+<nav class="navbar navbar-default">
+<div class="container-fluid">
+<!-- Brand and toggle get grouped for better mobile display -->
+<div class="navbar-header" >
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <a src="images/cb_logo.png"></a>
+  <a class="navbar-brand" href="#">
+    CloseBites
+  </a>
+</div>
+
+<!-- Collect the nav links, forms, and other content for toggling -->
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+  <ul class="nav navbar-nav navbar-right">
+
+    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <strong>Vendor</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login" style="width: 305px; padding: 10px; padding-bottom: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <p class="text-left"><strong>{{ getUserName() }}</strong></p>
+                                        <p class="text-left small">{{ getUserEmail() }}</p>
+                                        <p class="text-left">
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session" style="padding: 10px; padding-bottom: 0px; padding-top: 0px;">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        
+                                          <div style="float:right">
+                                            <a routerLink = "/">
+                                            <button type="button" class="btn btn-danger"
+                                            (click)="logout()">Log Out</button></a>
+                                          </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+  </ul>
+</div><!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
+</nav>
+
+<!--contains plus glyphicon to add deal as well as list of deals-->
+
+        <div class = "col-sm-2" style="text-align:center">
+            <span href="#" class = "glyphicon glyphicon-plus" style="font-size:300%; margin-top:250px" title="New Deal"
+            (click)="resetTypeNotChosen()" data-toggle="modal" data-target="#myModal"></span>
+        </div>
+        <div style="float:right; width: 70%">
+<div style = "width: 100%;" >
+        <div style="float:right; width: 70%">
+            
+            <div style = "width: 100%;" >
+            <div class="media" *ngFor = "let deal of vendorDeals">
+                <div class="deal media-body">
+                <div class="card">
+                  <img class="card-img-top" src="{{ deal.photoUrl }}"  >
+                  <div class="card-block">
+                      <h4 class="card-title"> {{deal.name}}</h4>
+                      <p class="card-text">{{deal.description}}</p>
+                      <a href="#" (click)="identifyDeal(deal.id)"data-toggle="modal" data-target="#dealModal2" class="btn btn-primary">See More</a>
+                </div>
+                </div>
+              </div>
+              <div class="media-right">
+                <a href="javascript:void(0);">
+                    <span class="glyphicon glyphicon-pencil" title="Edit deal" style="font-size:170%;margin:-20px;top:60px;color:darkred"
+                    (click)="updateDeal(deal.id)" data-toggle="modal" data-target="#myModal"></span>
+                </a>
+                <a href="javascript:void(0);">
+                    <span (click)="deleteDeal(deal.id)" class="glyphicon glyphicon-trash" title="Remove deal" style="font-size:170%;margin:-20px;top:60px;color:crimson;float:right;margin-left:10px"></span>
+                </a>
+                </div> 
+            </div>
+            </div>
+        </div>
+  </div>
+  </div>
+<!--modal to add or update deal-->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog" style="width:400px">
+    
+      <div class="modal-content" style="text-align:center">
+        <h1 *ngIf = "createOrEdit == 'create'">Create Deal</h1>
+        <h1 *ngIf = "createOrEdit == 'edit'">Update Deal</h1>
+            <div class="form-group">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Deal Title" [(ngModel)]="deal.name">
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" id="description" placeholder="Deal Description" [(ngModel)]="deal.description"></textarea>
+            </div>
+            <p><strong>Deal Type</strong></p>
+            <button [ngClass] = "{'btn-info': food,'btn-primary':!food}"
+                (click)="updateMode('food')" type="button" class="btn btn-primary" 
+                style="width:25%;margin:10px;margin-top:0px">Food
+            </button>
+            <button [ngClass] = "{'btn-info':drinks,'btn-primary':!drinks}"
+                (click)="updateMode('drinks')" type="button" class="btn btn-primary" 
+                style="width:25%;margin:10px;margin-top:0px">Drinks
+            </button>
+            <button [ngClass] = "{'btn-info':foodAndDrinks,'btn-primary':!foodAndDrinks}"
+                (click)="updateMode('foodAndDrinks')" type="button" class="btn btn-primary" 
+                style="width:25%;margin:10px;margin-top:0px">Both
+            </button>
+            <div style="margin-top:10px">
+                <label for="startD">From</label>
+                <div id="startD">
+                    <input type="date" name ="start" [(ngModel)]="startDate">
+                    <input type="time" name="start" [(ngModel)]="startTime">
+                </div>
+            </div>    
+            <div style="margin:20px">
+                <label for="endD">To  </label>
+                <div id="endD">
+                    <input type="date" name="end" [(ngModel)]="endDate">
+                    <input type="time" name="end" [(ngModel)]="endTime">
+                </div>
+            </div>
+            <strong>Start Price</strong>
+            <input style="margin-right:30px" type="number" min="0.01" step="0.01" max="2500" value="0.00" name="price" [(ngModel)]="deal.normPrice" />
+            <strong>Discounted</strong>
+            <input type="number" min="0.01" step="0.01" max="2500" value="0.00" name="otherPrice" [(ngModel)]="deal.discountedPrice"/>
+
+            <p style="margin-top:30px"><strong>Choose the days on which this deal will repeat.</strong></p>
+            <form style="display:inline-block;margin-top:2px" *ngFor = "let day of days;let i = index">
+                <div class="checkbox">
+                    <label style="margin-right:10px"><input type="checkbox" name="day" (click)="clickDay(i)">{{day}}</label>
+                </div>
+            </form>
+            <div class="form-group">
+                <input type="text" class="form-control" id="photoURL" name="photoURL" placeholder="Photo URL" [(ngModel)]="deal.photoUrl">
+            </div>
+            <button type="button" class="btn btn-default" (click)="addDeal()" style="margin:20px">Submit</button>  
+            <div *ngIf = 'typeNotChosen'class="alert alert-danger">
+                You must select a deal type.
+            </div>
+            <div *ngIf = 'typeNotChosen==false && createOrEdit=="create" 'class="alert alert-success">
+                You have successfully created a new deal.
+            </div>
+            <div *ngIf = 'typeNotChosen==false && createOrEdit=="edit" 'class="alert alert-success">
+                You have successfully updated your deal.
+            </div>
+    </div>
+</div>
+</div>
+
+<!--modal for when clicking on deal-->
+<div class="modal fade" id="dealModal2" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content" style="text-align:center">
+        <div class="modal-header" style="text-align: center; ">
+			      <button type="button" class="close" data-dismiss="modal">&times;</button>
+			      <h4 class="modal-title">{{deal.name}}</h4>
+		    </div>
+		    <div class="modal-body">
+          <img width=400 class="modal-img" src="{{ deal.photoUrl }}">
+                <p>{{deal.description}}
+                <!--<span [style.opacity]="favoriteDeal ? 1 : .5"
+								class="glyphicon glyphicon-heart" style="float:right;font-size:250%;top:-10px"></span>
+                -->
+                </p>
+		    </div>
+        <div class="modal-footer" style="text-align:left;letter-spacing:2px; font-size:120%;font-family:Courier New, Courier, monospace">
+            <p><strong>Deal Location:</strong> {{deal.address}}</p>
+            <p style="text-transform:capitalize"><strong>Cuisine:</strong> {{deal.type}} </p>
+            <p><strong>Deal Type:</strong> {{deal.dType}}</p>
+            <p><strong><del> ${{deal.normPrice}}</del> to ${{deal.discountedPrice}}</strong></p>
+            <p>Available from {{deal.start}} to {{deal.end}} on {{deal.repeat}}</p>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,10 @@
+<div *ngIf="model.errors && model.touched"
+    class="alert alert-danger" role="alert" style="width:500px;margin-top:5px">
+    <ul>
+        <li *ngFor="let validator of validators"
+            [hidden]="!model.errors[validator.key]">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            {{ validator.message }}
+        </li>
+    </ul>
+</div>
